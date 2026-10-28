@@ -1,0 +1,17 @@
+# secrets
+.env
+qcloud.env
+*.sk
+# runtime state (private keys live in data/ground/keys)
+data/
+# python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# node
+frontend/node_modules/
+frontend/dist/
+# evidence is kept, but archived logs and ad-hoc files can be large
+evidence/logs/*.2*.jsonl

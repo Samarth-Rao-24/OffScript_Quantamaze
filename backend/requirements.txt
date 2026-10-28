@@ -1,0 +1,13 @@
+# Python 3.11 (3.10 also works). pqcrypto 0.4.0 ships Windows wheels only up to Python 3.11.
+# QpiAI Opt SDK + gate-based optimisation extra; pins qpiai-quantum==0.3.0
+qpiai-opt[quantum]==0.0.9
+# Falcon-512 / Falcon-padded-512 / ML-DSA-44 via PQClean. 1.0.0 removed Falcon, so stay on 0.4.0.
+pqcrypto==0.4.0
+cryptography==50.0.2
+fastapi==0.162.0
+uvicorn==0.54.0
+websockets==17.3
+python-dotenv==1.2.4
+psutil==7.2.2
+pytest==9.2.0
+httpx==0.28.1

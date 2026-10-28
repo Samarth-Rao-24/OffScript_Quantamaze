@@ -1,0 +1,35 @@
+{
+  "checked_utc": "2026-10-28T19:47:21.179970+00:00",
+  "resources": [
+    {
+      "backend_name": "QpiAI-QSV-Simulator",
+      "device_name": "QpiAI-QSV-Simulator",
+      "usage_rate": 1
+    },
+    {
+      "backend_name": "QpiAI-QDM-Simulator",
+      "device_name": "QpiAI-QDM-Simulator",
+      "usage_rate": 2
+    },
+    {
+      "backend_name": "QpiAI-QTN-Simulator",
+      "device_name": "QpiAI-QTN-Simulator",
+      "usage_rate": 3
+    },
+    {
+      "backend_name": "QpiAI-QSV-Lite",
+      "device_name": "QpiAI-QSV-Lite",
+      "usage_rate": 1
+    },
+    {
+      "backend_name": "QpiAI-QDM-Lite",
+      "device_name": "QpiAI-QDM-Lite",
+      "usage_rate": 2
+    },
+    {
+      "backend_name": "QpiAI-Indus-1",
+      "device_name": "QpiAI-Indus-1",
+      "usage_rate": 4
+    }
+  ]
+}

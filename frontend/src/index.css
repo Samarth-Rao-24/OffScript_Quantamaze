@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-feature-settings: "tnum" 1;
+}
+
+body {
+  background: #e8edf2;
+  color: #14233f;
+  font-family: Barlow, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* verifier checks light up one after another when a frame lands */
+@keyframes ladderIn {
+  from { opacity: 0.15; transform: translateX(-4px); }
+  to { opacity: 1; transform: none; }
+}
+.ladder-in { animation: ladderIn 260ms ease-out both; }
+
+/* a frame crossing the simulated link */
+@keyframes cross {
+  from { left: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  to { left: calc(100% - 3.5rem); opacity: 0; }
+}
+.frame-cross { animation: cross 900ms cubic-bezier(.5,.05,.4,1) forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ladder-in, .frame-cross { animation: none !important; }
+  .frame-cross { opacity: 1; left: calc(50% - 1.75rem); }
+}
+
+table.data th { font-weight: 600; color: #566580; font-size: 0.8rem; text-align: left; padding: 0.35rem 0.5rem; border-bottom: 1px solid #cad4df; }
+table.data td { padding: 0.35rem 0.5rem; border-bottom: 1px solid #e3e9ef; vertical-align: top; }
+table.data tr:last-child td { border-bottom: 0; }
+
+input, select, textarea {
+  border: 1px solid #cad4df; border-radius: 4px; background: white; padding: 0.25rem 0.4rem; font-size: 0.875rem;
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #5a47d1; outline-offset: 1px; }

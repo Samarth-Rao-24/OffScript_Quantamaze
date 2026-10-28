@@ -1,0 +1,2 @@
+qpiai-opt==0.0.9
+qpiai-quantum==0.7.5
