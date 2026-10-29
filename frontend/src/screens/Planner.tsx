@@ -1,3 +1,4 @@
+import NasaPanel from "../components/NasaPanel";
 import { useEffect, useMemo, useState } from "react";
 import { api, fmtBytes, type Json } from "../api";
 import { Button, CopyId, ErrorNote, Fact, Panel, Provenance } from "../components/ui";
@@ -37,6 +38,9 @@ export default function Planner() {
   };
   useEffect(() => {
     load().catch((e) => setError(String(e.message ?? e)));
+    const f = () => load().catch(() => undefined);
+    window.addEventListener("plan-changed", f);
+    return () => window.removeEventListener("plan-changed", f);
   }, []);
 
   const dirty = useMemo(() => JSON.stringify(draft) !== JSON.stringify(queue), [draft, queue]);
@@ -102,6 +106,8 @@ export default function Planner() {
         </div>
       </header>
       <ErrorNote error={error} onDismiss={() => setError(null)} />
+
+      <NasaPanel budgetSource={queue?.budget_source} onApplied={() => load().catch((e) => setError(String(e.message ?? e)))} />
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
         <Panel
@@ -286,6 +292,15 @@ function PlanResult({ plan, stale }: { plan: Json; stale: boolean }) {
             <dd className="inline">{o.info?.termination ?? o.model_status ?? "—"}</dd>
           </div>
         </dl>
+        {plan.replan && (
+          <div className="mt-3 rounded border border-caution/40 bg-caution/5 px-3 py-2 text-sm">
+            <b>Re-planned from pass {plan.replan.from_pass}</b> after missing packets: QpiAI Opt re-scheduled the{" "}
+            {plan.replan.requeued.length} unacknowledged command(s) {plan.replan.requeued.join(", ")} over the remaining passes.
+            {plan.replan.missed_deadline.length > 0 && <> Missed deadline: {plan.replan.missed_deadline.join(", ")}.</>}
+            {plan.replan.blocked_by_missed_dependency.length > 0 && <> Blocked: {plan.replan.blocked_by_missed_dependency.join(", ")}.</>}
+            {" "}Already acknowledged commands keep the pass they were delivered in.
+          </div>
+        )}
         {!v.feasible && (
           <ul className="mt-2 list-disc pl-5 text-sm text-reject">
             {v.violations.map((x: string) => (
@@ -306,7 +321,10 @@ function PlanResult({ plan, stale }: { plan: Json; stale: boolean }) {
             return (
               <div key={p.index}>
                 <div className="mb-1 flex justify-between text-sm">
-                  <span className="font-cond font-semibold">Pass {p.index}</span>
+                  <span className="font-cond font-semibold">
+                    Pass {p.index}
+                    {p.label && p.label !== `Pass ${p.index}` && <span className="ml-2 font-sans text-xs font-normal text-mute">{p.label}</span>}
+                  </span>
                   <span className="tabular-nums text-mute">
                     {fmtBytes(b.used_bytes)} of {fmtBytes(p.budget_bytes)}, {fmtBytes(b.remaining_bytes)} left
                   </span>

@@ -74,6 +74,7 @@ cp .env.example .env && $EDITOR .env
 |---|---|---|---|
 | QpiAI Opt | https://opt.qpiai.tech (register, copy your API key) | `QPIAI_OPT_API_KEY` | `qpiai_opt.opt_solvers.Client(api_key=...)` for every Opt solve |
 | QpiAI QCloud | https://qcloud.qpiai.tech (register, copy your API key) | `QPIAI_QCLOUD_API_KEY` | `QpiAIQuantumAuth.login(api_key=...)` for QRNG circuits and QAOA |
+| NASA Open APIs (optional) | https://api.nasa.gov (fill in the form; the key is shown and emailed at once) | `NASA_API_KEY` | DONKI space-weather requests. Without it `DEMO_KEY` is used (rate-limited). The TLE API needs no key. |
 
 - `.env` is git-ignored. The backend reads it on start-up. Keys are never logged, never returned by the API and never sent to the browser; the UI shows only "Opt key ✓/✗".
 - `QCLOUD_API_KEY` (the name your `poc/` used) is accepted as a fallback.
@@ -104,6 +105,7 @@ Manual equivalent: `cd backend; ..\.venv\Scripts\python.exe -m uvicorn satauth.a
 The server binds to `127.0.0.1` only. On first start it generates OPERATOR and ADMIN Falcon key pairs, provisions the onboard state, and starts the satellite verifier as a separate OS process.
 
 **First real run (recorded evidence):**
+0. *Pass planner*: **Fetch from NASA**, then **Use these budgets** (real pass windows; see section 4a).
 1. *Live uplink*: **Run QRNG circuit** (QpiAI local simulator by default). Run one per pass you plan to run, since each pass nonce consumes one run.
 2. *Pass planner*: **Optimize with QpiAI Opt** (QpiAI Opt local solver by default).
 3. *Live uplink*: **Run pass 1 … 4**.
@@ -119,7 +121,28 @@ Or from the command line: `.\scripts\run_all.ps1 -WithQpiAI`.
 cd F:\OffScript\backend
 F:\OffScript\.venv\Scripts\python.exe scripts\final_run.py --fresh
 ```
-It runs: key check (both keys authenticate with QpiAI), 4 QRNG circuits on the QpiAI Quantum SDK simulator, the QpiAI Opt local solver plan (validated, compared with greedy and brute force), QAOA on the QpiAI simulator, benchmarks, then passes, nonce verification, judge sample cases and all attacks on the real satellite process. `--fresh` archives the previous evidence to `evidence\_previous_runs\`. Options: `--quantum cloud` and `--opt-mode platform-qubo` for cloud jobs (need platform access and credits), `--qrng-jobs`, `--skip-qaoa`.
+It runs: key check (both keys authenticate with QpiAI), 4 QRNG circuits on the QpiAI Quantum SDK simulator, the NASA pull (real ISS passes over Bengaluru + DONKI space weather, applied as the pass budgets; skipped with a note if NASA is unreachable, or with `--no-nasa`), the QpiAI Opt local solver plan (validated, compared with greedy and brute force), QAOA on the QpiAI simulator, benchmarks, then passes with a **missing-packet drill** in pass 3 (one frame lost on the link, detected, reconciled, recovered or re-planned with QpiAI Opt; `--no-drill` to skip), nonce verification, judge sample cases and all attacks on the real satellite process. `--fresh` archives the previous evidence to `evidence\_previous_runs\`. Options: `--quantum cloud` and `--opt-mode platform-qubo` for cloud jobs (need platform access and credits), `--qrng-jobs`, `--skip-qaoa`.
+
+### 4a. Real pass windows from NASA data (Pass planner, top)
+
+Our satellite is simulated, but its contact windows don't have to be invented:
+1. **Orbit:** the latest TLE for NORAD 25544 (the ISS, as a stand-in) from the TLE API in the api.nasa.gov catalogue (`tle.ivanstanojevic.me`, no key; CelesTrak is a fallback). Checksums are verified.
+2. **Passes:** SGP4 propagation with `skyfield` finds the next passes over Bengaluru above 10° elevation within 72 h. Passes too short for PASS_OPEN plus one command are skipped.
+3. **Budget per pass** = contact seconds × command-uplink allocation (default 80 bit/s, adjustable) ÷ 8. The allocation is our stated assumption: the share of a low-rate TT&C link given to authenticated commands.
+4. **Space weather:** NASA DONKI geomagnetic storms (Kp) and solar flares from the last 7 days (via api.nasa.gov; if that gateway fails, NASA CCMC's own DONKI web service). Transient errors are retried twice. Our margin policy keeps 15% back after Kp ≥ 5 (30% at Kp ≥ 7) in the last 72 h, and a further 10% after an X-class flare in the last 24 h.
+
+**Fetch from NASA** shows the passes (in your local time), budgets, TLE age and the space-weather reasoning. **Use these budgets** writes them into the queue (the planner then asks you to Optimize again). Every pull is saved in `evidence/nasa/` with the raw responses, their SHA-256, the URLs (API key removed) and the derived passes. It is labelled everywhere as a real orbit used for a simulated satellite.
+
+### 4b. Missing packets (Live uplink, "Packet-loss drill" + "Missing-packet monitor")
+
+Choose a drill next to the pass buttons: lose the first transmission of a chosen command, or random 10% / 25% loss with a fixed seed (reproducible). Then run a pass. What happens:
+1. The lost frame uses link bytes but never reaches the satellite. The ground gets **no acknowledgement** and raises a *Missing packet* alert.
+2. Commands that depend on it are **held**: they are not signed (no counter is used) and are never sent ahead of their dependency.
+3. When the satellite accepts the next frame, it reports the **counter gap** (counters it never accepted) in its acknowledgement. The gap is stored in the same single NV write, so it costs nothing extra. The ground reconciles every skipped counter against its own transmit ledger: lost on the link, refused at budget, rejected onboard, used by a test frame, or **unexplained** (flagged).
+4. The lost command is **re-signed with a fresh counter**, never resent as-is: once a later frame is accepted, the old counter would be rejected as a replay (the tests prove this). It is retransmitted in the same pass if the byte budget allows, then held dependents are released.
+5. Anything left is **carried over**. **Re-plan passes N–4 with QpiAI Opt** re-runs the optimiser on every unacknowledged command over the remaining passes, with deadlines kept: past-deadline commands are reported *missed*, and their dependents *blocked*. The merged plan is re-validated before anything is signed. Re-running a pass never resends a command that was already acknowledged.
+
+Alerts are logged to `evidence/logs/alerts.jsonl`, and the acknowledgement ledger to `evidence/logs/ack_log.jsonl`. Both appear on the Evidence screen.
 
 ### Checking cost before a paid QCloud run
 
@@ -155,7 +178,7 @@ Judges can also **add or remove commands** in the Pass planner (then **Save queu
 
 ```powershell
 cd backend
-..\.venv\Scripts\python.exe -m pytest -q                         # 61 tests without keys (63 with Opt + QCloud integration enabled)
+..\.venv\Scripts\python.exe -m pytest -q                         # 78 tests without keys (80 with Opt + QCloud integration enabled)
 ..\.venv\Scripts\python.exe -m satauth.bench.measure             # latency, RAM, NV writes, flood
 ..\.venv\Scripts\python.exe -m satauth.bench.scheme_compare      # Falcon / ML-DSA / ECDSA / Ed25519
 .\scripts\run_all.ps1                                            # all of the above + UI build (from repo root)

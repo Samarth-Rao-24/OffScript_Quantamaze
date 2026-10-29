@@ -16,3 +16,5 @@ frontend/dist/
 # evidence is kept, but archived logs and ad-hoc files can be large
 evidence/logs/*.2*.jsonl
 evidence/_previous_runs/
+# local submission zip (not committed)
+_submission/

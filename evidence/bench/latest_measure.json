@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-10-29T07:27:02.626981+00:00",
+  "created_utc": "2026-10-29T10:40:48.501867+00:00",
   "flood_wellformed_with_guard": {
     "by_reason": {
       "E_BAD_SIG": 8,
@@ -8,9 +8,9 @@
     "flood_limit": 8,
     "frames": 500,
     "junk_kind": "attacker-key",
-    "per_frame_us": 12.38,
+    "per_frame_us": 16.44,
     "signature_verifications": 8,
-    "total_ms": 6.188
+    "total_ms": 8.22
   },
   "flood_wellformed_without_guard": {
     "by_reason": {
@@ -19,9 +19,9 @@
     "flood_limit": null,
     "frames": 500,
     "junk_kind": "attacker-key",
-    "per_frame_us": 91.92,
+    "per_frame_us": 120.23,
     "signature_verifications": 500,
-    "total_ms": 45.958
+    "total_ms": 60.115
   },
   "flood_with_guard": {
     "by_reason": {
@@ -31,9 +31,9 @@
     "flood_limit": 8,
     "frames": 500,
     "junk_kind": "random",
-    "per_frame_us": 12.42,
+    "per_frame_us": 32.84,
     "signature_verifications": 8,
-    "total_ms": 6.208
+    "total_ms": 16.422
   },
   "flood_without_guard": {
     "by_reason": {
@@ -42,9 +42,9 @@
     "flood_limit": null,
     "frames": 500,
     "junk_kind": "random",
-    "per_frame_us": 39.72,
+    "per_frame_us": 96.11,
     "signature_verifications": 500,
-    "total_ms": 19.859
+    "total_ms": 48.057
   },
   "frame": {
     "auth_overhead_bytes": 682,
@@ -170,24 +170,24 @@
   },
   "nv_writes_per_accepted": 1.0,
   "nv_writes_per_rejected": 0.0,
-  "peak_ram_bytes": 21292,
-  "peak_ram_loop_bytes": 94624,
-  "peak_ram_per_frame_p50_bytes": 21228,
+  "peak_ram_bytes": 22109,
+  "peak_ram_loop_bytes": 94526,
+  "peak_ram_per_frame_p50_bytes": 21229,
   "signature_scheme": "Falcon-padded-512",
   "verify_crypto_only": {
-    "max_us": 111.3,
-    "mean_us": 54.78,
+    "max_us": 222.2,
+    "mean_us": 85.67,
     "n": 1000,
-    "p50_us": 53.7,
-    "p95_us": 57.2,
-    "p99_us": 75.6
+    "p50_us": 76.1,
+    "p95_us": 136.6,
+    "p99_us": 146.93
   },
   "verify_pipeline": {
-    "max_us": 13341.5,
-    "mean_us": 4867.93,
+    "max_us": 85620.2,
+    "mean_us": 8519.14,
     "n": 1000,
-    "p50_us": 4837.05,
-    "p95_us": 5322.61,
-    "p99_us": 5622.14
+    "p50_us": 7943.3,
+    "p95_us": 9777.82,
+    "p99_us": 13848.42
   }
 }

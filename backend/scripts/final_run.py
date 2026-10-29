@@ -11,8 +11,11 @@ Defaults follow the organisers' guidance: QpiAI local solver and simulator, no c
      cloud job first, local solver if it fails), validated and compared with baselines
   4. QAOA on the reduced schedule via qpiai-opt[quantum] (QpiAI simulator by default)
   5. resource benchmarks on this CPU
-  6. full mission run on the real satellite process: reset, passes 1..N, nonce
-     verification, QCloud re-fetch of each cloud QRNG job (if any), judge sample cases, all attacks
+  2b. NASA: real ISS passes over Bengaluru (TLE API) + DONKI space weather -> pass budgets
+  6. full mission run on the real satellite process: reset, passes 1..N with a
+     missing-packet drill in pass N-1 (lost frame -> hold -> gap report -> re-sign ->
+     QpiAI Opt re-plan of the remaining passes), nonce verification, QCloud re-fetch of
+     each cloud QRNG job (if any), judge sample cases, all attacks
   7. evidence zip at F:\\OffScript\\q-uplink-evidence.zip and a summary
 
 Every step's output and any error traceback go to evidence/final_run_log.txt.
@@ -93,6 +96,8 @@ def main() -> int:
                     help="local (default, organiser-recommended) = QpiAI Quantum SDK simulator authenticated with the "
                          "QCloud key, no credits, no cloud job IDs. cloud = QCloud jobs (needs a subscription).")
     ap.add_argument("--yes", action="store_true", help="skip the single cost confirmation")
+    ap.add_argument("--no-nasa", action="store_true", help="keep the queue's current pass budgets (skip the NASA pull)")
+    ap.add_argument("--no-drill", action="store_true", help="skip the missing-packet drill in the mission run")
     ap.add_argument("--fresh", action="store_true",
                     help="move the previous run's generated evidence into evidence/_previous_runs/<time>/ first "
                          "(nothing is deleted) so this run's evidence stands on its own")
@@ -176,6 +181,26 @@ def main() -> int:
 
         mc.save_queue({"commands": [c.to_dict() for c in default_queue()], "budgets": list(s.pass_budgets)})
 
+    # 2b. NASA: real pass windows -> per-pass byte budgets ---------------------------
+    if not a.no_nasa:
+        def nasa():
+            rec = mc.nasa_fetch()
+            sw = rec["space_weather"]
+            msg = (f"{rec['tle']['name']} TLE from {rec['tle']['source']} (epoch {rec['tle']['epoch_utc'][:16]}, "
+                   f"{rec['tle_age_days']} d old); {rec['all_passes_found']} passes over "
+                   f"{rec['ground_station']['name']} in 72 h; space weather x{sw['factor']} (max Kp {sw['kp_max_72h']}); "
+                   f"budgets {rec['budgets']}")
+            if rec.get("errors"):
+                msg += f"; note: {rec['errors']}"
+            if not rec["complete"]:
+                raise RuntimeError(msg + " -- fewer than 4 usable passes, budgets NOT applied")
+            mc.nasa_apply(rec["evidence_file"])
+            return msg + " -> applied to the queue"
+
+        if step("2b. NASA orbit + space weather -> pass budgets", nasa) is None:
+            print("NASA data unavailable: the queue keeps its current budgets "
+                  f"{(mc.get_queue() or {}).get('passes') and [p['budget_bytes'] for p in mc.get_queue()['passes']]}.")
+
     def opt(mode):
         res = mc.plan(mode)
         o, v, c = res["opt"], res["validation"], res["comparison"]
@@ -188,6 +213,7 @@ def main() -> int:
 
     label = "local solver, drives the uplink" if a.opt_mode == "local" else a.opt_mode
     plan_ok = step(f"3a. QpiAI Opt schedule ({label})", opt, a.opt_mode)
+    plan_mode = a.opt_mode if plan_ok is not None else "local"
     if plan_ok is None and a.opt_mode != "local":
         print("Platform plan unavailable or infeasible: the QpiAI Opt LOCAL solver will produce the plan that drives "
               "the uplink. The platform attempt above stays in the log/evidence.")
@@ -248,12 +274,45 @@ def main() -> int:
             unused = pool.status()["unused_for_nonce"]
             if plan and plan.get("validation", {}).get("feasible") and unused:
                 T = len(plan["instance"]["passes"])
+                drill_t = T - 1 if (T >= 2 and not a.no_drill) else None
                 for t in range(1, min(T, unused) + 1):
-                    r = mc.run_pass(t, pace_ms=0)
+                    drop = None
+                    if t == drill_t:
+                        drop = _drill_target(mc.current_plan(), t)
+                        if drop:
+                            print(f"  missing-packet drill: the first transmission of {drop} in pass {t} is lost on the "
+                                  "simulated link")
+                    r = mc.run_pass(t, pace_ms=0, drop=[drop] if drop else None)
                     acc = sum(1 for f in r["frames"] if f["verdict"] == "ACCEPT")
                     src = r["nonce"].get("job_id") or r["nonce"].get("randomness_class")
-                    out[f"pass {t}"] = f"{acc}/{len(r['frames'])} accepted, nonce source: {src}"
+                    tally = {}
+                    for f in r["frames"]:
+                        tally[f["verdict"]] = tally.get(f["verdict"], 0) + 1
+                    out[f"pass {t}"] = (f"{acc} accepted ({', '.join(f'{k} {v}' for k, v in sorted(tally.items()))}), "
+                                        f"nonce source: {src}")
                     print(f"  pass {t}: {out[f'pass {t}']}")
+                    if drop:
+                        alerts = [x for x in mc.alerts if x["kind"] in ("MISSING_PACKET", "DEPENDENCY_HOLD",
+                                                                          "GAP_REPORTED", "RETRANSMIT_OK", "CARRIED_OVER")]
+                        for x in alerts:
+                            print(f"    alert {x['kind']}: {x['message']}")
+                        gap = next((x for x in alerts if x["kind"] == "GAP_REPORTED"), None)
+                        out["missing-packet drill"] = {
+                            "dropped": drop, "pass": t,
+                            "detected_no_ack": any(x["kind"] == "MISSING_PACKET" for x in alerts),
+                            "satellite_gap_report_confirms": bool(gap and drop in gap.get("lost", [])),
+                            "recovered_in_pass": any(x["kind"] == "RETRANSMIT_OK" and x.get("cmd_id") == drop for x in alerts),
+                            "held": [x["cmd_id"] for x in alerts if x["kind"] == "DEPENDENCY_HOLD"],
+                            "carried_over": [c["cmd_id"] for c in r["carried_over"]],
+                        }
+                        if r["carried_over"] and t < T:
+                            new = mc.replan(t + 1, plan_mode)
+                            moved = {c: new["opt"]["plan"][c] for c in new["replan"]["requeued"]}
+                            out["missing-packet drill"]["replanned_with_qpiai_opt"] = {
+                                "mode": new["opt"].get("execution_mode"), "moved": moved,
+                                "missed": new["replan"]["missed_deadline"],
+                                "blocked": new["replan"]["blocked_by_missed_dependency"]}
+                            print(f"    QpiAI Opt re-plan from pass {t + 1}: {moved}")
                 st = mc.state()
                 chain = read_json(Path(s.data_dir) / "ground" / "nonce_chain.json", default={}) or {}
                 v = verify_nonce(Path(s.evidence_dir) / "qcloud_jobs", st["onboard"]["pass_nonce"],
@@ -307,6 +366,21 @@ def main() -> int:
     return finish(s, started)
 
 
+def _drill_target(plan: dict, t: int) -> str | None:
+    """Pick the command in pass t whose loss shows the most: one that another command in
+    the same pass depends on, else the first command of the pass."""
+    from satauth.ground.feasibility import order_within_pass
+    from satauth.ground.queue import Instance
+
+    inst = Instance.from_dict(plan["instance"])
+    order = order_within_pass(inst, plan["opt"]["plan"], t)
+    by = inst.by_id()
+    for cid in order:
+        if any(cid in by[o].depends_on for o in order):
+            return cid
+    return order[0] if order else None
+
+
 def _archive_previous(s) -> None:
     import shutil
 
@@ -315,7 +389,7 @@ def _archive_previous(s) -> None:
     moves = [*(ev / "qcloud_jobs").glob("qrng_*.json"), *(ev / "qcloud_jobs").glob("qaoa_*.json"),
              *(ev / "qcloud_jobs").glob("refetch_*.json"), ev / "qcloud_jobs" / "nonce_derivations.jsonl",
              ev / "opt_jobs", ev / "judge_runs", ev / "bench", ev / "pass_runs.json", ev / "final_run_log.txt",
-             ev / "final_run_summary.json", gd / "qrng_pool.json", gd / "current_plan.json", gd / "pass_runs.json"]
+             ev / "final_run_summary.json", ev / "logs" / "alerts.jsonl", ev / "logs" / "ack_log.jsonl", gd / "qrng_pool.json", gd / "current_plan.json", gd / "pass_runs.json"]
     moved = 0
     for p in moves:
         if p.exists():

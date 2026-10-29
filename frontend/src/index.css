@@ -29,9 +29,17 @@ body {
   to { left: calc(100% - 3.5rem); opacity: 0; }
 }
 .frame-cross { animation: cross 900ms cubic-bezier(.5,.05,.4,1) forwards; }
+/* a frame lost on the simulated link: it fades out mid-path */
+@keyframes lost {
+  from { left: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  45% { opacity: 1; transform: none; }
+  to { left: 55%; opacity: 0; transform: translateY(14px) rotate(8deg); }
+}
+.frame-lost { animation: lost 900ms ease-in forwards; }
 
 @media (prefers-reduced-motion: reduce) {
-  .ladder-in, .frame-cross { animation: none !important; }
+  .ladder-in, .frame-cross, .frame-lost { animation: none !important; }
   .frame-cross { opacity: 1; left: calc(50% - 1.75rem); }
 }
 

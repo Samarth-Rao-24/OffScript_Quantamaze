@@ -280,7 +280,64 @@ async def pass_open(payload: dict = Body(default={})):
 
 @app.post("/api/pass/{t}/run")
 async def pass_run(t: int, payload: dict = Body(default={})):
-    return await _exclusive("pass", mc.run_pass, t, int(payload.get("pace_ms", 300)))
+    drop = payload.get("drop") or []
+    if isinstance(drop, str):
+        drop = [d.strip() for d in drop.split(",") if d.strip()]
+    try:
+        rate = float(payload.get("loss_rate") or 0.0)
+    except (TypeError, ValueError):
+        raise HTTPException(400, "loss_rate must be a number")
+    if not 0.0 <= rate <= 0.5:
+        raise HTTPException(400, "loss_rate must be between 0 and 0.5")
+    seed = payload.get("seed")
+    return await _exclusive("pass", mc.run_pass, t, int(payload.get("pace_ms", 300)), drop=list(drop),
+                            loss_rate=rate, seed=int(seed) if seed not in (None, "") else None)
+
+
+@app.get("/api/nasa")
+async def nasa_latest():
+    s = settings.public_status()
+    return {"latest": await asyncio.to_thread(mc.nasa_latest),
+            "config": {k: s[k] for k in ("nasa_key_configured", "norad_id", "ground_station", "uplink_bps",
+                                         "min_elevation_deg")}}
+
+
+@app.post("/api/nasa/fetch")
+async def nasa_fetch(payload: dict = Body(default={})):
+    def num(k, cast):
+        v = payload.get(k)
+        if v in (None, ""):
+            return None
+        try:
+            return cast(v)
+        except (TypeError, ValueError):
+            raise HTTPException(400, f"{k} must be a number")
+    norad, bps, el = num("norad", int), num("uplink_bps", float), num("min_elevation_deg", float)
+    if bps is not None and not 8 <= bps <= 100000:
+        raise HTTPException(400, "uplink_bps must be 8..100000")
+    if el is not None and not 0 <= el <= 60:
+        raise HTTPException(400, "min_elevation_deg must be 0..60")
+    return await _exclusive("nasa", mc.nasa_fetch, norad=norad, uplink_bps=bps, min_el=el)
+
+
+@app.post("/api/nasa/apply")
+async def nasa_apply(payload: dict = Body(default={})):
+    return await asyncio.to_thread(mc.nasa_apply, payload.get("evidence_file"))
+
+
+@app.get("/api/delivery")
+async def delivery():
+    """Missing-packet view: acknowledged commands, carried-over commands, alerts, ACK ledger."""
+    return await asyncio.to_thread(mc.delivery_status)
+
+
+@app.post("/api/replan")
+async def replan(payload: dict = Body(default={})):
+    mode = payload.get("mode") or settings.opt_mode
+    if mode not in ("platform", "platform-qubo", "local"):
+        raise HTTPException(400, "mode must be platform, platform-qubo or local")
+    fp = payload.get("from_pass")
+    return await _exclusive("opt", mc.replan, int(fp) if fp else None, mode)
 
 
 @app.post("/api/frame/send")
@@ -376,11 +433,19 @@ def _job_index() -> dict:
         qc.append({"file": f"qcloud_jobs/{p.name}", "kind": "qaoa", "job_ids": q.get("job_ids", []),
                    "device": q.get("backend") or d.get("device_name"), "execution_mode": q.get("execution_mode"),
                    "created_utc": d.get("created_utc"), "qubits": d.get("qubits"), "comparison": d.get("comparison")})
+    nasa = []
+    for p in sorted((ev / "nasa").glob("nasa_*.json")):
+        d = read_json(p) or {}
+        nasa.append({"file": f"nasa/{p.name}", "created_utc": d.get("created_utc"), "spacecraft": (d.get("tle") or {}).get("name"),
+                     "tle_source": (d.get("tle") or {}).get("source"), "tle_epoch_utc": (d.get("tle") or {}).get("epoch_utc"),
+                     "budgets": d.get("budgets"), "space_weather_factor": (d.get("space_weather") or {}).get("factor"),
+                     "kp_max_72h": (d.get("space_weather") or {}).get("kp_max_72h")})
     judge = []
     for p in sorted((ev / "judge_runs").glob("judge_*.json")):
         d = read_json(p) or {}
         judge.append({"file": f"judge_runs/{p.name}", "created_utc": d.get("created_utc"), "totals": d.get("totals")})
-    return {"opt_jobs": opt, "qcloud_jobs": qc, "judge_runs": judge,
+    return {"opt_jobs": opt, "qcloud_jobs": qc, "judge_runs": judge, "nasa_pulls": nasa,
+            "alerts": read_jsonl(ev / "logs" / "alerts.jsonl", limit=300)[::-1],
             "nonce_derivations": read_jsonl(ev / "qcloud_jobs" / "nonce_derivations.jsonl", limit=100),
             "tests": read_json(ev / "tests" / "summary.json", default=None)}
 

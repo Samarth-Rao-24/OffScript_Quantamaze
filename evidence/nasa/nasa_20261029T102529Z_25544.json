@@ -1,0 +1,109 @@
+{
+  "all_passes_found": 8,
+  "budgets": [
+    3981,
+    3700,
+    3799,
+    2622
+  ],
+  "complete": true,
+  "created_utc": "2026-10-29T10:25:29.217478+00:00",
+  "donki": null,
+  "errors": {
+    "donki": "HTTP 503 from https://api.nasa.gov/DONKI/GST?startDate=2026-10-22&endDate=2026-10-29&api_key=DEMO_KEY: upstream connect error or disconnect/reset before headers. retried and the latest reset reason: remote connection failure"
+  },
+  "evidence_file": "nasa/nasa_20261029T102529Z_25544.json",
+  "ground_station": {
+    "alt_m": 920.0,
+    "lat": 12.9716,
+    "lon": 77.5946,
+    "name": "Bengaluru"
+  },
+  "kind": "nasa_pass_windows",
+  "parameters": {
+    "budget_formula": "floor(floor(contact_s x uplink_bps / 8) x space_weather_factor)",
+    "min_elevation_deg": 10.0,
+    "min_useful_budget_bytes": 1398,
+    "n_passes": 4,
+    "search_hours": 72.0,
+    "uplink_bps": 80.0
+  },
+  "passes": [
+    {
+      "aos_utc": "2026-10-29T16:38:37.440780+00:00",
+      "budget_bytes": 3981,
+      "duration_s": 398.1,
+      "index": 1,
+      "label": "AOS 2026-10-29 16:38 UTC \u00b7 6.6 min \u00b7 max 76\u00b0",
+      "los_utc": "2026-10-29T16:45:15.535342+00:00",
+      "max_elevation_deg": 75.7,
+      "range_at_tca_km": 428.0,
+      "raw_budget_bytes": 3981,
+      "tca_utc": "2026-10-29T16:41:56.049238+00:00"
+    },
+    {
+      "aos_utc": "2026-10-30T02:32:51.574085+00:00",
+      "budget_bytes": 3700,
+      "duration_s": 370.0,
+      "index": 2,
+      "label": "AOS 2026-10-30 02:32 UTC \u00b7 6.2 min \u00b7 max 33\u00b0",
+      "los_utc": "2026-10-30T02:39:01.554215+00:00",
+      "max_elevation_deg": 32.8,
+      "range_at_tca_km": 730.0,
+      "raw_budget_bytes": 3700,
+      "tca_utc": "2026-10-30T02:35:56.670607+00:00"
+    },
+    {
+      "aos_utc": "2026-10-30T15:51:17.622146+00:00",
+      "budget_bytes": 3799,
+      "duration_s": 379.9,
+      "index": 3,
+      "label": "AOS 2026-10-30 15:51 UTC \u00b7 6.3 min \u00b7 max 42\u00b0",
+      "los_utc": "2026-10-30T15:57:37.557844+00:00",
+      "max_elevation_deg": 42.0,
+      "range_at_tca_km": 598.0,
+      "raw_budget_bytes": 3799,
+      "tca_utc": "2026-10-30T15:54:27.188972+00:00"
+    },
+    {
+      "aos_utc": "2026-10-31T01:46:11.218685+00:00",
+      "budget_bytes": 2622,
+      "duration_s": 262.2,
+      "index": 4,
+      "label": "AOS 2026-10-31 01:46 UTC \u00b7 4.4 min \u00b7 max 16\u00b0",
+      "los_utc": "2026-10-31T01:50:33.444179+00:00",
+      "max_elevation_deg": 16.1,
+      "range_at_tca_km": 1183.0,
+      "raw_budget_bytes": 2622,
+      "tca_utc": "2026-10-31T01:48:22.371866+00:00"
+    }
+  ],
+  "skipped_short": [],
+  "space_weather": {
+    "factor": 1.0,
+    "flares": [],
+    "kp_max_72h": null,
+    "reasons": [
+      "space weather not fetched: no margin applied"
+    ],
+    "storms": []
+  },
+  "spacecraft_note": "Orbit of a real spacecraft used as a stand-in; the satellite in this system is simulated.",
+  "tle": {
+    "epoch_utc": "2026-10-28T11:12:28.029312+00:00",
+    "fallback_errors": [
+      "HTTP 508 from https://tle.ivanstanojevic.me/api/tle/25544: \n<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<HTML><HEAD>\n<TITLE> 508 Resource Limit Is Reached</TITLE>\n</HEAD><BODY>\n<H1>Resource Limit Is Reached</H1>\nThe website is temporarily unable to service your request as it exceeded resource limit.\nPlease try again later.\n</BODY></HTML>\n"
+    ],
+    "http_status": 200,
+    "line1": "1 25544U 98067A   26301.46699108  .00005372  00000+0  10526-3 0  9998",
+    "line2": "2 25544  51.6335   0.5562 0007038 319.9799  40.0670 15.49088092592412",
+    "name": "ISS (ZARYA)",
+    "norad": 25544,
+    "raw": "ISS (ZARYA)             \r\n1 25544U 98067A   26301.46699108  .00005372  00000+0  10526-3 0  9998\r\n2 25544  51.6335   0.5562 0007038 319.9799  40.0670 15.49088092592412\r\n",
+    "raw_sha256": "13a80d559843773af66a12a91ad4785c872e547b8488346315cd1d6ea093060e",
+    "source": "CelesTrak GP (fallback)",
+    "url": "https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=TLE"
+  },
+  "tle_age_days": 0.97,
+  "tle_stale": false
+}

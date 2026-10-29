@@ -1,11 +1,14 @@
 {
   "runs": [
     {
+      "carried_over": [],
       "frames": [
         {
+          "attempt": 1,
           "bytes": 699,
           "cmd_id": "C05",
           "counter": 2,
+          "counter_gap": null,
           "name": "Collision-avoidance burn",
           "reason": "OK",
           "steps": [
@@ -15,7 +18,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 4.3
+              "us": 11.4
             },
             {
               "detail": "699 B, body 17 B",
@@ -23,7 +26,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 20.2
+              "us": 52.5
             },
             {
               "detail": "sat_id=42",
@@ -31,7 +34,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 1.7
+              "us": 4.7
             },
             {
               "detail": "600 s remaining",
@@ -39,7 +42,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 1.2
+              "us": 3.9
             },
             {
               "detail": "2 > 1",
@@ -47,15 +50,15 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 1.6
+              "us": 4.3
             },
             {
-              "detail": "valid (Falcon-padded-512, 67 us)",
+              "detail": "valid (Falcon-padded-512, 216 us)",
               "label": "Falcon signature over frame + pass nonce",
               "name": "signature",
               "status": "pass",
               "step": 4,
-              "us": 76.2
+              "us": 243.5
             },
             {
               "detail": "ADMIN -> ORBIT_BURN",
@@ -63,15 +66,17 @@
               "name": "role",
               "status": "pass",
               "step": 5,
-              "us": 6.2
+              "us": 16.4
             }
           ],
           "verdict": "ACCEPT"
         },
         {
+          "attempt": 1,
           "bytes": 684,
           "cmd_id": "C01",
           "counter": 3,
+          "counter_gap": null,
           "name": "Exit safe mode",
           "reason": "OK",
           "steps": [
@@ -81,7 +86,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 5.1
+              "us": 9.7
             },
             {
               "detail": "684 B, body 2 B",
@@ -89,7 +94,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 55.2
+              "us": 57.5
             },
             {
               "detail": "sat_id=42",
@@ -97,7 +102,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 2.9
+              "us": 5.4
             },
             {
               "detail": "600 s remaining",
@@ -105,7 +110,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 1.9
+              "us": 4.4
             },
             {
               "detail": "3 > 2",
@@ -113,15 +118,15 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 2.3
+              "us": 4.8
             },
             {
-              "detail": "valid (Falcon-padded-512, 112 us)",
+              "detail": "valid (Falcon-padded-512, 232 us)",
               "label": "Falcon signature over frame + pass nonce",
               "name": "signature",
               "status": "pass",
               "step": 4,
-              "us": 128.3
+              "us": 262.1
             },
             {
               "detail": "ADMIN -> SET_SAFE_MODE",
@@ -129,15 +134,17 @@
               "name": "role",
               "status": "pass",
               "step": 5,
-              "us": 8.1
+              "us": 18.3
             }
           ],
           "verdict": "ACCEPT"
         },
         {
+          "attempt": 1,
           "bytes": 685,
           "cmd_id": "C02",
           "counter": 4,
+          "counter_gap": null,
           "name": "Point nadir",
           "reason": "OK",
           "steps": [
@@ -147,7 +154,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 4.0
+              "us": 10.9
             },
             {
               "detail": "685 B, body 3 B",
@@ -155,7 +162,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 20.6
+              "us": 78.1
             },
             {
               "detail": "sat_id=42",
@@ -163,7 +170,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 2.0
+              "us": 12.2
             },
             {
               "detail": "600 s remaining",
@@ -171,7 +178,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 1.4
+              "us": 7.5
             },
             {
               "detail": "4 > 3",
@@ -179,15 +186,15 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 1.4
+              "us": 8.3
             },
             {
-              "detail": "valid (Falcon-padded-512, 67 us)",
+              "detail": "valid (Falcon-padded-512, 283 us)",
               "label": "Falcon signature over frame + pass nonce",
               "name": "signature",
               "status": "pass",
               "step": 4,
-              "us": 75.9
+              "us": 332.8
             },
             {
               "detail": "OPERATOR -> SET_ATTITUDE_MODE",
@@ -195,15 +202,17 @@
               "name": "role",
               "status": "pass",
               "step": 5,
-              "us": 5.0
+              "us": 17.8
             }
           ],
           "verdict": "ACCEPT"
         },
         {
+          "attempt": 1,
           "bytes": 695,
           "cmd_id": "C11",
           "counter": 5,
+          "counter_gap": null,
           "name": "Image target B (wildfire)",
           "reason": "OK",
           "steps": [
@@ -213,7 +222,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 4.6
+              "us": 7.8
             },
             {
               "detail": "695 B, body 13 B",
@@ -221,7 +230,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 36.6
+              "us": 57.4
             },
             {
               "detail": "sat_id=42",
@@ -229,7 +238,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 3.5
+              "us": 5.0
             },
             {
               "detail": "600 s remaining",
@@ -237,7 +246,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 2.5
+              "us": 4.8
             },
             {
               "detail": "5 > 4",
@@ -245,15 +254,15 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 2.8
+              "us": 4.7
             },
             {
-              "detail": "valid (Falcon-padded-512, 136 us)",
+              "detail": "valid (Falcon-padded-512, 234 us)",
               "label": "Falcon signature over frame + pass nonce",
               "name": "signature",
               "status": "pass",
               "step": 4,
-              "us": 153.4
+              "us": 264.8
             },
             {
               "detail": "OPERATOR -> CAPTURE_IMAGE",
@@ -261,47 +270,56 @@
               "name": "role",
               "status": "pass",
               "step": 5,
-              "us": 8.2
+              "us": 14.8
             }
           ],
           "verdict": "ACCEPT"
         }
       ],
       "link": {
-        "budget_bytes": 3600,
+        "budget_bytes": 3982,
         "frames_sent": 5,
         "hostile_bytes": 0,
         "hostile_frames": 0,
+        "loss_model": {
+          "drop_first_tx_of": [],
+          "random_rate": 0.0
+        },
+        "lost": 0,
         "pass": 1,
         "refused": 0,
-        "remaining_bytes": 122,
+        "remaining_bytes": 504,
         "used_bytes": 3478,
         "window_id": 1
       },
+      "loss_model": null,
       "nonce": {
-        "counts_sha256": "f2a31b67d95534148e58392dad3adbeda681c311213c9692da4d2dbd348150de",
+        "counts_sha256": "47b2f908fc797deca53d83fa31998bc645eaf6b43825e223b6c865a83bdc6eca",
         "device": "QpiAI-QSV-Local",
         "job_id": null,
-        "nonce": "10163f6ad4be779c6af8996f2ea580c55cb543ce61a48510dc09d468af9b9feb",
-        "os_entropy_hex": "57e35b94b5e8a88b79ba0c5cc5846ae28bd0e92e64701eecf61a9fcb2448217b",
+        "nonce": "1fcbdaf9fc3899117ef3b7e6355cb193e410ad35d01980b40b92d99b6576cd2a",
+        "os_entropy_hex": "d010482fc78a6887be581e299170308e3171fae9426f23568c36b3d0fc8793d8",
         "pass": 1,
-        "qrng_file": "qrng_20261029T072620Z_local_369259.json",
+        "qrng_file": "qrng_20261029T103728Z_local_b70240.json",
         "randomness_class": "qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
         "source": "SHA-256(OS 32 B || QCloud counts digest || job_id || pass)",
-        "time_utc": "2026-10-29T07:27:07.307314+00:00"
+        "time_utc": "2026-10-29T10:40:55.682113+00:00"
       },
       "pass": 1,
       "plan_execution_mode": "local",
       "plan_job_id": null,
-      "time_utc": "2026-10-29T07:27:07.805375+00:00",
+      "time_utc": "2026-10-29T10:40:56.419662+00:00",
       "window": 1
     },
     {
+      "carried_over": [],
       "frames": [
         {
+          "attempt": 1,
           "bytes": 695,
           "cmd_id": "C03",
           "counter": 7,
+          "counter_gap": null,
           "name": "Image target A (flood zone)",
           "reason": "OK",
           "steps": [
@@ -311,7 +329,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 8.6
+              "us": 11.8
             },
             {
               "detail": "695 B, body 13 B",
@@ -319,7 +337,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 57.6
+              "us": 80.7
             },
             {
               "detail": "sat_id=42",
@@ -327,7 +345,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 3.4
+              "us": 6.3
             },
             {
               "detail": "600 s remaining",
@@ -335,7 +353,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 2.6
+              "us": 5.7
             },
             {
               "detail": "7 > 6",
@@ -343,15 +361,15 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 2.5
+              "us": 4.7
             },
             {
-              "detail": "valid (Falcon-padded-512, 130 us)",
+              "detail": "valid (Falcon-padded-512, 242 us)",
               "label": "Falcon signature over frame + pass nonce",
               "name": "signature",
               "status": "pass",
               "step": 4,
-              "us": 147.6
+              "us": 275.2
             },
             {
               "detail": "OPERATOR -> CAPTURE_IMAGE",
@@ -359,15 +377,17 @@
               "name": "role",
               "status": "pass",
               "step": 5,
-              "us": 7.8
+              "us": 16.4
             }
           ],
           "verdict": "ACCEPT"
         },
         {
+          "attempt": 1,
           "bytes": 691,
           "cmd_id": "C04",
           "counter": 8,
+          "counter_gap": null,
           "name": "Downlink image A",
           "reason": "OK",
           "steps": [
@@ -377,7 +397,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 3.5
+              "us": 12.2
             },
             {
               "detail": "691 B, body 9 B",
@@ -385,7 +405,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 27.5
+              "us": 87.9
             },
             {
               "detail": "sat_id=42",
@@ -393,7 +413,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 2.2
+              "us": 5.3
             },
             {
               "detail": "600 s remaining",
@@ -401,7 +421,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 1.6
+              "us": 5.7
             },
             {
               "detail": "8 > 7",
@@ -409,15 +429,15 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 1.8
+              "us": 4.6
             },
             {
-              "detail": "valid (Falcon-padded-512, 73 us)",
+              "detail": "valid (Falcon-padded-512, 239 us)",
               "label": "Falcon signature over frame + pass nonce",
               "name": "signature",
               "status": "pass",
               "step": 4,
-              "us": 84.1
+              "us": 271.9
             },
             {
               "detail": "OPERATOR -> DOWNLINK_DATA",
@@ -425,15 +445,17 @@
               "name": "role",
               "status": "pass",
               "step": 5,
-              "us": 5.2
+              "us": 15.8
             }
           ],
           "verdict": "ACCEPT"
         },
         {
+          "attempt": 1,
           "bytes": 685,
           "cmd_id": "C06",
           "counter": 9,
+          "counter_gap": null,
           "name": "Battery heater set-point",
           "reason": "OK",
           "steps": [
@@ -443,7 +465,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 3.3
+              "us": 10.7
             },
             {
               "detail": "685 B, body 3 B",
@@ -451,7 +473,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 25.0
+              "us": 74.7
             },
             {
               "detail": "sat_id=42",
@@ -459,15 +481,15 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 1.8
+              "us": 6.2
             },
             {
-              "detail": "600 s remaining",
+              "detail": "599 s remaining",
               "label": "Not expired",
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 1.4
+              "us": 5.9
             },
             {
               "detail": "9 > 8",
@@ -475,15 +497,15 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 1.8
+              "us": 5.4
             },
             {
-              "detail": "valid (Falcon-padded-512, 71 us)",
+              "detail": "valid (Falcon-padded-512, 322 us)",
               "label": "Falcon signature over frame + pass nonce",
               "name": "signature",
               "status": "pass",
               "step": 4,
-              "us": 80.3
+              "us": 366.4
             },
             {
               "detail": "OPERATOR -> SET_HEATER",
@@ -491,15 +513,17 @@
               "name": "role",
               "status": "pass",
               "step": 5,
-              "us": 4.8
+              "us": 18.7
             }
           ],
           "verdict": "ACCEPT"
         },
         {
+          "attempt": 1,
           "bytes": 695,
           "cmd_id": "C13",
           "counter": 10,
+          "counter_gap": null,
           "name": "Image target C (glacier)",
           "reason": "OK",
           "steps": [
@@ -509,7 +533,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 6.1
+              "us": 10.0
             },
             {
               "detail": "695 B, body 13 B",
@@ -517,7 +541,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 36.3
+              "us": 71.5
             },
             {
               "detail": "sat_id=42",
@@ -525,7 +549,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 3.2
+              "us": 6.0
             },
             {
               "detail": "600 s remaining",
@@ -533,7 +557,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 2.4
+              "us": 3.9
             },
             {
               "detail": "10 > 9",
@@ -541,15 +565,15 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 2.6
+              "us": 4.5
             },
             {
-              "detail": "valid (Falcon-padded-512, 146 us)",
+              "detail": "valid (Falcon-padded-512, 209 us)",
               "label": "Falcon signature over frame + pass nonce",
               "name": "signature",
               "status": "pass",
               "step": 4,
-              "us": 161.7
+              "us": 233.8
             },
             {
               "detail": "OPERATOR -> CAPTURE_IMAGE",
@@ -557,179 +581,94 @@
               "name": "role",
               "status": "pass",
               "step": 5,
-              "us": 7.9
+              "us": 12.9
             }
           ],
           "verdict": "ACCEPT"
         }
       ],
       "link": {
-        "budget_bytes": 3600,
+        "budget_bytes": 3700,
         "frames_sent": 5,
         "hostile_bytes": 0,
         "hostile_frames": 0,
+        "loss_model": {
+          "drop_first_tx_of": [],
+          "random_rate": 0.0
+        },
+        "lost": 0,
         "pass": 2,
         "refused": 0,
-        "remaining_bytes": 119,
+        "remaining_bytes": 219,
         "used_bytes": 3481,
         "window_id": 2
       },
+      "loss_model": null,
       "nonce": {
-        "counts_sha256": "4b9aca0f8d79b2d9a728cbe538839fb15c93f25038c1759a2d4064ee062bef00",
+        "counts_sha256": "9f0b3cd87692d6e5a47dce2a0d1d451244907acc9dfca4907b78d20f095d3dd3",
         "device": "QpiAI-QSV-Local",
         "job_id": null,
-        "nonce": "263360ee624f3b8e6a191cb69f1961d55a37dc919e5716da2ebad608180d117a",
-        "os_entropy_hex": "63a6e36f55b2b77820339b28545b36a67901db219bacaf8a671e3726da0419f6",
+        "nonce": "225ac5059ee4a6255097bc52977c1f19b0ed2a3b0cfb50b887d76abce6e40e03",
+        "os_entropy_hex": "3ceece98127ea26096a94f2e6fc1c99628f21ec486432d441b238182da2417f9",
         "pass": 2,
-        "qrng_file": "qrng_20261029T072621Z_local_b6e247.json",
+        "qrng_file": "qrng_20261029T103731Z_local_87e982.json",
         "randomness_class": "qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
         "source": "SHA-256(OS 32 B || QCloud counts digest || job_id || pass)",
-        "time_utc": "2026-10-29T07:27:07.933442+00:00"
+        "time_utc": "2026-10-29T10:40:56.551841+00:00"
       },
       "pass": 2,
       "plan_execution_mode": "local",
       "plan_job_id": null,
-      "time_utc": "2026-10-29T07:27:08.428842+00:00",
+      "time_utc": "2026-10-29T10:40:57.203427+00:00",
       "window": 2
     },
     {
+      "carried_over": [
+        {
+          "cmd_id": "C09",
+          "deadline_pass": 4,
+          "name": "Reboot ADCS after patch",
+          "reason": "no budget left in pass 3 (252 B < 684 B)"
+        }
+      ],
       "frames": [
         {
+          "attempt": 1,
           "bytes": 714,
           "cmd_id": "C07",
           "counter": 12,
           "name": "Firmware patch chunk 1/2",
-          "reason": "OK",
-          "steps": [
-            {
-              "detail": "0/8",
-              "label": "Flood guard below limit",
-              "name": "flood_guard",
-              "status": "pass",
-              "step": 0,
-              "us": 2.9
-            },
-            {
-              "detail": "714 B, body 32 B",
-              "label": "Frame well-formed",
-              "name": "parse",
-              "status": "pass",
-              "step": null,
-              "us": 22.9
-            },
-            {
-              "detail": "sat_id=42",
-              "label": "Satellite ID matches",
-              "name": "sat_id",
-              "status": "pass",
-              "step": 1,
-              "us": 2.2
-            },
-            {
-              "detail": "600 s remaining",
-              "label": "Not expired",
-              "name": "expiry",
-              "status": "pass",
-              "step": 2,
-              "us": 1.3
-            },
-            {
-              "detail": "12 > 11",
-              "label": "Counter > last accepted",
-              "name": "counter",
-              "status": "pass",
-              "step": 3,
-              "us": 1.3
-            },
-            {
-              "detail": "valid (Falcon-padded-512, 71 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
-              "status": "pass",
-              "step": 4,
-              "us": 80.1
-            },
-            {
-              "detail": "ADMIN -> PATCH_FIRMWARE",
-              "label": "Opcode allowed for key role",
-              "name": "role",
-              "status": "pass",
-              "step": 5,
-              "us": 4.4
-            }
-          ],
-          "verdict": "ACCEPT"
+          "reason": "ACK_TIMEOUT",
+          "verdict": "NO_ACK"
         },
         {
-          "bytes": 714,
           "cmd_id": "C08",
-          "counter": 13,
           "name": "Firmware patch chunk 2/2",
-          "reason": "OK",
-          "steps": [
-            {
-              "detail": "0/8",
-              "label": "Flood guard below limit",
-              "name": "flood_guard",
-              "status": "pass",
-              "step": 0,
-              "us": 5.5
-            },
-            {
-              "detail": "714 B, body 32 B",
-              "label": "Frame well-formed",
-              "name": "parse",
-              "status": "pass",
-              "step": null,
-              "us": 40.7
-            },
-            {
-              "detail": "sat_id=42",
-              "label": "Satellite ID matches",
-              "name": "sat_id",
-              "status": "pass",
-              "step": 1,
-              "us": 3.6
-            },
-            {
-              "detail": "600 s remaining",
-              "label": "Not expired",
-              "name": "expiry",
-              "status": "pass",
-              "step": 2,
-              "us": 2.9
-            },
-            {
-              "detail": "13 > 12",
-              "label": "Counter > last accepted",
-              "name": "counter",
-              "status": "pass",
-              "step": 3,
-              "us": 2.9
-            },
-            {
-              "detail": "valid (Falcon-padded-512, 157 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
-              "status": "pass",
-              "step": 4,
-              "us": 175.4
-            },
-            {
-              "detail": "ADMIN -> PATCH_FIRMWARE",
-              "label": "Opcode allowed for key role",
-              "name": "role",
-              "status": "pass",
-              "step": 5,
-              "us": 8.3
-            }
-          ],
-          "verdict": "ACCEPT"
+          "reason": "WAITING_FOR_DEPENDENCY",
+          "verdict": "HELD",
+          "waiting_for": [
+            "C07"
+          ]
         },
         {
+          "cmd_id": "C09",
+          "name": "Reboot ADCS after patch",
+          "reason": "WAITING_FOR_DEPENDENCY",
+          "verdict": "HELD",
+          "waiting_for": [
+            "C08"
+          ]
+        },
+        {
+          "attempt": 1,
           "bytes": 689,
           "cmd_id": "C12",
-          "counter": 14,
+          "counter": 13,
+          "counter_gap": {
+            "count": 1,
+            "from": 12,
+            "to": 12
+          },
           "name": "Housekeeping downlink",
           "reason": "OK",
           "steps": [
@@ -739,7 +678,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 3.8
+              "us": 7.1
             },
             {
               "detail": "689 B, body 7 B",
@@ -747,7 +686,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 29.1
+              "us": 51.9
             },
             {
               "detail": "sat_id=42",
@@ -755,7 +694,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 2.3
+              "us": 3.9
             },
             {
               "detail": "600 s remaining",
@@ -763,23 +702,23 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 2.0
+              "us": 4.1
             },
             {
-              "detail": "14 > 13",
+              "detail": "13 > 11",
               "label": "Counter > last accepted",
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 2.0
+              "us": 4.5
             },
             {
-              "detail": "valid (Falcon-padded-512, 105 us)",
+              "detail": "valid (Falcon-padded-512, 215 us)",
               "label": "Falcon signature over frame + pass nonce",
               "name": "signature",
               "status": "pass",
               "step": 4,
-              "us": 116.2
+              "us": 238.7
             },
             {
               "detail": "OPERATOR -> DOWNLINK_DATA",
@@ -787,47 +726,197 @@
               "name": "role",
               "status": "pass",
               "step": 5,
-              "us": 6.0
+              "us": 12.4
+            }
+          ],
+          "verdict": "ACCEPT"
+        },
+        {
+          "attempt": 2,
+          "bytes": 714,
+          "cmd_id": "C07",
+          "counter": 14,
+          "counter_gap": null,
+          "name": "Firmware patch chunk 1/2",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 7.1
+            },
+            {
+              "detail": "714 B, body 32 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 49.2
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 4.4
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 3.6
+            },
+            {
+              "detail": "14 > 13",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 4.1
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 209 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 234.6
+            },
+            {
+              "detail": "ADMIN -> PATCH_FIRMWARE",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 16.8
+            }
+          ],
+          "verdict": "ACCEPT"
+        },
+        {
+          "attempt": 1,
+          "bytes": 714,
+          "cmd_id": "C08",
+          "counter": 15,
+          "counter_gap": null,
+          "name": "Firmware patch chunk 2/2",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 7.0
+            },
+            {
+              "detail": "714 B, body 32 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 49.4
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 3.8
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 3.4
+            },
+            {
+              "detail": "15 > 14",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 3.8
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 208 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 230.5
+            },
+            {
+              "detail": "ADMIN -> PATCH_FIRMWARE",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 11.6
             }
           ],
           "verdict": "ACCEPT"
         }
       ],
       "link": {
-        "budget_bytes": 2900,
-        "frames_sent": 4,
+        "budget_bytes": 3798,
+        "frames_sent": 5,
         "hostile_bytes": 0,
         "hostile_frames": 0,
+        "loss_model": {
+          "drop_first_tx_of": [],
+          "random_rate": 0.0
+        },
+        "lost": 1,
         "pass": 3,
         "refused": 0,
-        "remaining_bytes": 68,
-        "used_bytes": 2832,
+        "remaining_bytes": 252,
+        "used_bytes": 3546,
         "window_id": 3
       },
+      "loss_model": {
+        "drop_first_tx_of": [
+          "C07"
+        ],
+        "random_rate": 0.0
+      },
       "nonce": {
-        "counts_sha256": "e689b92e37ce3ddadc13a6accc97f310d640455481215643dab1c41d9f10d6b4",
+        "counts_sha256": "678bbc5b1e8479d530699a9c8e5c89b45eecf5496a52be1f4d04df3a5f7ee1c5",
         "device": "QpiAI-QSV-Local",
         "job_id": null,
-        "nonce": "1836cc456a6f33ba76ba88754475be3eb806ae4b22789f6c3995cc466171caae",
-        "os_entropy_hex": "aeebc1a1133400a2952e00531d02a357609b3fb8bf4dd79bd6737c0dfcad1d5b",
+        "nonce": "10eb51c4aa24cea5aa321c86646629012683ec408a64c88ce4ba525b81e17a08",
+        "os_entropy_hex": "f16dbfaadc881a75088afd19dd7d48084dc57e636164df693d794f1b48561f90",
         "pass": 3,
-        "qrng_file": "qrng_20261029T072621Z_local_644cba.json",
+        "qrng_file": "qrng_20261029T103731Z_local_2678c6.json",
         "randomness_class": "qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
         "source": "SHA-256(OS 32 B || QCloud counts digest || job_id || pass)",
-        "time_utc": "2026-10-29T07:27:08.545541+00:00"
+        "time_utc": "2026-10-29T10:40:57.342221+00:00"
       },
       "pass": 3,
       "plan_execution_mode": "local",
       "plan_job_id": null,
-      "time_utc": "2026-10-29T07:27:08.943366+00:00",
+      "time_utc": "2026-10-29T10:40:57.980778+00:00",
       "window": 3
     },
     {
+      "carried_over": [],
       "frames": [
         {
+          "attempt": 1,
           "bytes": 684,
           "cmd_id": "C09",
-          "counter": 16,
+          "counter": 17,
+          "counter_gap": null,
           "name": "Reboot ADCS after patch",
           "reason": "OK",
           "steps": [
@@ -837,7 +926,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 2.9
+              "us": 7.9
             },
             {
               "detail": "684 B, body 2 B",
@@ -845,7 +934,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 22.9
+              "us": 53.3
             },
             {
               "detail": "sat_id=42",
@@ -853,7 +942,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 1.7
+              "us": 4.3
             },
             {
               "detail": "600 s remaining",
@@ -861,23 +950,23 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 1.2
+              "us": 3.8
             },
             {
-              "detail": "16 > 15",
+              "detail": "17 > 16",
               "label": "Counter > last accepted",
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 1.4
+              "us": 4.1
             },
             {
-              "detail": "valid (Falcon-padded-512, 69 us)",
+              "detail": "valid (Falcon-padded-512, 248 us)",
               "label": "Falcon signature over frame + pass nonce",
               "name": "signature",
               "status": "pass",
               "step": 4,
-              "us": 77.3
+              "us": 273.5
             },
             {
               "detail": "ADMIN -> REBOOT_SUBSYSTEM",
@@ -885,15 +974,17 @@
               "name": "role",
               "status": "pass",
               "step": 5,
-              "us": 4.5
+              "us": 13.0
             }
           ],
           "verdict": "ACCEPT"
         },
         {
+          "attempt": 1,
           "bytes": 685,
           "cmd_id": "C14",
-          "counter": 17,
+          "counter": 18,
+          "counter_gap": null,
           "name": "Sun-pointing for charge",
           "reason": "OK",
           "steps": [
@@ -903,7 +994,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 3.4
+              "us": 9.8
             },
             {
               "detail": "685 B, body 3 B",
@@ -911,7 +1002,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 26.0
+              "us": 74.1
             },
             {
               "detail": "sat_id=42",
@@ -919,7 +1010,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 1.7
+              "us": 7.0
             },
             {
               "detail": "600 s remaining",
@@ -927,23 +1018,23 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 1.2
+              "us": 6.2
             },
             {
-              "detail": "17 > 16",
+              "detail": "18 > 17",
               "label": "Counter > last accepted",
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 1.8
+              "us": 6.9
             },
             {
-              "detail": "valid (Falcon-padded-512, 64 us)",
+              "detail": "valid (Falcon-padded-512, 349 us)",
               "label": "Falcon signature over frame + pass nonce",
               "name": "signature",
               "status": "pass",
               "step": 4,
-              "us": 73.1
+              "us": 394.9
             },
             {
               "detail": "OPERATOR -> SET_ATTITUDE_MODE",
@@ -951,39 +1042,45 @@
               "name": "role",
               "status": "pass",
               "step": 5,
-              "us": 4.0
+              "us": 19.1
             }
           ],
           "verdict": "ACCEPT"
         }
       ],
       "link": {
-        "budget_bytes": 2200,
+        "budget_bytes": 2621,
         "frames_sent": 3,
         "hostile_bytes": 0,
         "hostile_frames": 0,
+        "loss_model": {
+          "drop_first_tx_of": [],
+          "random_rate": 0.0
+        },
+        "lost": 0,
         "pass": 4,
         "refused": 0,
-        "remaining_bytes": 116,
+        "remaining_bytes": 537,
         "used_bytes": 2084,
         "window_id": 4
       },
+      "loss_model": null,
       "nonce": {
-        "counts_sha256": "d581a3c2d087bf84b45a16e426d1b1f9e8f2aa17050c616cfad81c0e461a1d7f",
+        "counts_sha256": "66bda37fb8b6ea8e4d6cde7be8af87d1e220ec89945e93de4b49641fd9ce181e",
         "device": "QpiAI-QSV-Local",
         "job_id": null,
-        "nonce": "4d7738de8959ed6e0daa2a7cc9ee0b0bbf9f573fb4e6b467747cf81370a2bbb2",
-        "os_entropy_hex": "29f70b3d98aabfaa60fbc573d17b12287e31d3fa8df6e2ee6468e184076326d2",
+        "nonce": "d5efc0f974db297fda39587cd7e5e2f80e551fcec72c29db04b45d40af5f7b6d",
+        "os_entropy_hex": "37eb6f1ec839dfb9e7c863d9481a84cfb814295d2932b5c10f96a8ad78cdc975",
         "pass": 4,
-        "qrng_file": "qrng_20261029T072621Z_local_a6f878.json",
+        "qrng_file": "qrng_20261029T103731Z_local_a6328a.json",
         "randomness_class": "qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
         "source": "SHA-256(OS 32 B || QCloud counts digest || job_id || pass)",
-        "time_utc": "2026-10-29T07:27:09.061237+00:00"
+        "time_utc": "2026-10-29T10:40:58.523515+00:00"
       },
       "pass": 4,
       "plan_execution_mode": "local",
       "plan_job_id": null,
-      "time_utc": "2026-10-29T07:27:09.375232+00:00",
+      "time_utc": "2026-10-29T10:40:58.927615+00:00",
       "window": 4
     }
   ]

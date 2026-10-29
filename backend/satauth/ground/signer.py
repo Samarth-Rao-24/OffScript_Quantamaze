@@ -7,6 +7,8 @@ DOMAIN_TAG || header || command || pass nonce.
 
 from __future__ import annotations
 
+from collections import OrderedDict
+
 import threading
 import time
 from pathlib import Path
@@ -51,6 +53,9 @@ class Signer:
         self.default_expiry_s = default_expiry_s
         self.counter = GroundCounter(self.data_dir / "ground" / "counter.json")
         self._sk_cache: dict[str, bytes] = {}
+        # counters this ground station assigned in this session (bounded), used to
+        # reconcile the satellite's counter-gap reports
+        self.issued: OrderedDict[int, dict] = OrderedDict()
 
     def _sk(self, role: str) -> bytes:
         if role not in self._sk_cache:
@@ -83,6 +88,10 @@ class Signer:
         sid = self.sat_id if sat_id is None else sat_id
         exp = int(now) + self.default_expiry_s if expiry is None else int(expiry)
         ctr = self.counter.next() if counter is None else int(counter)
+        if counter is None:
+            self.issued[ctr] = {"role": role, "opcode": command[0], "time": now}
+            while len(self.issued) > 5000:
+                self.issued.popitem(last=False)
         header = pack_header(FRAME_VERSION, sid, kid, len(command), ctr, exp)
         sk = self._sk(role) if secret_key is None else secret_key
         sig = crypto.sign(sk, signed_message(header, command, pass_nonce))

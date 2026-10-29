@@ -125,6 +125,52 @@ export default function Evidence() {
         </Panel>
       )}
 
+      <div className="grid gap-5 xl:grid-cols-2">
+        <Panel title="NASA data pulls" aside={`${ev?.nasa_pulls?.length ?? 0} pull${ev?.nasa_pulls?.length === 1 ? "" : "s"}`}>
+          <JobsTable
+            rows={ev?.nasa_pulls ?? []}
+            empty="No NASA pull yet. Fetch pass windows in the pass planner."
+            cols={[
+              ["When", (r: Json) => <span className="text-mute">{r.created_utc?.slice(0, 16).replace("T", " ")}</span>],
+              ["Orbit", (r: Json) => <span>{r.spacecraft}</span>],
+              ["TLE epoch", (r: Json) => <span className="text-mute">{r.tle_epoch_utc?.slice(0, 16).replace("T", " ")}</span>],
+              ["Budgets (B)", (r: Json) => <span className="tabular-nums">{(r.budgets ?? []).join(" / ")}</span>],
+              ["Weather ×", (r: Json) => <span className="tabular-nums">{r.space_weather_factor ?? "—"}</span>],
+            ]}
+            onOpen={open}
+          />
+        </Panel>
+        <Panel title="Link alerts (missing packets)" aside={`${ev?.alerts?.length ?? 0} alert${ev?.alerts?.length === 1 ? "" : "s"}`}>
+          <div className="max-h-72 overflow-y-auto">
+            <table className="data w-full text-sm">
+              <thead>
+                <tr>
+                  <th>When (UTC)</th>
+                  <th>Kind</th>
+                  <th>Message</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(ev?.alerts ?? []).length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="text-mute">
+                      No alerts. Run a packet-loss drill on the live uplink screen.
+                    </td>
+                  </tr>
+                )}
+                {(ev?.alerts ?? []).slice(0, 60).map((a: Json) => (
+                  <tr key={a.id}>
+                    <td className="whitespace-nowrap text-mute">{a.time_utc?.slice(11, 19)}</td>
+                    <td className={`whitespace-nowrap font-semibold ${a.severity === "info" ? "" : "text-caution"}`}>{a.kind}</td>
+                    <td>{a.message}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Panel>
+      </div>
+
       <Panel
         title="Onboard accept / reject log"
         aside={

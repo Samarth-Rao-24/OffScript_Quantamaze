@@ -1,6 +1,6 @@
 {
-  "created_utc": "2026-10-29T07:27:10.067791+00:00",
-  "elapsed_s": 0.614,
+  "created_utc": "2026-10-29T10:40:59.909688+00:00",
+  "elapsed_s": 0.825,
   "input": {
     "cases": [
       {
@@ -89,23 +89,23 @@
   "results": [
     {
       "built": {
-        "counter": 18,
+        "counter": 19,
         "counter_source": "next ground counter",
-        "expiry": 1793259429,
+        "expiry": 1793271059,
         "key": "ground OPERATOR key",
         "key_id": 1,
         "mutations": [],
-        "nonce_prefix": "4d7738de8959ed6e",
+        "nonce_prefix": "d5efc0f974db297f",
         "opcode_name": "CAPTURE_IMAGE",
         "pass_open_new_nonce": null,
         "sat_id": 42,
         "signed_under": "current pass nonce"
       },
-      "counter_after": 18,
-      "counter_before": 17,
+      "counter_after": 19,
+      "counter_before": 18,
       "description": "Valid operator image capture",
       "expect": "ACCEPT",
-      "frame_hex": "012a010300000000000000126ae2f7a5120b0139e951ac632fd513ab144e665795c9faf85259309699cff1e2a15de25e0142e318c36a1dd723706fee736003a6ce1ae663e7e78d64fc14cdca37d93a91387c9ed7282f8c72399f53a109696be4b0cd1b8acee1be2faef74d29c563605c0f4f8f22c666187ff3bac76a765c3a37834fcd7e61240a92afc03f0e5b0924c6a5a67ed5fb23cafaa8fce31ea4a7311d30c7c7ed3430c96c474e8a4f7a69ed036185eccb9ebdaae7a54e957462898e4151de6f5f47de9679a36f3470d46b0acab78450cd7e335df45c6bceb7cd16841e967940ea4f603c266523d3a1c9b5c3454326e64a78951c293b0aa8e8661e82ad5698edae74fa750304415e19a7db27b07917358bdd8fb1eeca910819a8523a9225d92a727ae77a18c32eacc02f36fd8574f1d034e9c1aeaf2dca65af5f5154d6b8945987af96c9c4c1564c0994b2db8ed9b5d49c6cd59697bbfcfcf7971753407f9683cdab3de501fb938f354d83d13d9fdee2688cc6f2ebe76574492d8d1a5b822f1c667cf04f10e199414d3b3b1bca7e3aba4c626900167f9c45a439f26316c9d1979a720e67d2b586918a8511e263a0d8cef698a2853198adf9983b2d90c532d0622d02a027941d93e718d0a72b1eeb0f478fc416860ef9fe5ae1346dc4b37493358acc597bfc4430dcc85dd7f5a0c548b73aa6a9a22999bf6307f97c3bc80916672017aaa5e508ef51a1479f70cccfb3e8f2a3cad25a1ba60c7e53cc893fed93b71cd97b30392d1fd507f93ae85c3dd97361755e6b5726d62f18abf61f26473267cac4fd6415ebd22f82526e975eef3697f7de6bef784fead92f41cbc9b29ae22b736c5a36d1f073e3653957a449132ac15a6eed0e922ec02a9d87ea6772ed7ee1f3ccaced20955ef2d7d4cc88a755e415e2f02e0fba8f50c34e4c42588000000000000000000000000000",
+      "frame_hex": "012a010300000000000000136ae32513120b013929df199b63ef60d81a100c7ca953668fded6966117e173da36a5acb4d6f96048c77e74ec01727a2d889fcf715431dfc4d2a02f3e557d6a9207688ea85da495c8f6e14dac730059b46cbc3bd6a3a354369e829953326409e185bb0894d98dd5eac83f5360c29453f4b2f16e18353f2ed46322682984277c1b4ac0de470536dbb066698d592dc8e5a50cfc35be9bb5cd36e8d36209aa4a74f0e6422f93a3c9b1254b7fbdc594085191b0b4b1d2a191d6a8c88ccbc7ed458626b166f2ee72dc382e2b939067081ae8c39509077ae91133c90fe14223ee0b71a642109e3edd84e7b1e6ad46d7a9cb6d7763efbdc920778f536b8dd441277fbfaa39b761fe7b6d8f815584615bc6ca7b31cb30d1695e48a5ab99f374d20c97219e8f42c9cc7ca83f91cd921ba597b5056385896bd9288256b5c49a457a3e26d1ef0ba08ac50fe376ea26136439838f67e12e4e1b6d3dab5090eaec996380cc759a628702847beff486a246af47e93a69b73aef7230479f6ad2dd23d0638d1a6329065065dfabd6396cb7506f0ded9a2524b0a88ac4c7748cf63527b57c256466e9017f6449cce4c4497b35871265451d3ee5dff71df212675b9dd6ee52bebc0a9da8edcc5a51244d2315aa629b8b75ef30d63b5258923eff2e3cdcd8a4d8343af798737d3f96c599823168fd24a82faf120cc899947fe18a2351a4da4ea0220cc5c7228d7916656bad1296b7d7656d95b8ce253d935dc7b7a43a48b42984d48b36a5c98b3b7eae619ddf89c9f248e58be4cdabc5c1d07c7acb8acec47cd28996b2e0652a53d15f8830648fad687f271698ec05834818be8c055b7d7581e5f15de0c75133fdece294ca4a8582993e1da14261dc5d362ecf3847b9a84f4a16b531ce4ad5fe8f33db791ad6e56c64d746ba22cd627f8dbc000000000000000000000000",
       "frame_len": 685,
       "id": "J1",
       "kind": "compose",
@@ -121,7 +121,7 @@
           "name": "flood_guard",
           "status": "pass",
           "step": 0,
-          "us": 2.3
+          "us": 9.4
         },
         {
           "detail": "685 B, body 3 B",
@@ -129,7 +129,7 @@
           "name": "parse",
           "status": "pass",
           "step": null,
-          "us": 21.8
+          "us": 71.2
         },
         {
           "detail": "sat_id=42",
@@ -137,7 +137,7 @@
           "name": "sat_id",
           "status": "pass",
           "step": 1,
-          "us": 1.4
+          "us": 5.5
         },
         {
           "detail": "600 s remaining",
@@ -145,23 +145,23 @@
           "name": "expiry",
           "status": "pass",
           "step": 2,
-          "us": 1.4
+          "us": 5.5
         },
         {
-          "detail": "18 > 17",
+          "detail": "19 > 18",
           "label": "Counter > last accepted",
           "name": "counter",
           "status": "pass",
           "step": 3,
-          "us": 1.2
+          "us": 5.8
         },
         {
-          "detail": "valid (Falcon-padded-512, 71 us)",
+          "detail": "valid (Falcon-padded-512, 340 us)",
           "label": "Falcon signature over frame + pass nonce",
           "name": "signature",
           "status": "pass",
           "step": 4,
-          "us": 78.3
+          "us": 378.7
         },
         {
           "detail": "OPERATOR -> CAPTURE_IMAGE",
@@ -169,7 +169,7 @@
           "name": "role",
           "status": "pass",
           "step": 5,
-          "us": 4.2
+          "us": 17.4
         }
       ],
       "verdict": "ACCEPT"
@@ -179,11 +179,11 @@
         "mutations": [],
         "replay_of": "J1"
       },
-      "counter_after": 18,
-      "counter_before": 18,
+      "counter_after": 19,
+      "counter_before": 19,
       "description": "Replay J1 unchanged",
       "expect": "E_REPLAY",
-      "frame_hex": "012a010300000000000000126ae2f7a5120b0139e951ac632fd513ab144e665795c9faf85259309699cff1e2a15de25e0142e318c36a1dd723706fee736003a6ce1ae663e7e78d64fc14cdca37d93a91387c9ed7282f8c72399f53a109696be4b0cd1b8acee1be2faef74d29c563605c0f4f8f22c666187ff3bac76a765c3a37834fcd7e61240a92afc03f0e5b0924c6a5a67ed5fb23cafaa8fce31ea4a7311d30c7c7ed3430c96c474e8a4f7a69ed036185eccb9ebdaae7a54e957462898e4151de6f5f47de9679a36f3470d46b0acab78450cd7e335df45c6bceb7cd16841e967940ea4f603c266523d3a1c9b5c3454326e64a78951c293b0aa8e8661e82ad5698edae74fa750304415e19a7db27b07917358bdd8fb1eeca910819a8523a9225d92a727ae77a18c32eacc02f36fd8574f1d034e9c1aeaf2dca65af5f5154d6b8945987af96c9c4c1564c0994b2db8ed9b5d49c6cd59697bbfcfcf7971753407f9683cdab3de501fb938f354d83d13d9fdee2688cc6f2ebe76574492d8d1a5b822f1c667cf04f10e199414d3b3b1bca7e3aba4c626900167f9c45a439f26316c9d1979a720e67d2b586918a8511e263a0d8cef698a2853198adf9983b2d90c532d0622d02a027941d93e718d0a72b1eeb0f478fc416860ef9fe5ae1346dc4b37493358acc597bfc4430dcc85dd7f5a0c548b73aa6a9a22999bf6307f97c3bc80916672017aaa5e508ef51a1479f70cccfb3e8f2a3cad25a1ba60c7e53cc893fed93b71cd97b30392d1fd507f93ae85c3dd97361755e6b5726d62f18abf61f26473267cac4fd6415ebd22f82526e975eef3697f7de6bef784fead92f41cbc9b29ae22b736c5a36d1f073e3653957a449132ac15a6eed0e922ec02a9d87ea6772ed7ee1f3ccaced20955ef2d7d4cc88a755e415e2f02e0fba8f50c34e4c42588000000000000000000000000000",
+      "frame_hex": "012a010300000000000000136ae32513120b013929df199b63ef60d81a100c7ca953668fded6966117e173da36a5acb4d6f96048c77e74ec01727a2d889fcf715431dfc4d2a02f3e557d6a9207688ea85da495c8f6e14dac730059b46cbc3bd6a3a354369e829953326409e185bb0894d98dd5eac83f5360c29453f4b2f16e18353f2ed46322682984277c1b4ac0de470536dbb066698d592dc8e5a50cfc35be9bb5cd36e8d36209aa4a74f0e6422f93a3c9b1254b7fbdc594085191b0b4b1d2a191d6a8c88ccbc7ed458626b166f2ee72dc382e2b939067081ae8c39509077ae91133c90fe14223ee0b71a642109e3edd84e7b1e6ad46d7a9cb6d7763efbdc920778f536b8dd441277fbfaa39b761fe7b6d8f815584615bc6ca7b31cb30d1695e48a5ab99f374d20c97219e8f42c9cc7ca83f91cd921ba597b5056385896bd9288256b5c49a457a3e26d1ef0ba08ac50fe376ea26136439838f67e12e4e1b6d3dab5090eaec996380cc759a628702847beff486a246af47e93a69b73aef7230479f6ad2dd23d0638d1a6329065065dfabd6396cb7506f0ded9a2524b0a88ac4c7748cf63527b57c256466e9017f6449cce4c4497b35871265451d3ee5dff71df212675b9dd6ee52bebc0a9da8edcc5a51244d2315aa629b8b75ef30d63b5258923eff2e3cdcd8a4d8343af798737d3f96c599823168fd24a82faf120cc899947fe18a2351a4da4ea0220cc5c7228d7916656bad1296b7d7656d95b8ce253d935dc7b7a43a48b42984d48b36a5c98b3b7eae619ddf89c9f248e58be4cdabc5c1d07c7acb8acec47cd28996b2e0652a53d15f8830648fad687f271698ec05834818be8c055b7d7581e5f15de0c75133fdece294ca4a8582993e1da14261dc5d362ecf3847b9a84f4a16b531ce4ad5fe8f33db791ad6e56c64d746ba22cd627f8dbc000000000000000000000000",
       "frame_len": 685,
       "id": "J2",
       "kind": "replay",
@@ -199,7 +199,7 @@
           "name": "flood_guard",
           "status": "pass",
           "step": 0,
-          "us": 3.6
+          "us": 9.9
         },
         {
           "detail": "685 B, body 3 B",
@@ -207,7 +207,7 @@
           "name": "parse",
           "status": "pass",
           "step": null,
-          "us": 28.3
+          "us": 70.5
         },
         {
           "detail": "sat_id=42",
@@ -215,7 +215,7 @@
           "name": "sat_id",
           "status": "pass",
           "step": 1,
-          "us": 2.0
+          "us": 5.5
         },
         {
           "detail": "600 s remaining",
@@ -223,15 +223,15 @@
           "name": "expiry",
           "status": "pass",
           "step": 2,
-          "us": 2.1
+          "us": 5.8
         },
         {
-          "detail": "counter 18 <= last accepted 18",
+          "detail": "counter 19 <= last accepted 19",
           "label": "Counter > last accepted",
           "name": "counter",
           "status": "fail",
           "step": 3,
-          "us": 2.4
+          "us": 6.7
         },
         {
           "detail": "",
@@ -254,23 +254,23 @@
     },
     {
       "built": {
-        "counter": 19,
+        "counter": 20,
         "counter_source": "next ground counter",
-        "expiry": 1793259429,
+        "expiry": 1793271059,
         "key": "ground OPERATOR key",
         "key_id": 1,
         "mutations": [],
-        "nonce_prefix": "4d7738de8959ed6e",
+        "nonce_prefix": "d5efc0f974db297f",
         "opcode_name": "ORBIT_BURN",
         "pass_open_new_nonce": null,
         "sat_id": 42,
         "signed_under": "current pass nonce"
       },
-      "counter_after": 18,
-      "counter_before": 18,
+      "counter_after": 19,
+      "counter_before": 19,
       "description": "Operator tries a thruster burn",
       "expect": "E_UNAUTHORIZED",
-      "frame_hex": "012a010500000000000000136ae2f7a5200000000a392cafb561d5e93e95b62c91eb0664f10cc113b67116f5bb0fa783038b0a15cadfc5b94369920a80dd714bd8ec6c761f158fbc32b7c10c3128b294f6e2cde6b5da2f1824babfffaee57bc9e4b96d516898e2d1b5c472903116e1c13e9429455dd663d5d9f531e2cc6eb0429d52e75ed9394d0ed5d179ac79340bae6ba35dc4650120f8ea8b426a9d52354e648f070265329799e4eb239d9232ee8eb485c338e950f2f1e759a3884f69aaef5971d2e3747d1e4340f94c19be3b9a9cc59765750cb52e14888210ace66528b6699e4ba76b442d1f711f734f7c9541120356d8620f1d4e9b2cba5a0b456f106b927f1d97b7bbb76409227ce6d9f66ab20f0aaee39044528d176964d00781cf4fbe2843989bb1b376433e76f9080c930bd4f0e97dbad9f4f73435d0b465cf6219ee2eddb9b2695a463daea1240bbb6012ddf425ae775b0780d4e2395fea03e14bdc16ed16b1239ebfdd37b28127afa1e264a690e82b11ecdf298d143dd25456cef7ec9f14065d35468c11aeefb08ca3bd8911afa5a1818c171cbc2b2739c73b9918fdb08e40367f6ac63ee265941cdca5415bc9342776c771f39cd7bfb29f3d673e915caf2529ba510d2ebbe9643c4e584bbb048d0d42432dd9a0b4bf7a95aab13246493c9061503eda23305769ddbcd349e7c570930bfd2622f6fc2435d4658b2fdb0d33472ee1248a5e224939220656cf8060df5c72bf0c412208c6b53dcc36e526d8cbb0ba8719b2f6fdec86f39d4462157d017e8ba648d140cf228d1e832d24476f8e6dc6cb345859233e5ea8c69735f44c706983f7b876b4b2c74a6549a0388f07c27ecbe10dd6b9b42f06517fe6a82a2afe617d752a3653c914dce13fdb944213c0a6b3089ff9b85d9945662563acee398c74309a6d0ab217aa4470b4b59700b64ba000000000000000000000",
+      "frame_hex": "012a010500000000000000146ae32513200000000a39ed1ebb8088d10ade0bfba6c0d376faddee474b45e8770df340445851bfa1968c77baa3d61c91b2a9175eaf323c213d536bd446b90044eab04e141acb4b29e39d65a3c8459368855c5ab916c12b4a666d5252f73089124781f8a5e973c3dd42cd96011fc275d8f145fe61e95927df5d8038833a9d55a1b5ba261fb6529fd62a590d56a559dcd3aa4221f13c6ef44026dd2ed786b9cae2b08c9f67049e400b3927e47c24fb37650c9be6f7b85932e904dc53ee38d6b91f21d22cab6c83e329767aba1e52f41fbc28b9a76b60620f5e36e8cd6a325dd790d5ae3fe2df242d306a2c1fb1453e4d17c646e3d47329d99a2390e895a688ad1865dd0923b15326a95929b67ede0fc4914aba6cb2f8a1d1143c47192b8ac810620233b5d210852ecf2416a3025736b8e320ecc19b0cc3167262b687e65cb4cf38e72ae4aebe95acc7029a58a70750cdf2fb544e8197e720ca5c646267b866a3086e9d77b90864e0881f37711086e5d8a432d88cff2fb1993472b0cb0cc49a246e4d8f9ac59da3f4db2ace5104c22babec2989caa0068937c7b00da5bceb1cfb213a646f496eb444f271e6ba6cc536d41d71a8a8927ce4ad685233f2149e78ae4378ebae9f64f8ad6c4f7a9acb5e1b2239f7340ebf5d5a24d22c59f08be2db7db3106eb9754e93fb958550e75f77f3a54396387fcbea17ab4d39a657c746e6629ec91afec95224db841bdbae691a5b1f2a64fdbbd073debfd0d19cf76696915af251f52a10a4432fd494aa64c8d3a8bcd71effc344221c09ce9dba8929d1ccc35f8cde93edc626149e2e840d28a52ef9470a1cca9cac34d235058023b61842876aa21d5dae1d2576b827a99a774b5d6fd39b2368435d34a5d0aaf49acea22d1e60ca0e91269afe6bba8dcd46ab4173fa156c118d82b99084000000000000000000000000",
       "frame_len": 687,
       "id": "J3",
       "kind": "compose",
@@ -286,7 +286,7 @@
           "name": "flood_guard",
           "status": "pass",
           "step": 0,
-          "us": 5.1
+          "us": 7.5
         },
         {
           "detail": "687 B, body 5 B",
@@ -294,7 +294,7 @@
           "name": "parse",
           "status": "pass",
           "step": null,
-          "us": 42.3
+          "us": 53.4
         },
         {
           "detail": "sat_id=42",
@@ -302,7 +302,7 @@
           "name": "sat_id",
           "status": "pass",
           "step": 1,
-          "us": 3.1
+          "us": 4.4
         },
         {
           "detail": "600 s remaining",
@@ -310,23 +310,23 @@
           "name": "expiry",
           "status": "pass",
           "step": 2,
-          "us": 3.0
+          "us": 4.3
         },
         {
-          "detail": "19 > 18",
+          "detail": "20 > 19",
           "label": "Counter > last accepted",
           "name": "counter",
           "status": "pass",
           "step": 3,
-          "us": 2.7
+          "us": 4.4
         },
         {
-          "detail": "valid (Falcon-padded-512, 919 us)",
+          "detail": "valid (Falcon-padded-512, 255 us)",
           "label": "Falcon signature over frame + pass nonce",
           "name": "signature",
           "status": "pass",
           "step": 4,
-          "us": 944.1
+          "us": 281.9
         },
         {
           "detail": "OPERATOR may not issue ORBIT_BURN",
@@ -334,32 +334,32 @@
           "name": "role",
           "status": "fail",
           "step": 5,
-          "us": 12.2
+          "us": 14.4
         }
       ],
       "verdict": "REJECT"
     },
     {
       "built": {
-        "counter": 20,
+        "counter": 21,
         "counter_source": "next ground counter",
-        "expiry": 1793259429,
+        "expiry": 1793271059,
         "key": "ground ADMIN key",
         "key_id": 2,
         "mutations": [
           "flipped bit 140 (byte 17)"
         ],
-        "nonce_prefix": "4d7738de8959ed6e",
+        "nonce_prefix": "d5efc0f974db297f",
         "opcode_name": "ORBIT_BURN",
         "pass_open_new_nonce": null,
         "sat_id": 42,
         "signed_under": "current pass nonce"
       },
-      "counter_after": 18,
-      "counter_before": 18,
+      "counter_after": 19,
+      "counter_before": 19,
       "description": "Admin burn, but flip one bit of the body after signing",
       "expect": "E_BAD_SIG",
-      "frame_hex": "012a020500000000000000146ae2f7a5200800000a3921dda2b7bf39c66e1e4dae688751edb0abf6249d05d439f8455b848a7a0a8d4a111f2fe10cf21460139a56f971e7f927e2fa90cea7b9d2f41a0c2b0eabc298ff8edbe68a292d1e2a82699f4b943111a1cb48c13aa7faf42851d2f967dc38dbb4e4693a0c43f5dfc72673adfb2d7281b410ae3e3b6bec87a90f6dcd2e70b3f98bb5fb0643959819875b5a3831a679e00be5b3193c52de4567b0b327a8ca7468a29e6dd2b1315268a8ad84fc6fa095bd6ebce9fab12bf3df71ce6650862331426db49027120dd7d346b9b51c6a84230d678a4d226e9c0edb916df76911edb27151e3c5a7493120c2192d374b6c6495467ecb575c9a9399d4ea2bc98a497cde37668a24b0f7126a0245bfcb3334a657bb6c8ee7583420b3715e74c5e3bb70ac8c8e999878b366d5c899a278a2685158ff69a79cb9b43cbd19958a20da8f579fbc90928dea7597c0ae8e9e1c481ba70114c5b2d6f482df8968b4e44e4dedadea5a06fe65e037f15d6c48efa3293ca4f2375639cc0b76d5925655c1cf69bff6abe44dfd9ae558d733ce6231ea8c1b5e904ed85d7f665b07375d7b84449c6369ec437141e2b6459e2ea9a1f4b5de1ac7974a5a7b83e922d92676bbb5b4a179a7ae267a16b3092ed9aa33f5795864a80425c934c843b4d6b927024c7aaf4916f355784526d35689416838fdb83c1d992a3c18f312fbb4e8e4bf1ac33c545662d1ec8e9cec3315e291c2ecf6e33b3a9cc2510e1c88be21df4e0a116ee54517ec4c764c3106858ac499844613f3a7a9d0aa6fc202570b6d66e5df6af7525adffa17bd7170bd558727cab1739132758fffdaec107327c1eef660b0f199688824c332cb1e3179f5ca58a506ee9799ed46a21133aedcd3d20c3127a6ba999ef3dd7af170cec73b1f71564a57dd2faa903d0a20800000000000000000000000",
+      "frame_hex": "012a020500000000000000156ae32513200800000a393ad6acca2588f6c2c9da324541d5f08525f4c23c8d1756c08504d26c69fa50e1c88d3bab243af2db8a65a05ab8ba6433897175a0cc781eaa8bb4450ae5be757761216f423249d95ffeee18d7abb0250732fecefd2818a65031c90686fc528c5645f425c85b27e5a6ef99885ef511674af7cbc729909dddb4438c9ab1846da6623c85387e35e4698741b2927d023ceda2a5a118aeb7bc3d12cd218621f03d7635b672a7db7f1bab366f65baa6ff082ffbac9a18fbd47f50cb0dbbeaebc67e49248ca54cd8319cb6baf3de878252bd24eb3194704a05e7075e733d69aa489702e1d2934c354c1a0e8f22caca798b79325f49e71162d337979884cb7fa0628e4c5b345756aa837b39edfbf0d8898ef3bbab96adf3a489317d7d4975be1998894ef7fb985d8638264db37f8e5774fdffc686bd9a4ad36b22d6419669a67768e1d797c3815e677a37ed97ae4e465134f666fb634e8480dd66256cca2899d0573b2c4db642333df98f722fc6ad216cd1dfc0329dfd4d776738dfc7585162f891b8d73f9eebb1dc546b157b864ea69948fa3496594e96f910af51e2b2c641ba9b53d9dda9425c28b2f2428b9bc6ef02e1264e8e279ad09ae9cab7c1ebb60dd17653b6a8f6c492b695ee618e77dcbe0c7c6afdb47c148b2af0ccc882a5f97bb572a8f7b20f268a2d0d6717c5e8c0b3461992c7ba9776550da478e688f40ed091632a1e64cb776c446c5d1fe6490489bc2a2a893e4c5dace2cfaa4a52bd4134a9c9f035245f48d4efce3ff76b5ff43975d9e2c4e95bb9525fae064e15bd10935860ac5c00c6ee934c2388702c4f21b7d6b690561499ef725da737e7a93f939f036287c748a251f1c5b3e825906c95c7eb0edaa228a359048e766c3944a9e135f6d404636d7b6649de8633f034e4ccd6f33a580000000000000000000000",
       "frame_len": 687,
       "id": "J4",
       "kind": "compose",
@@ -375,7 +375,7 @@
           "name": "flood_guard",
           "status": "pass",
           "step": 0,
-          "us": 4.9
+          "us": 7.1
         },
         {
           "detail": "687 B, body 5 B",
@@ -383,7 +383,7 @@
           "name": "parse",
           "status": "pass",
           "step": null,
-          "us": 38.4
+          "us": 53.4
         },
         {
           "detail": "sat_id=42",
@@ -391,7 +391,7 @@
           "name": "sat_id",
           "status": "pass",
           "step": 1,
-          "us": 3.2
+          "us": 4.1
         },
         {
           "detail": "600 s remaining",
@@ -399,110 +399,23 @@
           "name": "expiry",
           "status": "pass",
           "step": 2,
-          "us": 2.5
+          "us": 3.8
         },
         {
-          "detail": "20 > 18",
+          "detail": "21 > 19",
           "label": "Counter > last accepted",
           "name": "counter",
           "status": "pass",
           "step": 3,
-          "us": 2.8
+          "us": 4.0
         },
         {
-          "detail": "invalid for key_id 2 under pass nonce 4d7738de8959... (failures 1/8)",
+          "detail": "invalid for key_id 2 under pass nonce d5efc0f974db... (failures 1/8)",
           "label": "Falcon signature over frame + pass nonce",
           "name": "signature",
           "status": "fail",
           "step": 4,
-          "us": 168.9
-        },
-        {
-          "detail": "",
-          "label": "Opcode allowed for key role",
-          "name": "role",
-          "status": "skipped",
-          "step": 5,
-          "us": null
-        }
-      ],
-      "verdict": "REJECT"
-    },
-    {
-      "built": {
-        "counter": 21,
-        "counter_source": "next ground counter",
-        "expiry": 1793259429,
-        "key": "ground OPERATOR key",
-        "key_id": 1,
-        "mutations": [],
-        "nonce_prefix": "4d7738de8959ed6e",
-        "opcode_name": "NOOP_PING",
-        "pass_open_new_nonce": null,
-        "sat_id": 7,
-        "signed_under": "current pass nonce"
-      },
-      "counter_after": 18,
-      "counter_before": 18,
-      "description": "Addressed to satellite 7",
-      "expect": "E_WRONG_SAT",
-      "frame_hex": "0107010100000000000000156ae2f7a51039c34292c8c9b1d06f1fccf6a2f43806a9cea7fec3ffbb8ef3ee9c99c57192b891a55df57f489306bc1e403151e5162e4d5673a8d874f1efe79d5873f47c3a34708e65b3468d16d564299e367df632096faf97bc47e35d94f1854316aaffee0e68bd57ac23535d551e14f241daa0dee4d29b5e59928bb0dccfd49ee28a34ccbacc715232130c901baa14bf4ea8ea51b7091ae06be3f03ae511088514c60bab2e56adf23e7525506b27bd4a8cfd3262b37be3917c6c58941a68db49149a4d7daa439f0dddae956a57351b8e9ebfc068b12ba519c0d794d9a606748fd32fbe1e31d5767c69798b1c4b7e95408972ea3d8831b8751317534da04f2931cc8a87ef5f3916873d40fb10af3701382f90e15d6a560dfb5c745006b14252bc5d888a2a40744b9d5085499d583ab4e5daf0d898e7d70b2f7ca8b4c814231c8a9e9a0465af9b52db36bb7b05c9d2aa33ff06fa7ba444f3d208833f86a5fa16db229863101c27ef04c953a44f938112da21a83307ffc033a612027334c7ef4e6d3b9a5b1777b8828828ca943550e3e01f0cd27e5e3cd58a9163b0a2560792cc952879071b2ee7e262ec131a89d0d0041bd7093699371bba81223ed7d38bfeac9b2b6af894675858a1fa802844fd97d84a0aea4e96ffe50703eb8ec11d8215441526fa2698731ee9521ca6b191eb671a0c9936c3611b407335f53b23f18c23d3ce957aa4ec25ea440b0b7dc75bd8a96b2d26e4d21aa3415e9bce63e40fb887c23cad24229d9e5bdf142392ea3ab2b4459b6752c6b8e948a52dfbce9e7059b41e1519c9369e9ff12e9bc7f62e7c2b6b61cde75b192679a224d845e95acbb2b4470be3b3986c7c1d153dc78866a4883a7973eb5a581eadc296e2cb485a8c4977968cd1f7b679b806a34fa4ac196631d68f6147c480000000000000000000000000",
-      "frame_len": 683,
-      "id": "J5",
-      "kind": "compose",
-      "log_seq": 22,
-      "nv_writes": 0,
-      "outcome": "correct reject",
-      "passed": true,
-      "reason": "E_WRONG_SAT",
-      "steps": [
-        {
-          "detail": "1/8",
-          "label": "Flood guard below limit",
-          "name": "flood_guard",
-          "status": "pass",
-          "step": 0,
-          "us": 4.8
-        },
-        {
-          "detail": "683 B, body 1 B",
-          "label": "Frame well-formed",
-          "name": "parse",
-          "status": "pass",
-          "step": null,
-          "us": 36.5
-        },
-        {
-          "detail": "frame sat_id=7, this spacecraft=42",
-          "label": "Satellite ID matches",
-          "name": "sat_id",
-          "status": "fail",
-          "step": 1,
-          "us": 4.6
-        },
-        {
-          "detail": "",
-          "label": "Not expired",
-          "name": "expiry",
-          "status": "skipped",
-          "step": 2,
-          "us": null
-        },
-        {
-          "detail": "",
-          "label": "Counter > last accepted",
-          "name": "counter",
-          "status": "skipped",
-          "step": 3,
-          "us": null
-        },
-        {
-          "detail": "",
-          "label": "Falcon signature over frame + pass nonce",
-          "name": "signature",
-          "status": "skipped",
-          "step": 4,
-          "us": null
+          "us": 290.9
         },
         {
           "detail": "",
@@ -519,29 +432,29 @@
       "built": {
         "counter": 22,
         "counter_source": "next ground counter",
-        "expiry": 1793258799,
+        "expiry": 1793271059,
         "key": "ground OPERATOR key",
         "key_id": 1,
         "mutations": [],
-        "nonce_prefix": "4d7738de8959ed6e",
+        "nonce_prefix": "d5efc0f974db297f",
         "opcode_name": "NOOP_PING",
         "pass_open_new_nonce": null,
-        "sat_id": 42,
+        "sat_id": 7,
         "signed_under": "current pass nonce"
       },
-      "counter_after": 18,
-      "counter_before": 18,
-      "description": "Expired 30 s ago",
-      "expect": "E_EXPIRED",
-      "frame_hex": "012a010100000000000000166ae2f52f1039766295c0d4d59323a125d50532bc41a16bbce3c5e0adc3367fa65fa2523c96b7ec076d7939a440798e886eafb46868a678356438a4be0c111351b6954994c8ffc1e28b35293eaf56358f2e166ff39b99d17bf74c5ee93ac45705c64279cc54ed17b6590bfc2dc246ddec6a9c8e5adbb70bb8ed91e455c3669383190274f186258c345365975100809f98aa2799874a2ffcb7c9abb4a9de5e2b9f9b52f449d53996cccae7f112e105421b76124e867b8d5eca60be4f6733f33ed2eca7d1796424a7f1f39aef364160cb98ba68e8bbff64052caf5f7ef2c81332a4b98d539b3afd41fccb5985617d5a63b8a6d7ac994f267dffd5d973dc5faa11b5a0e11fa61ded47ab7909373a8495e6ac78a68b6d2380eeeb29c13e234a4ff0d7ac6d0e5220a472de86c22e5237c7f8c55e6a9b7bdbac9fc0064cb9425c092e8570388b3399b2c913e6339ce661b47fc8a6f68b629cacf1515d79c88d6b644e1b4d00db5d10321c52be2c32005ba2d35dba753487a59996b3bf82a774f8142a42c74bdcdbecef53038757894c20e75a50065d7bb6ba34bbcd57c76b4fd5f7410fa44b8797666e08c2d539c8afb6cefa8d24d0ccae79eb56bbe7b0b0beaf8450afd94afd8196bc44541ace87bcc7b44d9d6dd8ec4837b1cd75b69dbff26c17f4ee8e99e37653fb04a6b6d1beeabdb36105b9138c99b72b560b5229ba4b9445898974a7744ac2428495b35dff473253cd52b1b12ad08479e98c27e29ed4c34b83e5ad7176bbba7e89faf7c08b0aef1c884892c435a22a578267ec221099a73672ced87447b190bcd1bc8297baa1dee108abc7ad3634a387f9a72c5cd7e954e97e18759975ac619d478e59c2a246312c9ddf1feabdde99841e04feef29d20882c328879b0f8d735e6b9889eeb03ef166edbbe7cd50080000000000000000000000",
+      "counter_after": 19,
+      "counter_before": 19,
+      "description": "Addressed to satellite 7",
+      "expect": "E_WRONG_SAT",
+      "frame_hex": "0107010100000000000000166ae3251310391682c2a5dc235f5eb069768a249fc056563933d56c15856866ec5bd013275d9a1567439db76e71209040d9ffeb0282aa2a7ec1c5dfa0e84f0064a74f6a3334e69eaf609314b6307dd56983da804f7cb42782ebc7769d4d9c6d72fe615133577a41355b7bf6d2a904243b09aab070ed86491a26384869a1d95edb6eb2677ad3b8c8a20944f9e74c13674d8932b619c6aed9aff877f3b03521c04fb4933c5aaa605fbd44d96b829d5b1f7070601ac70c93e978bd78af82d5a12a84d48264313d6cfeeb067d9e88a499b19abc99360f4cf1e49d99b1fb6dd68f4b7aefdd290901813426a2f5dc2da6654682bca8a651747ff1d0bca6711664621beb0a81dea265b1e28d39e9d15078eb4f71217cfa845d91d0f3e2cd8e8af3614962b24bcb8a4f36e653c95a5f528511ddd1987afc15919e52187ae7532f149b2679463d0c49ef7c7ebb83cec9dc17fa153f2c9504dddcc62f4baec124b3f187da69047f138b6c145e3afa02153888e29f8c898834195937a19d83bd0c0d16928d71d9bd4ac3608d8ceddfe512118b4cda3292a6cfa44f529063714649c8a16dba52138f914b3a6e9377c69f44d1477c9039705154da3c4896cdcf98e949ba6b3e65fdd0f999479961923b8ca4c360fa31eadc11c3d27106af333d9b99bd12e94aabbf94f6167ceddcfaee16992f795096d195a562216a02ea9fe3499e1f29cf3635a89c0f71f5fe24b08b5a3ca7271bbab5cf05227d3addf88e1517217121298b26dd5aef1639a05faa284cfea1baf6f47552834ca1b6382deb9f15c237f917e5dc2f521abd87e933f0ed1b8af683d16ee7fc3a4f936ece447b7032cd171d74bcbbacfda289b79454b8329fae82030b94c6f4b97371b12d5ce55dc64457356b2be8fbfcd5ce7dc386d81fd654da48132eb5df2c80000000000000000000000000",
       "frame_len": 683,
-      "id": "J6",
+      "id": "J5",
       "kind": "compose",
-      "log_seq": 23,
+      "log_seq": 22,
       "nv_writes": 0,
       "outcome": "correct reject",
       "passed": true,
-      "reason": "E_EXPIRED",
+      "reason": "E_WRONG_SAT",
       "steps": [
         {
           "detail": "1/8",
@@ -549,7 +462,7 @@
           "name": "flood_guard",
           "status": "pass",
           "step": 0,
-          "us": 2.8
+          "us": 7.2
         },
         {
           "detail": "683 B, body 1 B",
@@ -557,23 +470,23 @@
           "name": "parse",
           "status": "pass",
           "step": null,
-          "us": 21.9
+          "us": 54.9
         },
         {
-          "detail": "sat_id=42",
+          "detail": "frame sat_id=7, this spacecraft=42",
           "label": "Satellite ID matches",
           "name": "sat_id",
-          "status": "pass",
+          "status": "fail",
           "step": 1,
-          "us": 1.3
+          "us": 7.2
         },
         {
-          "detail": "expiry 1793258799 < onboard clock 1793258829",
+          "detail": "",
           "label": "Not expired",
           "name": "expiry",
-          "status": "fail",
+          "status": "skipped",
           "step": 2,
-          "us": 2.2
+          "us": null
         },
         {
           "detail": "",
@@ -606,29 +519,29 @@
       "built": {
         "counter": 23,
         "counter_source": "next ground counter",
-        "expiry": 1793259429,
-        "key": "attacker's own Falcon key (unknown to the satellite)",
+        "expiry": 1793270429,
+        "key": "ground OPERATOR key",
         "key_id": 1,
         "mutations": [],
-        "nonce_prefix": "4d7738de8959ed6e",
-        "opcode_name": "SET_SAFE_MODE",
+        "nonce_prefix": "d5efc0f974db297f",
+        "opcode_name": "NOOP_PING",
         "pass_open_new_nonce": null,
         "sat_id": 42,
         "signed_under": "current pass nonce"
       },
-      "counter_after": 18,
-      "counter_before": 18,
-      "description": "Attacker key pretending to be OPERATOR",
-      "expect": "E_BAD_SIG",
-      "frame_hex": "012a010200000000000000176ae2f7a52101390b197786abd0e8fa177732a75a43d2d912c56d337fe0a113df634657f0af578a73f3f684e965692f53bd588fe4fb0c808827e8c128cca1d04fe2037a6f6e86cff2cde4ce96f99f6d5eef24b90a6ec6e46f1007c76e8fc71b720652522b5150cc8f4093d0a8ca1e89dfdcd1e652ddba468762462870bf275cccc5a1e964e48d26294dc1cee253bc311d52eeadf02dfcbd59d03d52db271b14b1e6b9edeb056b31b45a7d7d348c3c8ebb0da34d102785345f6d4294cb939b528f20a5282a9f9d287113ee74f17598515d5b5ce1ee5e594c9c3df3e550f2699ecdc6dd75a991db232a85be50233adcb678a9727c95b29439dad2ca9c3d063d0d6fba907aefeeabd36d3ada859fc3cff74055e93d2754b4a31ce91c29d96167a8a91fd4a0e6f748bb080ae93696ebcdea31f1aaf3211ef763219c93b6d1862f15e0d044b1087bc744e9e45ccd01bf4b2d38242c59aadd7b5b15e2da5faa5cfea571cac03dd107c30bd1a015c9146289d8e34e9ff8f26575a2c4d1f5c2e188427b63a083558e2e7c87c08e3f4fc5b43c1f574097b71e2a0917c5db7271fe2ed67cacea31543ca7489fac4eb6e562d86e4d12b1ebfbae7604d07c0915620f3cc456547d8abdbe42188bc7fd9ab01399e2fde5c024c5168251185763bf324836d8a5962487fd74101747dbbe6ce1df13cf0342243a2a1b4292a15fd76aa6ec22932ee7966f05393b056fc79f8cbd1794c0abd837f17f7c9b3594c251c471866bc892ab8f8257c9fc8933759b2da4a3bdba4ba88d7f066a90a14e7145e0d354fe51ea929faca6ae004d10644275c1f6a31ecc145d6bd9f02af06b652e8c7e9518bb972ec9b9b69714f4669cfb0ea299a89ab1ade906e7bf3e99fb15a13049611529f159d1615af877acfc0199f3f77059add78a4fd820bcf80000000000000000000000",
-      "frame_len": 684,
-      "id": "J7",
+      "counter_after": 19,
+      "counter_before": 19,
+      "description": "Expired 30 s ago",
+      "expect": "E_EXPIRED",
+      "frame_hex": "012a010100000000000000176ae3229d1039b23fa76623cb3d4d416d53cb4b2178d9d7fe811e36ca61a4a1694179f2d780553dd59688d3937d4559bad0eacc2aedca3accd91eef6bedcedee3d09de731c96737a845a9747a248fbabb60a793a605ef84b2b7290e63ddd0da6e7244885fef781cfbeac96a78be4effcb27c7cd6c1b777d1e58a5944c2f49bad7e9e57c8e59cb885e50c62783f3f85a9ea6d300e6c80b87fe974b418a6eed91be5fb0a644cd36fb2d8226d94c5c3f3b6ba061209a0965a2bf932a1d821b5b604aa235edf8b6feb2137fd032681c9a5494e28a161125abd8fc2ae41899c96e0f094c3a0595c842c98a9ca96b16f8bb76fcf5eb6a0b13ad95449d3db7e74b8ddab5ce9a1f2c7450b82d7a012a67139dd54a597f9731d0445164f6677ab5cb0c4acf177833dc64cecd00470c0ee50ca89c0bba168227b334d06a5a24fba4cc60eccac65249b9439d3e5d66d78ad72abf894fa66e607c09fab9d43cc2b4eab10cf58023be593c20700cd8a0c66691a0c0aa1f3fb7b7d92880379c823ed6136a9b06797ab0242a692e8323f62592a7f342d0fbca9cc5a13fe914f323d1c8e69a94dbdd0f421a29b4a736684506b12720670d9d384542c5fd7b2c89a09c6361d942b7ed21588343085227fc5a34ee7acba02faddab8ab2396f2788e5fe1d41443d71e6cf75a53a77b8d73987c47c0b6e3618ececd47ed1e2f0e5494f5eaca532b55f252f8340b6e1a8272a3f52de7e624e3d2708e297aad2433e11c31c6093bd2e93b881e4321665770865d28191641fe80c5ac78e42b26af5a057d84557468a3c5c06e1278df66375facc369b5a79a0d0fd448afdaf60d868042d3de15925bd9764d398934f4fc6e091029089e534a89f27f10b64198645f75674d28e9b29862879fa7c5e556ad1464dfe9a1c8b1bc68d862176b6c90000000000000000000000000",
+      "frame_len": 683,
+      "id": "J6",
       "kind": "compose",
-      "log_seq": 24,
+      "log_seq": 23,
       "nv_writes": 0,
       "outcome": "correct reject",
       "passed": true,
-      "reason": "E_BAD_SIG",
+      "reason": "E_EXPIRED",
       "steps": [
         {
           "detail": "1/8",
@@ -636,15 +549,15 @@
           "name": "flood_guard",
           "status": "pass",
           "step": 0,
-          "us": 8.0
+          "us": 7.4
         },
         {
-          "detail": "684 B, body 2 B",
+          "detail": "683 B, body 1 B",
           "label": "Frame well-formed",
           "name": "parse",
           "status": "pass",
           "step": null,
-          "us": 56.7
+          "us": 54.4
         },
         {
           "detail": "sat_id=42",
@@ -652,31 +565,31 @@
           "name": "sat_id",
           "status": "pass",
           "step": 1,
-          "us": 5.4
-        },
-        {
-          "detail": "600 s remaining",
-          "label": "Not expired",
-          "name": "expiry",
-          "status": "pass",
-          "step": 2,
-          "us": 4.3
-        },
-        {
-          "detail": "23 > 18",
-          "label": "Counter > last accepted",
-          "name": "counter",
-          "status": "pass",
-          "step": 3,
           "us": 4.5
         },
         {
-          "detail": "invalid for key_id 1 under pass nonce 4d7738de8959... (failures 2/8)",
+          "detail": "expiry 1793270429 < onboard clock 1793270459",
+          "label": "Not expired",
+          "name": "expiry",
+          "status": "fail",
+          "step": 2,
+          "us": 8.2
+        },
+        {
+          "detail": "",
+          "label": "Counter > last accepted",
+          "name": "counter",
+          "status": "skipped",
+          "step": 3,
+          "us": null
+        },
+        {
+          "detail": "",
           "label": "Falcon signature over frame + pass nonce",
           "name": "signature",
-          "status": "fail",
+          "status": "skipped",
           "step": 4,
-          "us": 277.5
+          "us": null
         },
         {
           "detail": "",
@@ -693,21 +606,108 @@
       "built": {
         "counter": 24,
         "counter_source": "next ground counter",
-        "expiry": 1793259429,
+        "expiry": 1793271059,
+        "key": "attacker's own Falcon key (unknown to the satellite)",
+        "key_id": 1,
+        "mutations": [],
+        "nonce_prefix": "d5efc0f974db297f",
+        "opcode_name": "SET_SAFE_MODE",
+        "pass_open_new_nonce": null,
+        "sat_id": 42,
+        "signed_under": "current pass nonce"
+      },
+      "counter_after": 19,
+      "counter_before": 19,
+      "description": "Attacker key pretending to be OPERATOR",
+      "expect": "E_BAD_SIG",
+      "frame_hex": "012a010200000000000000186ae32513210139af7d023e990d8275a7c4d5681ef69387dd91a11a0355b4a3121836b41378ea40f07794764b7c4c5aebd073f7f08c43e8b5fe6d0d2c1b66d25091588aad3ca6c121862a49091ffa2066b62d75156d44d5730495ef7156d144c3a9792e75d34f40f25713a5ae43fcd8fea84de79619a0ed606fc876fdd942f32fd6363fba4965291629aba76d9454153be8f7969b0f308c6927e96573c36f72bbf789c70f44e94149537d1ac8c4f2f91d1615ed99563aaa8bbbba57e8993e573352d5252ec7c64452b45f7816b25f8368a37d7df7362cdc7097b98439413c9245b6458644749e7b0fcb0ba134de187097a0a707664b8da6fd677f3199a78a0908390532472b525a268e6083ff8e56d6257bc412a40ed8dbc2ccb94dcfc68bb765f675b9a51943d3092d438b3a9945d58d2b7f435139fd3c51409d5173d807b520a0a81cd3855052604cdd794e8a5bb00219d97bde5e539ddb3ac9517ee864e0670d607b2098dc750ceaa24535d93d5dbd5e6d957a1f796c655290c48733a512865653789fa133892e9d7e1d418752e89227bdde2d36a78edce2e7742edf19ba4d7286be6f253f7bdaeb259c6196049d1c5789dadb1615cae374c5229d580f13626c76ca8d725dba97511f8a2a7664a31c29e392aed5f696d8d96f4135bd8a0d9e7a9f6518571b3588b6271256a93f8d92670dccb56a9939c71fe4c0c0509248c1aa0a3b0f32c37998d9f99d637fda23732043bf2b54ad29d8982357109e6dae9ec51a844537b9d44a39a3d226a72215b96dcbc2daff6cfe2a03252e4e2d7cda2f61d46d5ba43b87a1485e48928a92e0eb34b47a2aab7b519c124ef2ec33b3449fe9053a2488fd60daa8a586417589b86b22614ecf98e297a462b310a612a1aa68e011984d25cdb8e1e050199926d6b8773c640000000000000000000000000000",
+      "frame_len": 684,
+      "id": "J7",
+      "kind": "compose",
+      "log_seq": 24,
+      "nv_writes": 0,
+      "outcome": "correct reject",
+      "passed": true,
+      "reason": "E_BAD_SIG",
+      "steps": [
+        {
+          "detail": "1/8",
+          "label": "Flood guard below limit",
+          "name": "flood_guard",
+          "status": "pass",
+          "step": 0,
+          "us": 6.7
+        },
+        {
+          "detail": "684 B, body 2 B",
+          "label": "Frame well-formed",
+          "name": "parse",
+          "status": "pass",
+          "step": null,
+          "us": 49.6
+        },
+        {
+          "detail": "sat_id=42",
+          "label": "Satellite ID matches",
+          "name": "sat_id",
+          "status": "pass",
+          "step": 1,
+          "us": 3.7
+        },
+        {
+          "detail": "600 s remaining",
+          "label": "Not expired",
+          "name": "expiry",
+          "status": "pass",
+          "step": 2,
+          "us": 3.6
+        },
+        {
+          "detail": "24 > 19",
+          "label": "Counter > last accepted",
+          "name": "counter",
+          "status": "pass",
+          "step": 3,
+          "us": 3.8
+        },
+        {
+          "detail": "invalid for key_id 1 under pass nonce d5efc0f974db... (failures 2/8)",
+          "label": "Falcon signature over frame + pass nonce",
+          "name": "signature",
+          "status": "fail",
+          "step": 4,
+          "us": 231.7
+        },
+        {
+          "detail": "",
+          "label": "Opcode allowed for key role",
+          "name": "role",
+          "status": "skipped",
+          "step": 5,
+          "us": null
+        }
+      ],
+      "verdict": "REJECT"
+    },
+    {
+      "built": {
+        "counter": 25,
+        "counter_source": "next ground counter",
+        "expiry": 1793271059,
         "key": "ground ADMIN key",
         "key_id": 2,
         "mutations": [],
-        "nonce_prefix": "0eb7fe5b019b950d",
+        "nonce_prefix": "28769394b538ee4a",
         "opcode_name": "NOOP_PING",
         "pass_open_new_nonce": null,
         "sat_id": 42,
         "signed_under": "random 32 bytes (no pass uses this)"
       },
-      "counter_after": 18,
-      "counter_before": 18,
+      "counter_after": 19,
+      "counter_before": 19,
       "description": "Signed under a random nonce",
       "expect": "E_BAD_SIG",
-      "frame_hex": "012a020100000000000000186ae2f7a510399c9fc60a31e01817a4a0050dd3b9ac5c9eebc7ace315589dde7e0e616b7b2fa25ebf58c47c225caccc6272dc14f20265c9e67351bf4e2cf71d69285235db3f47422ae39a69a3263b3b7e760d4c757abecc6225303efb4e940e193052e31c95b791076132e68e16c39c25e35a961d9faeab5bfa9836ca82249257b6c49753b5d81f63bb1468f9da4d991756e8e9ea49c7b5d46972249d1358e005eb58d4c24ebe7d17bdee37bd78c205bc8ded5508cacd3f6391ae83c2fae27438fc72bae7e8cd4dbb396ebd5122edccd5a2fbf260d2266758f5449297d0e74bada5cde86cd268a75586480e6649e486a553e48f95e18ec449bf6f19f68a9cf9a3f0c941591c1a1942328762478fd5e049341d1667e2a4bdc9af711ad6b28b87747e115b86f0aaa5d1cf821d099cc5880fa1474bd78b76a29e8f90cdecf420737ad58c97e32494f83b76a34211a854fa9de3c79d948fc0e9bb33992b26c9fbfc5ade4a5fbb63d57ce87fa1d60a2db208dfa1519f2cee1fe7b16611421aced6dd91bed7c4fbdfdaa222a6dc8a7c33508d7a67b264691747fa7f39a7211ae1fb1a4b5d11b4e5a20dc1afcce251cdce3092fe5c149b86ea6788e937ca4633d62e9c290d6712bfa631381cefe9d587a94de69b74a144e082f730fbe39b471d82b0c92c5d2bb5a6805ac7edf39e27ebfe73bd6dd0359386157ceb48567259bc8c9efc49c7b73430f90362c11f9de6d5906acc8b1f95ce7b50a746458179351d68d92ada60e0c7d618b4a1f26b25df3ec6a388474d183ebaaece4e1dfa294d743a2e6391bc762bd368c2604e2be1013dcc2aa6df2491e9d3774744b0ecf6aedb012b0a826f4c99a5e7334697ecf7fc9a5f72c510efa086094541ec3183678af692e3f77985b695fb37a3fbb9809214d1044cb52d61c580000000000000000000000000",
+      "frame_hex": "012a020100000000000000196ae3251310397414cc9e048d589f204da50d3f7c44211b874669f62274c4cf8ce0aa3c451d1c98d1053d59ce0d3ea048729012c4ab5eeb39cc1e0d4b7ddb4ccc15b9dbb70a374d2ce1cc30fad98ec5123e75bcb20f3ae450734b9e92c490f98dc5450ba2beef9ad4d9555036a9423defdd69ae627d734bfc510fbe9e55faf24119f51dc66b76e95fe27125c49b34158f44d007abac2cecaa139070b18a6c330284903cde717c55a53d095ed7448e4857b944651ceaed9135512562824cb1e82770e3fecec732e812e73ee0f3b9724c59a4335487654049f4f4c91a03314b36dc891d5081b188bb7e986c6635481d4e1f4e856423641a41bd914a38c9522c4a79137fe7cad4f0f21444af4f92a36df97030eae6378f0a258d71a3d30c7e291625daea8477919078192a6b60a2a6e320fdd6ed9b7980c7475bf2fd78da479719c1c8e0ee12fc7ca94f4f5cfc030255a7900ace7a810f44bcf506692a5078b0ee7b3e7a1b5b8456928ee6292dad35aa9f2cb0990d36f9768bc7dbe80b0728d957090b177e8326dd9462ad79c4741ac51b6ad9e35aab0e9f3452dde6ca453f6a27979d57b0c819e86976e6b2ea9b17cd79de9ba64bef548d702bf0ce641d7dd8635785ef05c16f0d09cee666760b460dc0474b5f2133d1cd723188d9e67ad227bd243fb15d9b7181e556a5b88c36c889d84ce5b2b70be82b1855e95abdbbd0fa5cecd6c560d14586e3326eda04757b6a7b508b7e2e0241db66ec81630e660d105b26cb2f5f55e0607b6bfe85d7e998ee95bbd78642cd94d7b30de0dccc2620b6f9b2ff66d102dc67d87e6b73fb26aadfa70085f71c062b269073e7f4aab9045212b3c9fe6b9c0f1fd1ec6910f99e9bbcf2ccb65c6e4c41a3823274c617aec5e25fe45f73a60c71bc4a8e59c3aba18d9f430e974000000000000000000000000000",
       "frame_len": 683,
       "id": "J8",
       "kind": "compose",
@@ -723,7 +723,7 @@
           "name": "flood_guard",
           "status": "pass",
           "step": 0,
-          "us": 2.5
+          "us": 7.4
         },
         {
           "detail": "683 B, body 1 B",
@@ -731,7 +731,7 @@
           "name": "parse",
           "status": "pass",
           "step": null,
-          "us": 23.3
+          "us": 53.2
         },
         {
           "detail": "sat_id=42",
@@ -739,7 +739,7 @@
           "name": "sat_id",
           "status": "pass",
           "step": 1,
-          "us": 1.4
+          "us": 4.2
         },
         {
           "detail": "600 s remaining",
@@ -747,23 +747,23 @@
           "name": "expiry",
           "status": "pass",
           "step": 2,
-          "us": 1.2
+          "us": 3.9
         },
         {
-          "detail": "24 > 18",
+          "detail": "25 > 19",
           "label": "Counter > last accepted",
           "name": "counter",
           "status": "pass",
           "step": 3,
-          "us": 1.5
+          "us": 4.7
         },
         {
-          "detail": "invalid for key_id 2 under pass nonce 4d7738de8959... (failures 3/8)",
+          "detail": "invalid for key_id 2 under pass nonce d5efc0f974db... (failures 3/8)",
           "label": "Falcon signature over frame + pass nonce",
           "name": "signature",
           "status": "fail",
           "step": 4,
-          "us": 78.2
+          "us": 281.4
         },
         {
           "detail": "",
@@ -780,8 +780,8 @@
       "built": {
         "mutations": []
       },
-      "counter_after": 18,
-      "counter_before": 18,
+      "counter_after": 19,
+      "counter_before": 19,
       "description": "Garbage bytes",
       "expect": "REJECT",
       "frame_hex": "deadbeef",
@@ -800,7 +800,7 @@
           "name": "flood_guard",
           "status": "pass",
           "step": 0,
-          "us": 1.9
+          "us": 6.7
         },
         {
           "detail": "frame too short (4 B)",
@@ -808,7 +808,7 @@
           "name": "parse",
           "status": "fail",
           "step": null,
-          "us": 4.2
+          "us": 12.2
         },
         {
           "detail": "",
@@ -855,23 +855,23 @@
     },
     {
       "built": {
-        "counter": 25,
+        "counter": 26,
         "counter_source": "next ground counter",
-        "expiry": 1793259429,
+        "expiry": 1793271059,
         "key": "ground ADMIN key",
         "key_id": 2,
         "mutations": [],
-        "nonce_prefix": "4d7738de8959ed6e",
+        "nonce_prefix": "d5efc0f974db297f",
         "opcode_name": "SET_HEATER",
         "pass_open_new_nonce": null,
         "sat_id": 42,
         "signed_under": "current pass nonce"
       },
-      "counter_after": 25,
-      "counter_before": 18,
+      "counter_after": 26,
+      "counter_before": 19,
       "description": "Valid admin heater command",
       "expect": "ACCEPT",
-      "frame_hex": "012a020300000000000000196ae2f7a51401123949ecc72804dfd9f9241f0824a81ea6c91c3f772755713c6b47f94e2d868557ac174e48c87e7acc84b884fce4f739c9806fae71dd6b79a364ed937224a84a391a3a64cd8ab324369972db97cd540e2b37d2a848b336569d83c3d0a0e98274a92a7656c67500da2713f9bb6b529fa713de4b591972d131f9547aa8ead91ae9513b4cb344f259778b7a2ccbb0583fde2cc9220c2c8bf7617f27f63b7a9f015f9319516e77acb8760c8f68594d9a0fe6b6f1b28b67a0eae82875f9d416072a3858ba3e5aff22c3d5dea66db98c5918b50e0cc93728bfaa06ac4e9ab9ff17732ec9e151ff9e08c71b0b7c5f6c2dd1053f0667eb79cb7ef7c3a58075669ba4ceef9165251dd2b0c0ab311ce3abacac6169e89fd1b38e5d7e793538dd5377f08e44877c5ddcbb9e828b148bf85fcd52a849b06ae76a57a75a7e30c9ccec41861e2d3defe83f3a82614ecc1fac62bfe7dfbf4611a79c14d3263928c5ba1ada4098b8f2599a6ca2b7ea43813941f24d79ae98a3dfbcfb28bb427978895c34966fd02bbb0adf4e3e72f76de4a026290626c1045321a72196c41b32498ec9a7d11e8f4daac25b3cf8bdaf9255bb9bfeb0e792b0d3374897930c340dcb1b878b2775e64762b248e3ac72927d501bdb2fd7712627787b5c820be9fc3798a727749898fc4a3ec2e75896625761546652ace474a0ad3066c5bcdcc7b29e2232fbc99bc8dcc8932c2c9c85d99eed904a2a0374c0be7648f64e87e4452eb728c7ceefa162df5f1408e3dd78f71a24cd8d397a8d4d0d17cf649a31e56fef24a91253b650941c953a4cf9bd4a9855eb787ef5ea5c3168ec6cc92416c9267e2f64d9693a91f58d87dad4609335bfaef32271c4424ea719a5e5b4c34f65b2a7013ce1188c02aaeabdf7f3bf877a3c4fa6ef02f4efd00000000000000000000000000000",
+      "frame_hex": "012a0203000000000000001a6ae3251314011239c4d7a01bc92e9dff0ab2bedbdee2dcb7be1234c3ad2a146c97e2e34b269e0765a37240f0f1144cdf2088ab50877a86fdf6300d46e585cc44638ffe620d9eb2b62b9a7946cfe4b10e8b7871f28e3303a175cb7ed50482cd591fed3f2e1a746ed6c2fbbfd10291c56c6a8eb113bdd6a971a706c39bb82cd2fe7433617e75aa4f5f1b3a621847651f641966b49033e71f0aa1a630adb68acb1a52e036f66e1eda623458cab35dc8943857440539c5394a9a13cecdb36f6e40d965e65da3e7442fb66ecfad4b6c7764018161b3771320b2b56c9f4354e0e3e5f34151a9e979a60051ddaf219369662815211e45f7b9ba0357006ea5ee9b4b3690f51578bc08f3494ca1144d3005a67484324b3cc961b4b1969d0b42c41039e6ed8246aae82d34c7b299471b06b7adc32ad0f52e71732df6d045d3957e1a792656da2d3d06a2c011e40d6a88146c32347c4eaf874b16fab93ad80e9f07b9405454509699249beba63b8b36e7eb9d94ae381a63c35252d846a351805def0ec29b899a1317add06c879e5dd0ba40a20624f3b087245432ee14f6c89b7ae444e440a3cbc9b380c5aa991d2cf9b95421f0f25d18da170a851207d5feb06c0f8a80668dda64e1c130b34c8b3b37736569ae4b1fdadcdf6026f33d2decec1cf44a893e42baa8a797bd3f6d879dc7482903dbffb3cbff98fd4ca120ef6674cc9ebbff04426c3f72042042abe855b19344260edb95d96286c5c87a5ae23cb129b63b09d54d0f124edccc232b6ca31c61ad98a85a87d067efbdfdf75c8cf02a9812085c205c97034c9ed7b7f16b2693bc68d158bcabb72d9eb2795c0f1dd0b252b7f25c16e670f24e55f823aee2a129fc6fcaf32d48c5b530cb61663fcdca1cc7cc300a6be09348a42f23bedf2733e6f5ccb2d5e7d6a4e9aff335240000000000000000000000",
       "frame_len": 685,
       "id": "J10",
       "kind": "compose",
@@ -887,7 +887,7 @@
           "name": "flood_guard",
           "status": "pass",
           "step": 0,
-          "us": 2.9
+          "us": 7.3
         },
         {
           "detail": "685 B, body 3 B",
@@ -895,7 +895,7 @@
           "name": "parse",
           "status": "pass",
           "step": null,
-          "us": 26.2
+          "us": 54.3
         },
         {
           "detail": "sat_id=42",
@@ -903,31 +903,31 @@
           "name": "sat_id",
           "status": "pass",
           "step": 1,
-          "us": 1.8
+          "us": 4.1
         },
         {
-          "detail": "599 s remaining",
+          "detail": "600 s remaining",
           "label": "Not expired",
           "name": "expiry",
           "status": "pass",
           "step": 2,
-          "us": 1.5
+          "us": 3.9
         },
         {
-          "detail": "25 > 18",
+          "detail": "26 > 19",
           "label": "Counter > last accepted",
           "name": "counter",
           "status": "pass",
           "step": 3,
-          "us": 1.4
+          "us": 4.0
         },
         {
-          "detail": "valid (Falcon-padded-512, 89 us)",
+          "detail": "valid (Falcon-padded-512, 251 us)",
           "label": "Falcon signature over frame + pass nonce",
           "name": "signature",
           "status": "pass",
           "step": 4,
-          "us": 98.8
+          "us": 277.3
         },
         {
           "detail": "ADMIN -> SET_HEATER",
@@ -935,7 +935,7 @@
           "name": "role",
           "status": "pass",
           "step": 5,
-          "us": 5.4
+          "us": 13.5
         }
       ],
       "verdict": "ACCEPT"

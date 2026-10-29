@@ -1,0 +1,107 @@
+{
+  "all_passes_found": 8,
+  "budgets": [
+    3982,
+    3700,
+    3798,
+    2621
+  ],
+  "complete": true,
+  "created_utc": "2026-10-29T10:37:31.999831+00:00",
+  "donki": null,
+  "errors": {
+    "donki": "could not reach https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/GST?startDate=2026-10-22&endDate=2026-10-29: <urlopen error timed out>"
+  },
+  "evidence_file": "nasa/nasa_20261029T103731Z_25544.json",
+  "ground_station": {
+    "alt_m": 920.0,
+    "lat": 12.9716,
+    "lon": 77.5946,
+    "name": "Bengaluru"
+  },
+  "kind": "nasa_pass_windows",
+  "parameters": {
+    "budget_formula": "floor(floor(contact_s x uplink_bps / 8) x space_weather_factor)",
+    "min_elevation_deg": 10.0,
+    "min_useful_budget_bytes": 1398,
+    "n_passes": 4,
+    "search_hours": 72.0,
+    "uplink_bps": 80.0
+  },
+  "passes": [
+    {
+      "aos_utc": "2026-10-29T16:38:37.379586+00:00",
+      "budget_bytes": 3982,
+      "duration_s": 398.2,
+      "index": 1,
+      "label": "AOS 2026-10-29 16:38 UTC \u00b7 6.6 min \u00b7 max 76\u00b0",
+      "los_utc": "2026-10-29T16:45:15.623895+00:00",
+      "max_elevation_deg": 75.7,
+      "range_at_tca_km": 428.0,
+      "raw_budget_bytes": 3982,
+      "tca_utc": "2026-10-29T16:41:56.137791+00:00"
+    },
+    {
+      "aos_utc": "2026-10-30T02:32:51.662598+00:00",
+      "budget_bytes": 3700,
+      "duration_s": 370.0,
+      "index": 2,
+      "label": "AOS 2026-10-30 02:32 UTC \u00b7 6.2 min \u00b7 max 33\u00b0",
+      "los_utc": "2026-10-30T02:39:01.642728+00:00",
+      "max_elevation_deg": 32.8,
+      "range_at_tca_km": 730.0,
+      "raw_budget_bytes": 3700,
+      "tca_utc": "2026-10-30T02:35:56.759160+00:00"
+    },
+    {
+      "aos_utc": "2026-10-30T15:51:17.710659+00:00",
+      "budget_bytes": 3798,
+      "duration_s": 379.8,
+      "index": 3,
+      "label": "AOS 2026-10-30 15:51 UTC \u00b7 6.3 min \u00b7 max 42\u00b0",
+      "los_utc": "2026-10-30T15:57:37.494920+00:00",
+      "max_elevation_deg": 42.0,
+      "range_at_tca_km": 598.0,
+      "raw_budget_bytes": 3798,
+      "tca_utc": "2026-10-30T15:54:27.277525+00:00"
+    },
+    {
+      "aos_utc": "2026-10-31T01:46:11.307198+00:00",
+      "budget_bytes": 2621,
+      "duration_s": 262.1,
+      "index": 4,
+      "label": "AOS 2026-10-31 01:46 UTC \u00b7 4.4 min \u00b7 max 16\u00b0",
+      "los_utc": "2026-10-31T01:50:33.434161+00:00",
+      "max_elevation_deg": 16.1,
+      "range_at_tca_km": 1183.0,
+      "raw_budget_bytes": 2621,
+      "tca_utc": "2026-10-31T01:48:22.460419+00:00"
+    }
+  ],
+  "skipped_short": [],
+  "space_weather": {
+    "factor": 1.0,
+    "flares": [],
+    "kp_max_72h": null,
+    "reasons": [
+      "space weather not fetched: no margin applied"
+    ],
+    "storms": []
+  },
+  "spacecraft_note": "Orbit of a real spacecraft used as a stand-in; the satellite in this system is simulated.",
+  "tle": {
+    "epoch_utc": "2026-10-28T11:12:28.029312+00:00",
+    "fallback_errors": [],
+    "http_status": 200,
+    "line1": "1 25544U 98067A   26301.46699108  .00005372  00000+0  10526-3 0  9998",
+    "line2": "2 25544  51.6335   0.5562 0007038 319.9799  40.0670 15.49088092592412",
+    "name": "ISS (ZARYA)",
+    "norad": 25544,
+    "raw": "{\"@context\":\"https:\\/\\/www.w3.org\\/ns\\/hydra\\/context.jsonld\",\"@id\":\"https:\\/\\/tle.ivanstanojevic.me\\/api\\/tle\\/25544\",\"@type\":\"Tle\",\"satelliteId\":25544,\"name\":\"ISS (ZARYA)\",\"date\":\"2026-10-28T11:12:28+00:00\",\"line1\":\"1 25544U 98067A   26301.46699108  .00005372  00000+0  10526-3 0  9998\",\"line2\":\"2 25544  51.6335   0.5562 0007038 319.9799  40.0670 15.49088092592412\"}",
+    "raw_sha256": "41172f3b5d01105c3246806e5328603159921f328599b149c1379233227c19b0",
+    "source": "NASA TLE API (api.nasa.gov catalogue)",
+    "url": "https://tle.ivanstanojevic.me/api/tle/25544"
+  },
+  "tle_age_days": 0.98,
+  "tle_stale": false
+}

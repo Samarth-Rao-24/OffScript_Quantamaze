@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-10-29T07:27:06.319384+00:00",
+  "created_utc": "2026-10-29T10:40:53.645660+00:00",
   "falcon_vs_mldsa_signature_saving_pct": 72.5,
   "host": {
     "cpu": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel",
@@ -24,12 +24,12 @@
       "frame_bytes_12B_body_worst_case": 694,
       "frames_per_3600B_pass": 4,
       "keygen": {
-        "max_us": 21281.7,
-        "mean_us": 15980.54,
+        "max_us": 50096.1,
+        "mean_us": 29762.89,
         "n": 10,
-        "p50_us": 16181.45,
-        "p95_us": 20327.65,
-        "p99_us": 21090.89
+        "p50_us": 29611.6,
+        "p95_us": 46259.71,
+        "p99_us": 49328.82
       },
       "library": "pqcrypto 0.4.0 / PQClean",
       "public_key_bytes": 897,
@@ -38,12 +38,12 @@
       "secret_key_bytes": 1281,
       "selected": true,
       "sign": {
-        "max_us": 5724.4,
-        "mean_us": 4999.84,
+        "max_us": 7895.5,
+        "mean_us": 6729.08,
         "n": 200,
-        "p50_us": 4960.25,
-        "p95_us": 5239.86,
-        "p99_us": 5714.92
+        "p50_us": 6736.6,
+        "p95_us": 7175.38,
+        "p99_us": 7618.16
       },
       "signature_bytes": {
         "max": 666,
@@ -52,23 +52,23 @@
       },
       "verify": {
         "max_us": 115.6,
-        "mean_us": 55.59,
+        "mean_us": 73.24,
         "n": 1000,
-        "p50_us": 54.9,
-        "p95_us": 57.3,
-        "p99_us": 73.32
+        "p50_us": 72.7,
+        "p95_us": 75.41,
+        "p99_us": 80.7
       }
     },
     {
-      "frame_bytes_12B_body_worst_case": 688,
+      "frame_bytes_12B_body_worst_case": 689,
       "frames_per_3600B_pass": 4,
       "keygen": {
-        "max_us": 18069.1,
-        "mean_us": 14477.89,
+        "max_us": 64942.7,
+        "mean_us": 29756.52,
         "n": 10,
-        "p50_us": 14164.45,
-        "p95_us": 17673.91,
-        "p99_us": 17990.06
+        "p50_us": 24745.6,
+        "p95_us": 53438.13,
+        "p99_us": 62641.79
       },
       "library": "pqcrypto 0.4.0 / PQClean",
       "public_key_bytes": 897,
@@ -77,37 +77,37 @@
       "secret_key_bytes": 1281,
       "selected": false,
       "sign": {
-        "max_us": 6864.1,
-        "mean_us": 4985.5,
+        "max_us": 12009.6,
+        "mean_us": 7458.52,
         "n": 200,
-        "p50_us": 4942.65,
-        "p95_us": 5204.69,
-        "p99_us": 5768.24
+        "p50_us": 6723.0,
+        "p95_us": 11570.01,
+        "p99_us": 11786.56
       },
       "signature_bytes": {
-        "max": 660,
+        "max": 661,
         "mean": 655.1,
-        "min": 649
+        "min": 650
       },
       "verify": {
-        "max_us": 82.9,
-        "mean_us": 55.24,
+        "max_us": 100.4,
+        "mean_us": 73.45,
         "n": 1000,
-        "p50_us": 54.8,
-        "p95_us": 57.21,
-        "p99_us": 71.0
+        "p50_us": 72.9,
+        "p95_us": 77.1,
+        "p99_us": 88.52
       }
     },
     {
       "frame_bytes_12B_body_worst_case": 2448,
       "frames_per_3600B_pass": 1,
       "keygen": {
-        "max_us": 245.9,
-        "mean_us": 185.41,
+        "max_us": 1063.4,
+        "mean_us": 686.03,
         "n": 10,
-        "p50_us": 178.1,
-        "p95_us": 221.46,
-        "p99_us": 241.01
+        "p50_us": 648.0,
+        "p95_us": 913.64,
+        "p99_us": 1033.45
       },
       "library": "pqcrypto 0.4.0 / PQClean",
       "public_key_bytes": 1312,
@@ -116,12 +116,12 @@
       "secret_key_bytes": 2560,
       "selected": false,
       "sign": {
-        "max_us": 1457.7,
-        "mean_us": 400.1,
+        "max_us": 5290.1,
+        "mean_us": 827.86,
         "n": 200,
-        "p50_us": 344.95,
-        "p95_us": 729.13,
-        "p99_us": 1125.85
+        "p50_us": 692.15,
+        "p95_us": 1717.01,
+        "p99_us": 2791.47
       },
       "signature_bytes": {
         "max": 2420,
@@ -129,24 +129,24 @@
         "min": 2420
       },
       "verify": {
-        "max_us": 217.6,
-        "mean_us": 106.53,
+        "max_us": 585.3,
+        "mean_us": 141.53,
         "n": 1000,
-        "p50_us": 104.4,
-        "p95_us": 111.71,
-        "p99_us": 163.76
+        "p50_us": 139.1,
+        "p95_us": 150.91,
+        "p99_us": 161.14
       }
     },
     {
       "frame_bytes_12B_body_worst_case": 92,
       "frames_per_3600B_pass": 31,
       "keygen": {
-        "max_us": 40933.7,
-        "mean_us": 4124.28,
+        "max_us": 29433.0,
+        "mean_us": 3046.85,
         "n": 10,
-        "p50_us": 28.6,
-        "p95_us": 22549.22,
-        "p99_us": 37256.8
+        "p50_us": 103.85,
+        "p95_us": 16277.88,
+        "p99_us": 26801.98
       },
       "library": "cryptography (OpenSSL)",
       "public_key_bytes": 33,
@@ -155,12 +155,12 @@
       "secret_key_bytes": 32,
       "selected": false,
       "sign": {
-        "max_us": 34719.6,
-        "mean_us": 207.52,
+        "max_us": 82769.5,
+        "mean_us": 532.65,
         "n": 200,
-        "p50_us": 33.45,
-        "p95_us": 37.91,
-        "p99_us": 64.42
+        "p50_us": 111.85,
+        "p95_us": 142.12,
+        "p99_us": 264.29
       },
       "signature_bytes": {
         "max": 64,
@@ -168,24 +168,24 @@
         "min": 64
       },
       "verify": {
-        "max_us": 779.4,
-        "mean_us": 126.62,
+        "max_us": 1715.0,
+        "mean_us": 227.39,
         "n": 1000,
-        "p50_us": 114.1,
-        "p95_us": 202.71,
-        "p99_us": 246.58
+        "p50_us": 163.4,
+        "p95_us": 369.91,
+        "p99_us": 549.12
       }
     },
     {
       "frame_bytes_12B_body_worst_case": 92,
       "frames_per_3600B_pass": 31,
       "keygen": {
-        "max_us": 1402.2,
-        "mean_us": 180.0,
+        "max_us": 1447.6,
+        "mean_us": 200.36,
         "n": 10,
-        "p50_us": 43.0,
-        "p95_us": 794.88,
-        "p99_us": 1280.74
+        "p50_us": 59.55,
+        "p95_us": 829.21,
+        "p99_us": 1323.92
       },
       "library": "cryptography (OpenSSL)",
       "public_key_bytes": 32,
@@ -194,12 +194,12 @@
       "secret_key_bytes": 32,
       "selected": false,
       "sign": {
-        "max_us": 808.6,
-        "mean_us": 40.92,
+        "max_us": 934.5,
+        "mean_us": 55.43,
         "n": 200,
-        "p50_us": 36.7,
-        "p95_us": 37.55,
-        "p99_us": 57.21
+        "p50_us": 50.6,
+        "p95_us": 51.99,
+        "p99_us": 60.44
       },
       "signature_bytes": {
         "max": 64,
@@ -207,12 +207,12 @@
         "min": 64
       },
       "verify": {
-        "max_us": 255.5,
-        "mean_us": 113.98,
+        "max_us": 617.1,
+        "mean_us": 150.98,
         "n": 1000,
-        "p50_us": 106.0,
-        "p95_us": 185.63,
-        "p99_us": 213.62
+        "p50_us": 145.7,
+        "p95_us": 167.19,
+        "p99_us": 267.7
       }
     }
   ]

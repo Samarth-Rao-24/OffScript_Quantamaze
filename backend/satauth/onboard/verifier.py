@@ -154,6 +154,8 @@ class OnboardVerifier:
                     "total_us": result["total_us"],
                     "nv_writes": result["nv_writes"],
                 }
+                if result.get("counter_gap"):
+                    rec["counter_gap"] = result["counter_gap"]
                 if context:
                     rec["context"] = context
                 result["log"] = self.log.write(rec)
@@ -239,15 +241,24 @@ class OnboardVerifier:
             return finish(E_UNAUTHORIZED)
         step(5, "role", "Opcode allowed for key role", True, f"{role} -> {opcode_name(frame.opcode)}", t0)
 
+        # Counter-gap report (missing-packet detection): counters skipped between the
+        # last accepted frame and this one were never accepted onboard. Reported in the
+        # acknowledgement so the ground can reconcile them; stored in the same NV write.
+        gap = None
+        if frame.counter > last + 1:
+            gap = {"from": last + 1, "to": frame.counter - 1, "count": frame.counter - last - 1}
+            result["counter_gap"] = gap
+
         # Commit: exactly one NV write, then execute
         if frame.opcode == Opcode.PASS_OPEN:
             new_nonce = frame.command[1 : 1 + NONCE_LEN]
-            self.state.commit_accept(counter=frame.counter, new_nonce=new_nonce, new_pass_index=self.state.pass_index + 1)
+            self.state.commit_accept(counter=frame.counter, new_nonce=new_nonce, new_pass_index=self.state.pass_index + 1,
+                                     gap=gap)
             self.guard.begin_window(self.guard.window_id)  # PRD 4.1 step 3: reset flood count
             result["executed"] = f"pass nonce installed ({new_nonce.hex()[:16]}...), pass #{self.state.pass_index}"
             result["pass_index"] = self.state.pass_index
         else:
-            self.state.commit_accept(counter=frame.counter)
+            self.state.commit_accept(counter=frame.counter, gap=gap)
             result["executed"] = f"{opcode_name(frame.opcode)} args={frame.command[1:].hex() or '-'}"
             self.executed.append({"counter": frame.counter, "opcode": opcode_name(frame.opcode), "args": frame.command[1:].hex()})
         return finish(OK)
@@ -260,6 +271,7 @@ class OnboardVerifier:
             "pass_nonce": self.state.pass_nonce.hex(),
             "flood": self.guard.snapshot(),
             "nv_writes": self.state.nv_writes,
+            "gaps": self.state.gap_summary(),
             "stats": self.stats.as_dict(),
             "executed_recent": list(self.executed),
             "state_file": str(self.state.path),

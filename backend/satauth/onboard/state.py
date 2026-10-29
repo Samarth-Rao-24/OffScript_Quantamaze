@@ -59,6 +59,11 @@ class StateStore:
     def pass_index(self) -> int:
         return int(self._state["pass_index"])
 
+    def gap_summary(self) -> dict:
+        return {"reports": int(self._state.get("gaps_reported_total", 0)),
+                "missing_counters": int(self._state.get("missing_counters_total", 0)),
+                "last_gap": self._state.get("last_gap")}
+
     def public_key(self, key_id: int) -> bytes | None:
         hx = self._state["public_keys"].get(str(key_id))
         return bytes.fromhex(hx) if hx else None
@@ -82,10 +87,15 @@ class StateStore:
         return s
 
     # ---- the single NV write on acceptance (NFR-04) ----
-    def commit_accept(self, *, counter: int, new_nonce: bytes | None = None, new_pass_index: int | None = None) -> None:
+    def commit_accept(self, *, counter: int, new_nonce: bytes | None = None, new_pass_index: int | None = None,
+                      gap: dict | None = None) -> None:
         with self._lock:
             new_state = dict(self._state)
             new_state["last_counter"] = counter
+            if gap:  # same single write: no extra NV cost for gap reporting
+                new_state["gaps_reported_total"] = int(new_state.get("gaps_reported_total", 0)) + 1
+                new_state["missing_counters_total"] = int(new_state.get("missing_counters_total", 0)) + int(gap["count"])
+                new_state["last_gap"] = gap
             new_state["accepted_total"] = int(new_state.get("accepted_total", 0)) + 1
             if new_nonce is not None:
                 new_state["pass_nonce"] = new_nonce.hex()

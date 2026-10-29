@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { api, fmtBytes, REASON_TEXT, short, type Json } from "../api";
 import { useLive } from "../live";
 import QrngInspector from "../components/QrngInspector";
+import LinkAlerts from "../components/LinkAlerts";
 import { Button, CopyId, ErrorNote, Mono, Panel, Provenance, StepLadder, VerdictTag, randomnessKind } from "../components/ui";
 
 const DEVICES = [
@@ -19,11 +20,17 @@ export default function Uplink() {
   const [pace, setPace] = useState(450);
   const [flight, setFlight] = useState<Json | null>(null); // frame currently crossing the link
   const [lastVerdict, setLastVerdict] = useState<Json | null>(null);
+  const [loss, setLoss] = useState(""); // "" | "drop:C07" | "rate:0.1"
 
+  const loadPlan = () => api.get("/api/plan").then((p) => setPlan(p?.opt ? p : null));
   useEffect(() => {
-    api.get("/api/plan").then((p) => setPlan(p?.opt ? p : null));
+    loadPlan();
     api.get("/api/config").then((c) => setDevice(c.config.qrng_device));
+    window.addEventListener("plan-changed", loadPlan);
+    return () => window.removeEventListener("plan-changed", loadPlan);
   }, []);
+  const lossBody = loss.startsWith("drop:") ? { drop: [loss.slice(5)] } : loss.startsWith("rate:") ? { loss_rate: Number(loss.slice(5)), seed: 7 } : {};
+  const planned: string[] = plan ? Object.entries(plan.opt.plan).filter(([, t]) => t !== null).map(([id]) => id).sort() : [];
 
   useEffect(
     () =>
@@ -31,11 +38,12 @@ export default function Uplink() {
         if (e.type !== "frame") return;
         if (e.phase === "tx") setFlight({ ...e, key: `${e.ts}-${e.label}` });
         if (e.phase === "verdict") setLastVerdict({ ...e, key: `${e.ts}-${e.label}` });
+        if (e.type === "frame" && e.phase === "no_ack") setLastVerdict({ ...e, key: `${e.ts}-${e.label}`, noAck: true });
       }),
     [subscribe],
   );
 
-  const frames = useMemo(() => events.filter((e) => e.type === "frame" && e.phase === "verdict").slice(-14).reverse(), [events]);
+  const frames = useMemo(() => events.filter((e) => e.type === "frame" && (e.phase === "verdict" || e.phase === "no_ack")).slice(-16).reverse(), [events]);
   const refused = useMemo(() => events.filter((e) => e.type === "frame" && e.phase === "refused").slice(-3).reverse(), [events]);
   const signed = useMemo(() => events.filter((e) => e.type === "frame" && e.phase === "signed").slice(-8).reverse(), [events]);
 
@@ -142,7 +150,7 @@ export default function Uplink() {
           plan.instance.passes.map((p: Json) => {
             const n = Object.values(plan.opt.plan).filter((t) => t === p.index).length;
             return (
-              <Button key={p.index} busy={busy === `pass${p.index}`} disabled={!!busy} onClick={() => act(`pass${p.index}`, () => api.post(`/api/pass/${p.index}/run`, { pace_ms: pace }))}>
+              <Button key={p.index} busy={busy === `pass${p.index}`} disabled={!!busy} onClick={() => act(`pass${p.index}`, () => api.post(`/api/pass/${p.index}/run`, { pace_ms: pace, ...lossBody }))}>
                 Run pass {p.index} ({n} command{n === 1 ? "" : "s"})
               </Button>
             );
@@ -155,6 +163,21 @@ export default function Uplink() {
         <Button kind="secondary" busy={busy === "open"} disabled={!!busy} onClick={() => act("open", () => api.post("/api/pass/open", { pace_ms: pace }))}>
           Open ad-hoc contact window
         </Button>
+        {plan && (
+          <label className="ml-auto flex items-center gap-2 text-sm">
+            <span className="text-mute">Packet-loss drill</span>
+            <select value={loss} onChange={(e) => setLoss(e.target.value)} aria-label="Packet-loss drill">
+              <option value="">No loss</option>
+              {planned.map((id) => (
+                <option key={id} value={`drop:${id}`}>
+                  Lose first transmission of {id}
+                </option>
+              ))}
+              <option value="rate:0.1">Random 10% loss (seed 7)</option>
+              <option value="rate:0.25">Random 25% loss (seed 7)</option>
+            </select>
+          </label>
+        )}
       </div>
 
       <div className="grid gap-4 lg:grid-cols-[1fr_1.1fr_1.25fr]">
@@ -178,7 +201,7 @@ export default function Uplink() {
           <div className="relative h-14 overflow-hidden rounded bg-white ring-1 ring-rule">
             <div className="absolute inset-y-0 left-0 right-0 m-auto h-px bg-rule" />
             {flight && (
-              <div key={flight.key} className={`frame-cross absolute top-3 flex h-8 w-14 items-center justify-center rounded text-xs font-semibold text-white ${flight.hostile ? "bg-reject" : flight.label === "PASS_OPEN" ? "bg-s2" : "bg-s1"}`}>
+              <div key={flight.key} className={`${flight.lost ? "frame-lost bg-caution" : "frame-cross"} absolute top-3 flex h-8 w-14 items-center justify-center rounded text-xs font-semibold text-white ${flight.lost ? "" : flight.hostile ? "bg-reject" : flight.label === "PASS_OPEN" ? "bg-s2" : "bg-s1"}`}>
                 {flight.hostile ? "hostile" : String(flight.label).slice(0, 7)}
               </div>
             )}
@@ -195,7 +218,7 @@ export default function Uplink() {
                 <div className="h-full rounded bg-s1" style={{ width: `${Math.min(100, (100 * link.used_bytes) / Math.max(1, link.budget_bytes))}%` }} />
               </div>
               <p className="mt-1 text-xs text-mute">
-                {link.frames_sent} frames sent, {link.refused} refused at budget. Hostile traffic: {link.hostile_frames} frames ({fmtBytes(link.hostile_bytes)}).
+                {link.frames_sent} frames sent, {link.lost ? `${link.lost} lost on the link (simulated), ` : ""}{link.refused} refused at budget. Hostile traffic: {link.hostile_frames} frames ({fmtBytes(link.hostile_bytes)}).
               </p>
             </div>
           ) : (
@@ -212,7 +235,12 @@ export default function Uplink() {
           title="Spacecraft verifier"
           aside={shown && <VerdictTag verdict={shown.verdict} reason={shown.reason} />}
         >
-          {shown && (
+          {lastVerdict?.noAck && (
+            <p className="mb-2 rounded bg-caution/10 px-2 py-1 text-sm text-caution">
+              Nothing arrived for {lastVerdict.label} (counter {lastVerdict.counter}): no acknowledgement within the timeout. The ground treats it as a missing packet.
+            </p>
+          )}
+          {shown && !lastVerdict?.noAck && (
             <p className="mb-2 text-sm">
               <span className="font-cond font-semibold">{latest.label}</span>{" "}
               <span className="text-mute">
@@ -220,11 +248,13 @@ export default function Uplink() {
               </span>
             </p>
           )}
-          <StepLadder key={lastVerdict?.key ?? "initial"} steps={shown?.steps} animate={!!lastVerdict} />
+          {!lastVerdict?.noAck && <StepLadder key={lastVerdict?.key ?? "initial"} steps={shown?.steps} animate={!!lastVerdict} />}
           {shown?.executed && <p className="mt-2 text-sm text-accept">Executed: {shown.executed}</p>}
           {shown && shown.verdict === "REJECT" && <p className="mt-2 text-sm text-reject">{REASON_TEXT[shown.reason]}</p>}
         </Panel>
       </div>
+
+      <LinkAlerts />
 
       <Panel title="Frame log, this session" aside={<a className="underline" href="#/evidence">full audit log</a>}>
         <div className="overflow-x-auto">
@@ -252,10 +282,22 @@ export default function Uplink() {
                 <tr key={`${e.ts}-${i}`}>
                   <td className="font-cond font-semibold">{e.label}</td>
                   <td className="tabular-nums">{e.window}</td>
-                  <td className="text-right tabular-nums">{e.result?.counter ?? "—"}</td>
+                  <td className="text-right tabular-nums">{e.result?.counter ?? e.counter ?? "—"}</td>
                   <td className="text-right tabular-nums">{e.bytes}</td>
                   <td>
-                    <VerdictTag verdict={e.result?.verdict} reason={e.result?.reason} />
+                    {e.phase === "no_ack" ? (
+                      <span className="rounded bg-caution/15 px-2 py-0.5 text-xs font-semibold text-caution">No ACK · lost</span>
+                    ) : (
+                      <>
+                        <VerdictTag verdict={e.result?.verdict} reason={e.result?.reason} />
+                        {e.result?.counter_gap && (
+                          <span className="ml-1 text-xs text-caution" title="the satellite reported skipped counters">
+                            gap {e.result.counter_gap.from}
+                            {e.result.counter_gap.to !== e.result.counter_gap.from ? `–${e.result.counter_gap.to}` : ""}
+                          </span>
+                        )}
+                      </>
+                    )}
                   </td>
                   <td className="tabular-nums">{e.result?.log?.seq}</td>
                   <td>

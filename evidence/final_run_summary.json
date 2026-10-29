@@ -1,52 +1,58 @@
 {
-  "finished_utc": "2026-10-29T07:27:13.434650+00:00",
-  "started_utc": "2026-10-29T07:26:14.382068+00:00",
+  "finished_utc": "2026-10-29T10:41:05.793155+00:00",
+  "started_utc": "2026-10-29T10:37:18.655597+00:00",
   "steps": [
     {
       "detail": "both keys present; QCloud login accepted; experiment 'Default Experiment' found (id 52e4fc50-cd7b-41af-a247-1ca79051d95d)",
-      "s": 5.9,
+      "s": 10.3,
       "status": "OK",
       "step": "1. Key check"
     },
     {
-      "detail": "job_id=None status=completed credits_used=0 outcomes=249/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))",
-      "s": 1.3,
+      "detail": "job_id=None status=completed credits_used=0 outcomes=251/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))",
+      "s": 2.6,
       "status": "OK",
       "step": "2.1 QRNG job on QpiAI-QSV-Local"
     },
     {
-      "detail": "job_id=None status=completed credits_used=0 outcomes=250/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))",
-      "s": 0.1,
+      "detail": "job_id=None status=completed credits_used=0 outcomes=252/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))",
+      "s": 0.2,
       "status": "OK",
       "step": "2.2 QRNG job on QpiAI-QSV-Local"
     },
     {
-      "detail": "job_id=None status=completed credits_used=0 outcomes=252/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))",
+      "detail": "job_id=None status=completed credits_used=0 outcomes=251/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))",
       "s": 0.1,
       "status": "OK",
       "step": "2.3 QRNG job on QpiAI-QSV-Local"
     },
     {
-      "detail": "job_id=None status=completed credits_used=0 outcomes=249/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))",
+      "detail": "job_id=None status=completed credits_used=0 outcomes=254/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))",
       "s": 0.1,
       "status": "OK",
       "step": "2.4 QRNG job on QpiAI-QSV-Local"
     },
     {
-      "detail": "job_id=None mode=local objective=65.8 optimum=65.8 greedy=55.3 sent=13/14",
-      "s": 6.0,
+      "detail": "ISS (ZARYA) TLE from NASA TLE API (api.nasa.gov catalogue) (epoch 2026-10-28T11:12, 0.98 d old); 8 passes over Bengaluru in 72 h; space weather x1.0 (max Kp None); budgets [3982, 3700, 3798, 2621]; note: {'donki': 'could not reach https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/GST?startDate=2026-10-22&endDate=2026-10-29: <urlopen error timed out>'} -> applied to the queue",
+      "s": 125.5,
+      "status": "OK",
+      "step": "2b. NASA orbit + space weather -> pass budgets"
+    },
+    {
+      "detail": "job_id=None mode=local objective=66.8 optimum=66.8 greedy=55.4 sent=14/14",
+      "s": 10.2,
       "status": "OK",
       "step": "3a. QpiAI Opt schedule (local solver, drives the uplink)"
     },
     {
       "detail": "12 qubits, QpiAI local simulator (QpiAI-QSV-Local, no cloud job IDs), QAOA=30.3 classical Opt=30.3 exact=30.3",
-      "s": 4.6,
+      "s": 6.6,
       "status": "OK",
       "step": "4. QAOA (local QpiAI simulator)"
     },
     {
-      "detail": "verify p50 53.7 us, peak RAM 21292 B, flood checks 8/500",
-      "s": 33.8,
+      "detail": "verify p50 76.1 us, peak RAM 22109 B, flood checks 8/500",
+      "s": 59.5,
       "status": "OK",
       "step": "5. Resource benchmarks"
     },
@@ -63,19 +69,43 @@
           "passed": 10,
           "wrong_reason": 0
         },
+        "missing-packet drill": {
+          "carried_over": [
+            "C09"
+          ],
+          "detected_no_ack": true,
+          "dropped": "C07",
+          "held": [
+            "C08",
+            "C09"
+          ],
+          "pass": 3,
+          "recovered_in_pass": true,
+          "replanned_with_qpiai_opt": {
+            "blocked": [],
+            "missed": [],
+            "mode": "local",
+            "moved": {
+              "C09": 4,
+              "C10": null,
+              "C14": 4
+            }
+          },
+          "satellite_gap_report_confirms": true
+        },
         "nonce verified": true,
-        "pass 1": "4/4 accepted, nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
-        "pass 2": "4/4 accepted, nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
-        "pass 3": "3/3 accepted, nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
-        "pass 4": "2/2 accepted, nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)"
+        "pass 1": "4 accepted (ACCEPT 4), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
+        "pass 2": "4 accepted (ACCEPT 4), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
+        "pass 3": "3 accepted (ACCEPT 3, HELD 2, NO_ACK 1), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
+        "pass 4": "2 accepted (ACCEPT 2), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)"
       },
-      "s": 5.0,
+      "s": 8.3,
       "status": "OK",
       "step": "6. Mission run on the satellite process"
     },
     {
-      "detail": "F:\\OffScript\\q-uplink-evidence.zip (274 KB)",
-      "s": 2.0,
+      "detail": "F:\\OffScript\\q-uplink-evidence.zip (494 KB)",
+      "s": 3.6,
       "status": "OK",
       "step": "7. Evidence bundle"
     }

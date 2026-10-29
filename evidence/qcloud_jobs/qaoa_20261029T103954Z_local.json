@@ -20,9 +20,9 @@
     "qaoa_objective": 30.3,
     "qaoa_reached_optimum": true
   },
-  "created_utc": "2026-10-29T07:26:28.184515+00:00",
+  "created_utc": "2026-10-29T10:39:47.901489+00:00",
   "device_name": "QpiAI-QSV-Local (in-process, not a cloud run)",
-  "evidence_file": "qcloud_jobs/qaoa_20261029T072632Z_local.json",
+  "evidence_file": "qcloud_jobs/qaoa_20261029T103954Z_local.json",
   "kind": "qaoa",
   "mode": "local",
   "opt_classical": {
@@ -60,7 +60,7 @@
       "C11": 1
     },
     "raw_result": {
-      "compute_time_s": 0.1505954,
+      "compute_time_s": 0.253063,
       "execution_mode": "local",
       "job_id": null,
       "num_nodes": 12,
@@ -96,7 +96,7 @@
         "termination": "optimal",
         "transformed": true
       },
-      "solver_time_s": 0.0910747,
+      "solver_time_s": 0.1903851,
       "variable_assignment": {
         "x_C01_p1": 1,
         "x_C02_p1": 0,
@@ -108,7 +108,7 @@
         "x_C11_p1": 1
       }
     },
-    "wall_time_s": 0.151
+    "wall_time_s": 0.254
   },
   "parameters": {
     "max_iterations": 30,
@@ -154,7 +154,7 @@
       "C11": 1
     },
     "raw_result": {
-      "compute_time_s": 3.7831676,
+      "compute_time_s": 5.5426838,
       "eigenvalue": null,
       "execution_mode": "local",
       "job_id": null,
@@ -30657,7 +30657,7 @@
         "termination": "completed",
         "transformed": true
       },
-      "solver_time_s": 2.3284406999991916,
+      "solver_time_s": 3.742233099997975,
       "variable_assignment": {
         "x_C01_p1": 1,
         "x_C02_p1": 0,
@@ -30679,7 +30679,7 @@
       "x_C06_p2": 0,
       "x_C11_p1": 1
     },
-    "wall_time_s": 3.783
+    "wall_time_s": 5.543
   },
   "qubits": 12,
   "qubo": {
@@ -30905,14 +30905,14 @@
         "budget_bytes": 2145,
         "command_budget": 1430,
         "index": 1,
-        "label": "Pass 1",
+        "label": "AOS 2026-10-29 16:38 UTC \u00b7 6.6 min \u00b7 max 76\u00b0",
         "pass_open_bytes": 715
       },
       {
         "budget_bytes": 2145,
         "command_budget": 1430,
         "index": 2,
-        "label": "Pass 2",
+        "label": "AOS 2026-10-30 02:32 UTC \u00b7 6.2 min \u00b7 max 33\u00b0",
         "pass_open_bytes": 715
       }
     ],

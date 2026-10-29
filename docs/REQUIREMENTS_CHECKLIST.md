@@ -63,3 +63,10 @@ Status key: **Done** = implemented and tested in the build workspace. **Needs yo
 | NFR-08 | Vetted libraries only | pqcrypto (PQClean), cryptography (OpenSSL), QpiAI SDKs |
 
 **Note on QpiAI execution path.** The organisers confirmed: "You do not need workspaces or platform utilities after getting the API key and use that to run local solvers and simulators. They do not need any credits as well." The submission therefore uses the QpiAI Opt local solver and the QpiAI Quantum SDK simulator, both authenticated with our API keys. Cloud job paths remain in the code (`--quantum cloud`, `--opt-mode platform-qubo`) but were refused on our account for subscription reasons.
+
+**Additions after mentor review (2026-10-29).**
+
+| Item | What | Status |
+|---|---|---|
+| Missing-packet detection | No-ACK detection, onboard counter-gap report (same single NV write), ground ledger reconciliation, dependency hold, re-sign (never resend), in-pass retransmission, carry-over, QpiAI Opt re-plan of the remaining passes with deadlines and dependencies kept | Done; `tests/test_packet_loss.py` (6 tests), drill in `final_run.py` |
+| NASA data | Real ISS TLE (TLE API in the api.nasa.gov catalogue) -> SGP4 passes over Bengaluru -> per-pass byte budgets; NASA DONKI storms/flares -> space-weather margin; raw responses recorded with SHA-256 | Done; `tests/test_nasa.py` (6 offline tests on a synthetic TLE), live fetch in `final_run.py` |

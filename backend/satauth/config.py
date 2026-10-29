@@ -50,6 +50,10 @@ class Settings:
     allow_dev_nonce: bool
     allow_local_qrng: bool
     pass_budgets: list[int] = field(default_factory=list)
+    norad_id: int = 25544
+    ground_station: dict = field(default_factory=dict)
+    uplink_bps: float = 80.0
+    min_elevation_deg: float = 10.0
 
     # --- secrets: never serialise these ---
     @property
@@ -61,6 +65,10 @@ class Settings:
         # Project convention is QPIAI_QCLOUD_API_KEY; the earlier poc used
         # QCLOUD_API_KEY and the SDK itself reads API_KEY from qcloud.env.
         return _env("QPIAI_QCLOUD_API_KEY") or _env("QCLOUD_API_KEY")
+
+    @property
+    def nasa_api_key(self) -> str | None:
+        return _env("NASA_API_KEY")
 
     def public_status(self) -> dict:
         """Safe-to-display configuration (no secret values)."""
@@ -79,6 +87,11 @@ class Settings:
             "sat_id": self.sat_id,
             "flood_limit": self.flood_limit,
             "pass_budgets": self.pass_budgets,
+            "nasa_key_configured": self.nasa_api_key is not None,
+            "norad_id": self.norad_id,
+            "ground_station": self.ground_station,
+            "uplink_bps": self.uplink_bps,
+            "min_elevation_deg": self.min_elevation_deg,
         }
 
 
@@ -111,4 +124,11 @@ def load_settings() -> Settings:
         allow_dev_nonce=(_env("QUPLINK_ALLOW_DEV_NONCE", "false") or "false").lower() == "true",
         allow_local_qrng=(_env("QUPLINK_ALLOW_LOCAL_QRNG", "true") or "true").lower() == "true",
         pass_budgets=budgets,
+        norad_id=_env_int("QUPLINK_NORAD_ID", 25544),
+        ground_station={"name": _env("QUPLINK_GS_NAME", "Bengaluru"),
+                        "lat": float(_env("QUPLINK_GS_LAT", "12.9716")),
+                        "lon": float(_env("QUPLINK_GS_LON", "77.5946")),
+                        "alt_m": float(_env("QUPLINK_GS_ALT_M", "920"))},
+        uplink_bps=float(_env("QUPLINK_UPLINK_BPS", "80")),
+        min_elevation_deg=float(_env("QUPLINK_MIN_ELEVATION", "10")),
     )
