@@ -1,0 +1,2 @@
+id,description,expect,new_window,key,key_id,opcode,args_hex,sat_id,expiry_offset_s,counter,nonce,raw_hex,replay_of,flip_bit
+J1,(describe the test),ACCEPT,true,OPERATOR,,CAPTURE_IMAGE,0b01,,,,,,,

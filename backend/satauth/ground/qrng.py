@@ -206,6 +206,13 @@ class QRNGPool:
 
     # ---- consumers ----
     def take_nonce(self, pass_no: int) -> dict:
+        out = self._take_nonce(pass_no)
+        from ..common import txtlog
+
+        txtlog.refresh(self.jobs_dir.parent)  # plain-text QpiAI usage log (best effort)
+        return out
+
+    def _take_nonce(self, pass_no: int) -> dict:
         with self._lock:
             idx = self._index()
             entry = next((e for e in idx["entries"] if not e.get("nonce_used") and self._usable_for_nonce(e)), None)

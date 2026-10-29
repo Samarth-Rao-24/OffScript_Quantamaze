@@ -1,0 +1,459 @@
+============================================================================================
+QpiAI USAGE LOG  -  Q-Uplink Mission Control (team OffScript, Quant-A-Maze 3.0, PQC-03)
+============================================================================================
+Generated     : 2026-10-29 21:41:34 UTC
+What this is  : a plain-text copy of every QpiAI tool call recorded in evidence/. The JSON file
+                named on each entry is the full record (inputs, raw solver output, counts).
+Execution path: QpiAI Opt local solver and QpiAI-QSV-Local simulator, authenticated with the team
+                API key, as the organisers advised (no credits, so no cloud job IDs). Simulator
+                randomness is classical PRNG sampling and is labelled as such.
+Totals        : QpiAI Opt runs 5, QRNG circuits 19, QAOA runs 3, pass nonces from QRNG 19,
+                failed QpiAI calls 0
+QCloud devices the platform lists: QpiAI-Indus-1, QpiAI-QDM-Lite, QpiAI-QDM-Simulator, QpiAI-QSV-Lite, QpiAI-QSV-Simulator, QpiAI-QTN-Simulator (cloud runs need a QpiAI subscription)
+No API keys, passphrases or private keys appear in this file.
+============================================================================================
+
+[2026-10-29 12:58:19 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 253 distinct outcomes of 256; counts SHA-256 d188c4a8b5e7ef082b9c50e5aaff8693...
+  Status              : completed, credits used 0, wall 1.079 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T125819Z_local_1b6922.json
+
+[2026-10-29 12:58:20 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 253 distinct outcomes of 256; counts SHA-256 ea446968b07c6acdbc746d8ed63f49e4...
+  Status              : completed, credits used 0, wall 0.014 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T125820Z_local_e5bf18.json
+
+[2026-10-29 12:58:21 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 254 distinct outcomes of 256; counts SHA-256 861204479e952b7853c7f0273d451847...
+  Status              : completed, credits used 0, wall 0.014 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T125821Z_local_f02061.json
+
+[2026-10-29 12:58:21 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 252 distinct outcomes of 256; counts SHA-256 e65e2f1c00a7143d8d17725fd73de6e5...
+  Status              : completed, credits used 0, wall 0.004 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T125821Z_local_f16e8a.json
+
+[2026-10-29 12:58:21 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 253 distinct outcomes of 256; counts SHA-256 6f4505a11fd128b44b6d50e226190d59...
+  Status              : completed, credits used 0, wall 0.004 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T125821Z_local_2b28c2.json
+
+[2026-10-29 12:58:21 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 251 distinct outcomes of 256; counts SHA-256 7a5a147e113f6f483b562cbc00af2fa9...
+  Status              : completed, credits used 0, wall 0.004 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T125821Z_local_f6692f.json
+
+[2026-10-29 13:00:11 UTC]  QpiAI Opt  |  multi-pass uplink schedule (MILP)  |  OK
+  Product / SDK       : QpiAI Opt (qpiai-opt), called with the team API key
+  Mode                : requested local, executed local
+  Solver              : HiGHS via qpiai-opt-local; status optimal; optimality proven: True; gap 0.0
+  Job ID              : none (local solver: no cloud job is created)
+  Problem             : MILP, 56 binary variables, 53 constraints
+  Input               : 14 commands, 4 passes, budgets [3982, 3700, 3798, 2620] B
+  Objective           : 66.8 delivered priority
+  Commands sent       : 14/14
+  Baselines           : greedy 55.4, brute force 66.8, Opt matches brute force: True
+  Plan re-check       : feasible, approved for signing
+  Time                : wall 0.242 s, solver 0.0229882 s
+  Plan                : pass 1: C01, C02, C05, C11
+                        pass 2: C03, C04, C06, C13
+                        pass 3: C07, C08, C09, C12
+                        pass 4: C10, C14
+  Evidence file       : opt_jobs/opt_20261029T130017Z_local-nojobid.json
+
+[2026-10-29 13:00:17 UTC]  QpiAI  |  QAOA experiment  |  OK
+  Product / SDK       : QpiAI Opt QUBO modeller + QpiAI Quantum SDK QAOA (qpiai-opt[quantum])
+  Mode / device       : local / QpiAI-QSV-Local (in-process, not a cloud run)
+  Job IDs             : none (local simulator: no cloud job is created)
+  Problem             : reduced schedule as a QUBO, 12 qubits (5 commands, 2 passes)
+  Parameters          : reps 1, optimizer cobyla, max iterations 30, shots 1024, seed 7
+  Result              : QAOA 30.3, classical Opt 30.3, exact optimum 30.3; reached optimum: True
+  Time                : QAOA 3.421 s, classical Opt 0.172 s
+  Evidence file       : qcloud_jobs/qaoa_20261029T130022Z_local.json
+
+[2026-10-29 13:01:09 UTC]  QRNG output used  |  pass 1 nonce  |  OK
+  From QRNG run       : qrng_20261029T125819Z_local_1b6922.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 24273931a7b15095... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 13:01:10 UTC]  QRNG output used  |  pass 2 nonce  |  OK
+  From QRNG run       : qrng_20261029T125820Z_local_e5bf18.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 2346b4afb6b937e4... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 13:01:11 UTC]  QRNG output used  |  pass 3 nonce  |  OK
+  From QRNG run       : qrng_20261029T125821Z_local_f02061.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 069a88451d1af13f... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 13:01:12 UTC]  QpiAI Opt  |  re-plan after a missing packet (MILP)  |  OK
+  Product / SDK       : QpiAI Opt (qpiai-opt), called with the team API key
+  Mode                : requested local, executed local
+  Solver              : HiGHS via qpiai-opt-local; status optimal; optimality proven: True; gap 0.0
+  Job ID              : none (local solver: no cloud job is created)
+  Problem             : MILP, 3 binary variables, 4 constraints
+  Input               : 14 commands, 4 passes, budgets [3982, 3700, 3798, 2620] B
+  Objective           : 6.0 delivered priority
+  Commands sent       : 13/14
+  Baselines           : greedy 6.0, brute force 6.0, Opt matches brute force: True
+  Plan re-check       : feasible, approved for signing
+  Time                : wall 0.069 s, solver 0.0300142 s
+  Re-plan             : from pass 4, re-queued C09, C10, C14
+  Plan                : pass 1: C01, C02, C05, C11
+                        pass 2: C03, C04, C06, C13
+                        pass 3: C07, C08, C12
+                        pass 4: C09, C14
+                        not sent: C10
+  Evidence file       : opt_jobs/opt_20261029T130112Z_replan_p4_local-nojobid.json
+
+[2026-10-29 13:01:12 UTC]  QRNG output used  |  pass 4 nonce  |  OK
+  From QRNG run       : qrng_20261029T125821Z_local_f16e8a.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : c5f58764ecd20907... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 13:01:14 UTC]  QRNG output used  |  pass 5 nonce  |  OK
+  From QRNG run       : qrng_20261029T125821Z_local_2b28c2.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : ffd5d5303bdfaeb2... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 13:38:26 UTC]  QRNG output used  |  pass 2 nonce  |  OK
+  From QRNG run       : qrng_20261029T125821Z_local_f6692f.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 82215eb87f23d6b4... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 17:58:20 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 251 distinct outcomes of 256; counts SHA-256 94fda8a0f31b88f987a8f22a840d4b1b...
+  Status              : completed, credits used 0, wall 7.154 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T175820Z_local_881b36.json
+
+[2026-10-29 17:58:29 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 247 distinct outcomes of 256; counts SHA-256 7d686725191e22f7e65ae6ad65599a40...
+  Status              : completed, credits used 0, wall 0.007 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T175829Z_local_032fe6.json
+
+[2026-10-29 17:58:34 UTC]  QRNG output used  |  pass 1 nonce  |  OK
+  From QRNG run       : qrng_20261029T175820Z_local_881b36.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 792fe772eb1efc23... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 17:58:51 UTC]  QRNG output used  |  pass 2 nonce  |  OK
+  From QRNG run       : qrng_20261029T175829Z_local_032fe6.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 4403546dec7a1cbb... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 17:59:11 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 251 distinct outcomes of 256; counts SHA-256 edefe24eec72747e784e72c16478b30a...
+  Status              : completed, credits used 0, wall 0.01 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T175911Z_local_bdae63.json
+
+[2026-10-29 17:59:13 UTC]  QRNG output used  |  pass 3 nonce  |  OK
+  From QRNG run       : qrng_20261029T175911Z_local_bdae63.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 2c5b81065b879832... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 18:34:50 UTC]  QpiAI  |  QAOA experiment  |  OK
+  Product / SDK       : QpiAI Opt QUBO modeller + QpiAI Quantum SDK QAOA (qpiai-opt[quantum])
+  Mode / device       : local / QpiAI-QSV-Local (in-process, not a cloud run)
+  Job IDs             : none (local simulator: no cloud job is created)
+  Problem             : reduced schedule as a QUBO, 12 qubits (5 commands, 2 passes)
+  Parameters          : reps 1, optimizer cobyla, max iterations 30, shots 1024, seed 7
+  Result              : QAOA 30.3, classical Opt 30.3, exact optimum 30.3; reached optimum: True
+  Time                : QAOA 8.819 s, classical Opt 5.251 s
+  Evidence file       : qcloud_jobs/qaoa_20261029T183504Z_local.json
+
+[2026-10-29 18:39:05 UTC]  QpiAI Opt  |  multi-pass uplink schedule (MILP)  |  OK
+  Product / SDK       : QpiAI Opt (qpiai-opt), called with the team API key
+  Mode                : requested local, executed local
+  Solver              : HiGHS via qpiai-opt-local; status optimal; optimality proven: True; gap 0.0
+  Job ID              : none (local solver: no cloud job is created)
+  Problem             : MILP, 56 binary variables, 53 constraints
+  Input               : 14 commands, 4 passes, budgets [3982, 3698, 3799, 2621] B
+  Objective           : 66.8 delivered priority
+  Commands sent       : 14/14
+  Baselines           : greedy 55.4, brute force 66.8, Opt matches brute force: True
+  Plan re-check       : feasible, approved for signing
+  Time                : wall 2.282 s, solver 0.39346020000000004 s
+  Plan                : pass 1: C01, C02, C05, C11
+                        pass 2: C03, C04, C06, C13
+                        pass 3: C07, C08, C09, C12
+                        pass 4: C10, C14
+  Evidence file       : opt_jobs/opt_20261029T183913Z_local-nojobid.json
+
+[2026-10-29 18:39:23 UTC]  QpiAI  |  QAOA experiment  |  OK
+  Product / SDK       : QpiAI Opt QUBO modeller + QpiAI Quantum SDK QAOA (qpiai-opt[quantum])
+  Mode / device       : local / QpiAI-QSV-Local (in-process, not a cloud run)
+  Job IDs             : none (local simulator: no cloud job is created)
+  Problem             : reduced schedule as a QUBO, 12 qubits (5 commands, 2 passes)
+  Parameters          : reps 1, optimizer cobyla, max iterations 30, shots 1024, seed 7
+  Result              : QAOA 30.3, classical Opt 30.3, exact optimum 30.3; reached optimum: True
+  Time                : QAOA 1.465 s, classical Opt 0.114 s
+  Evidence file       : qcloud_jobs/qaoa_20261029T183925Z_local.json
+
+[2026-10-29 18:40:41 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 251 distinct outcomes of 256; counts SHA-256 bc6e8ecb917d35a9a0ac5fbf50c9b3aa...
+  Status              : completed, credits used 0, wall 0.006 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T184041Z_local_6785d4.json
+
+[2026-10-29 18:40:43 UTC]  QRNG output used  |  pass 4 nonce  |  OK
+  From QRNG run       : qrng_20261029T184041Z_local_6785d4.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 247c84c0e8317ef2... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 18:54:13 UTC]  QpiAI Opt  |  multi-pass uplink schedule (MILP)  |  OK
+  Product / SDK       : QpiAI Opt (qpiai-opt), called with the team API key
+  Mode                : requested local, executed local
+  Solver              : HiGHS via qpiai-opt-local; status optimal; optimality proven: True; gap 0.0
+  Job ID              : none (local solver: no cloud job is created)
+  Problem             : MILP, 56 binary variables, 53 constraints
+  Input               : 14 commands, 4 passes, budgets [3982, 3698, 3799, 2621] B
+  Objective           : 66.8 delivered priority
+  Commands sent       : 14/14
+  Baselines           : greedy 55.4, brute force 66.8, Opt matches brute force: True
+  Plan re-check       : feasible, approved for signing
+  Time                : wall 1.618 s, solver 0.0243334 s
+  Plan                : pass 1: C01, C02, C05, C11
+                        pass 2: C03, C04, C06, C13
+                        pass 3: C07, C08, C09, C12
+                        pass 4: C10, C14
+  Evidence file       : opt_jobs/opt_20261029T185420Z_local-nojobid.json
+
+[2026-10-29 18:54:45 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 251 distinct outcomes of 256; counts SHA-256 c7889d28fc62854902277a6d08a8bea5...
+  Status              : completed, credits used 0, wall 2.052 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T185445Z_local_ac239e.json
+
+[2026-10-29 18:54:51 UTC]  QRNG output used  |  pass 1 nonce  |  OK
+  From QRNG run       : qrng_20261029T185445Z_local_ac239e.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 0a522fe030946104... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 18:55:39 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 254 distinct outcomes of 256; counts SHA-256 d4d8245ddcef7193ea4ca6ab755ff8c6...
+  Status              : completed, credits used 0, wall 0.007 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T185539Z_local_6de98a.json
+
+[2026-10-29 18:55:45 UTC]  QRNG output used  |  pass 4 nonce  |  OK
+  From QRNG run       : qrng_20261029T185539Z_local_6de98a.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : f462c72f5733bd8e... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 18:56:06 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 252 distinct outcomes of 256; counts SHA-256 07d23e13aef2dd60f00ba56db606bca5...
+  Status              : completed, credits used 0, wall 0.006 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T185606Z_local_556761.json
+
+[2026-10-29 18:56:11 UTC]  QRNG output used  |  pass 2 nonce  |  OK
+  From QRNG run       : qrng_20261029T185606Z_local_556761.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 2886f8d1bdf79860... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 18:56:16 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 254 distinct outcomes of 256; counts SHA-256 526e1282ae6ceac6a9344f935f4289ed...
+  Status              : completed, credits used 0, wall 0.005 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T185616Z_local_e04c0d.json
+
+[2026-10-29 18:56:18 UTC]  QRNG output used  |  pass 3 nonce  |  OK
+  From QRNG run       : qrng_20261029T185616Z_local_e04c0d.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : c0e244e40c0e88c4... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 18:56:52 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 252 distinct outcomes of 256; counts SHA-256 28c1e3969993bfa5b24fbe87423e5ad2...
+  Status              : completed, credits used 0, wall 0.005 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T185652Z_local_08e3b7.json
+
+[2026-10-29 18:56:53 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 253 distinct outcomes of 256; counts SHA-256 5124850409339200ded8565d2fdce86e...
+  Status              : completed, credits used 0, wall 0.006 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T185653Z_local_55104e.json
+
+[2026-10-29 18:56:54 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 250 distinct outcomes of 256; counts SHA-256 f01854686d469644f8aaa047b2b9e672...
+  Status              : completed, credits used 0, wall 0.005 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T185654Z_local_e3509c.json
+
+[2026-10-29 18:57:17 UTC]  QRNG output used  |  pass 3 nonce  |  OK
+  From QRNG run       : qrng_20261029T185652Z_local_08e3b7.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 7c32ac43d80d15a9... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 18:57:20 UTC]  QRNG output used  |  pass 4 nonce  |  OK
+  From QRNG run       : qrng_20261029T185653Z_local_55104e.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 20df68afc47e86cb... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 18:57:24 UTC]  QRNG output used  |  pass 2 nonce  |  OK
+  From QRNG run       : qrng_20261029T185654Z_local_e3509c.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : 9e30d82535b1c8ac... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 19:01:21 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 253 distinct outcomes of 256; counts SHA-256 842c4ab6abeb551fd9c3baba421c0e86...
+  Status              : completed, credits used 0, wall 0.011 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T190121Z_local_d71785.json
+
+[2026-10-29 19:01:54 UTC]  QpiAI Quantum SDK  |  QRNG circuit  |  OK
+  Product / SDK       : QpiAI Quantum SDK (qpiai-quantum 0.3.0)
+  Device              : QpiAI-QSV-Local
+  Randomness class    : qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  Job ID              : none (local simulator: no cloud job is created)
+  Circuit             : 8 qubits: H on each, measure all, 1024 shots
+  Output              : 249 distinct outcomes of 256; counts SHA-256 3fb45dc078b77502063a325001be57b7...
+  Status              : completed, credits used 0, wall 0.005 s
+  Used for            : pass nonce + attack fuzz seed (mixed with OS entropy)
+  Evidence file       : qcloud_jobs/qrng_20261029T190154Z_local_b54605.json
+
+[2026-10-29 19:02:04 UTC]  QRNG output used  |  pass 2 nonce  |  OK
+  From QRNG run       : qrng_20261029T190121Z_local_d71785.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : ebcf99d6a365fe95... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 19:02:08 UTC]  QRNG output used  |  pass 3 nonce  |  OK
+  From QRNG run       : qrng_20261029T190154Z_local_b54605.json
+  Device / job        : QpiAI-QSV-Local / no cloud job
+  Derivation          : SHA-256(OS 32 B || QCloud counts digest || job_id || pass)
+  Nonce               : fd83a6a36150543f... (installed onboard via signed PASS_OPEN)
+
+[2026-10-29 19:37:02 UTC]  QpiAI Opt  |  multi-pass uplink schedule (MILP)  |  OK
+  Product / SDK       : QpiAI Opt (qpiai-opt), called with the team API key
+  Mode                : requested local, executed local
+  Solver              : HiGHS via qpiai-opt-local; status optimal; optimality proven: True; gap 0.0
+  Job ID              : none (local solver: no cloud job is created)
+  Problem             : MILP, 56 binary variables, 53 constraints
+  Input               : 14 commands, 4 passes, budgets [3982, 3698, 3799, 2621] B
+  Objective           : 66.8 delivered priority
+  Commands sent       : 14/14
+  Baselines           : greedy 55.4, brute force 66.8, Opt matches brute force: True
+  Plan re-check       : feasible, approved for signing
+  Time                : wall 1.255 s, solver 0.0329945 s
+  Plan                : pass 1: C01, C02, C05, C11
+                        pass 2: C03, C04, C06, C13
+                        pass 3: C07, C08, C09, C12
+                        pass 4: C10, C14
+  Evidence file       : opt_jobs/opt_20261029T193709Z_local-nojobid.json

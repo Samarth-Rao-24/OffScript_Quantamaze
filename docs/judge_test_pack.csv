@@ -1,0 +1,21 @@
+id,description,expect,new_window,key,key_id,opcode,args_hex,sat_id,expiry_offset_s,counter,nonce,raw_hex,replay_of,flip_bit
+T01,Valid OPERATOR image capture (opens a fresh contact window first),ACCEPT,true,OPERATOR,,CAPTURE_IMAGE,0b01,,,,,,,
+T02,Replay: T01 sent again byte for byte,E_REPLAY,,,,,,,,,,,T01,
+T03,"Replay with an old counter: valid signature, counter 1",E_REPLAY,,OPERATOR,,NOOP_PING,,,,1,,,,
+T04,Unauthorized: OPERATOR key orders a thruster burn,E_UNAUTHORIZED,,OPERATOR,,ORBIT_BURN,0000000a,,,,,,,
+T05,Unauthorized: OPERATOR key tries to revoke a key,E_UNAUTHORIZED,,OPERATOR,,KEY_REVOKE,02,,,,,,,
+T06,Tamper: ADMIN burn with one bit of the body flipped after signing,E_BAD_SIG,,ADMIN,,ORBIT_BURN,0000000a,,,,,,,140
+T07,Tamper: counter field changed after signing (bit 60),E_BAD_SIG,,OPERATOR,,NOOP_PING,,,,,,,,60
+T08,Forged: attacker's own Falcon key claiming to be OPERATOR,E_BAD_SIG,,ATTACKER,,SET_SAFE_MODE,01,,,,,,,
+T09,Relabel: ADMIN-signed frame that claims key_id 1 (OPERATOR),E_BAD_SIG,,ADMIN,1,NOOP_PING,,,,,,,,
+T10,Nonce: signed under a random nonce no pass uses,E_BAD_SIG,,ADMIN,,NOOP_PING,,,,,random,,,
+T11,Wrong satellite: addressed to satellite 7,E_WRONG_SAT,,OPERATOR,,NOOP_PING,,7,,,,,,
+T12,Expired: expiry 30 seconds in the past,E_EXPIRED,,OPERATOR,,NOOP_PING,,,-30,,,,,
+T13,"Standby key: signed claiming spare key 3, not yet activated (shows E_KEY_INACTIVE)",REJECT,,OPERATOR,3,NOOP_PING,,,,,,,,
+T14,Unknown opcode 0x99 from OPERATOR,REJECT,,OPERATOR,,0x99,,,,,,,,
+T15,Garbage bytes on the link,E_MALFORMED,,,,,,,,,,deadbeef,,
+T16,Valid ADMIN battery heater set-point,ACCEPT,,ADMIN,,SET_HEATER,0112,,,,,,,
+T17,Valid ADMIN safe-mode command,ACCEPT,,ADMIN,,SET_SAFE_MODE,01,,,,,,,
+T18,"Cross-pass: new window opened, frame signed under the previous pass nonce",E_BAD_SIG,true,OPERATOR,,CAPTURE_IMAGE,0c02,,,,previous,,,
+T19,Valid OPERATOR command in the new pass (rejections did not disturb the counter),ACCEPT,,OPERATOR,,DOWNLINK_DATA,03,,,,,,,
+T20,Replay of T16 into the new pass,REJECT,,,,,,,,,,,T16,

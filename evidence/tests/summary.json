@@ -1,286 +1,286 @@
 {
-  "finished_utc": "2026-10-29T12:58:08.348921+00:00",
+  "finished_utc": "2026-10-29T21:41:03.188274+00:00",
   "exit_status": 0,
   "counts": {
-    "passed": 91,
+    "passed": 93,
     "skipped": 1
   },
-  "total": 92,
+  "total": 94,
   "results": [
     {
       "test": "tests/test_api.py::test_health_and_no_secrets",
       "outcome": "passed",
-      "duration_s": 0.3432
+      "duration_s": 0.2792
     },
     {
       "test": "tests/test_api.py::test_plan_without_key_returns_503_and_no_plan",
       "outcome": "passed",
-      "duration_s": 0.0066
+      "duration_s": 0.0842
     },
     {
       "test": "tests/test_api.py::test_attacks_require_window_then_all_pass",
       "outcome": "passed",
-      "duration_s": 1.2133
+      "duration_s": 1.3036
     },
     {
       "test": "tests/test_api.py::test_run_pass_uses_validated_plan",
       "outcome": "passed",
-      "duration_s": 6.1703
+      "duration_s": 5.537
     },
     {
       "test": "tests/test_api.py::test_evidence_zip_has_no_private_keys",
       "outcome": "passed",
-      "duration_s": 0.1539
+      "duration_s": 0.1617
     },
     {
       "test": "tests/test_api.py::test_log_endpoint_filters",
       "outcome": "passed",
-      "duration_s": 0.0685
+      "duration_s": 0.0866
     },
     {
       "test": "tests/test_api.py::test_websocket_streams_frame_events",
       "outcome": "passed",
-      "duration_s": 0.0459
+      "duration_s": 0.0534
     },
     {
       "test": "tests/test_attacks.py::test_01_valid_command_accepted",
       "outcome": "passed",
-      "duration_s": 0.1209
+      "duration_s": 0.1206
     },
     {
       "test": "tests/test_attacks.py::test_02_tampered_command_rejected",
       "outcome": "passed",
-      "duration_s": 0.5736
+      "duration_s": 0.5712
     },
     {
       "test": "tests/test_attacks.py::test_02b_tampered_header_counter_rejected",
       "outcome": "passed",
-      "duration_s": 0.1336
+      "duration_s": 0.0964
     },
     {
       "test": "tests/test_attacks.py::test_03_replayed_command_rejected",
       "outcome": "passed",
-      "duration_s": 0.1755
+      "duration_s": 0.1066
     },
     {
       "test": "tests/test_attacks.py::test_03b_older_counter_rejected",
       "outcome": "passed",
-      "duration_s": 0.1375
+      "duration_s": 0.1221
     },
     {
       "test": "tests/test_attacks.py::test_04_expired_command_rejected",
       "outcome": "passed",
-      "duration_s": 0.1078
+      "duration_s": 0.1025
     },
     {
       "test": "tests/test_attacks.py::test_04b_expired_and_badly_signed_fails_cheaply",
       "outcome": "passed",
-      "duration_s": 0.0992
+      "duration_s": 0.1307
     },
     {
       "test": "tests/test_attacks.py::test_05_unauthorized_command_rejected",
       "outcome": "passed",
-      "duration_s": 0.1234
+      "duration_s": 0.1192
     },
     {
       "test": "tests/test_attacks.py::test_05b_operator_cannot_open_pass",
       "outcome": "passed",
-      "duration_s": 0.0996
+      "duration_s": 0.1035
     },
     {
       "test": "tests/test_attacks.py::test_06_forged_random_signature_rejected",
       "outcome": "passed",
-      "duration_s": 0.0013
+      "duration_s": 0.0016
     },
     {
       "test": "tests/test_attacks.py::test_06b_forged_with_attacker_key_rejected",
       "outcome": "passed",
-      "duration_s": 0.0305
+      "duration_s": 0.0342
     },
     {
       "test": "tests/test_attacks.py::test_06c_unknown_key_id_rejected",
       "outcome": "passed",
-      "duration_s": 0.098
+      "duration_s": 0.0976
     },
     {
       "test": "tests/test_attacks.py::test_07_cross_pass_replay_rejected",
       "outcome": "passed",
-      "duration_s": 0.1122
+      "duration_s": 0.119
     },
     {
       "test": "tests/test_attacks.py::test_07b_nonce_binding_is_what_rejects",
       "outcome": "passed",
-      "duration_s": 0.1032
+      "duration_s": 0.1018
     },
     {
       "test": "tests/test_attacks.py::test_07c_replayed_pass_open_rejected",
       "outcome": "passed",
-      "duration_s": 0.0148
+      "duration_s": 0.0151
     },
     {
       "test": "tests/test_attacks.py::test_08_wrong_satellite_rejected",
       "outcome": "passed",
-      "duration_s": 0.1088
+      "duration_s": 0.0969
     },
     {
       "test": "tests/test_attacks.py::test_09_flood_attack_bounded",
       "outcome": "passed",
-      "duration_s": 0.9203
+      "duration_s": 0.6895
     },
     {
       "test": "tests/test_attacks.py::test_09b_flood_of_wellformed_signatures_also_capped",
       "outcome": "passed",
-      "duration_s": 0.3785
+      "duration_s": 0.3677
     },
     {
       "test": "tests/test_attacks.py::test_10_link_never_exceeds_pass_budget",
       "outcome": "passed",
-      "duration_s": 0.128
+      "duration_s": 0.1227
     },
     {
       "test": "tests/test_attacks.py::test_counter_survives_reboot",
       "outcome": "passed",
-      "duration_s": 0.117
+      "duration_s": 0.1106
     },
     {
       "test": "tests/test_attacks.py::test_atomic_write_crash_leaves_previous_state",
       "outcome": "passed",
-      "duration_s": 0.1307
+      "duration_s": 0.1186
     },
     {
       "test": "tests/test_attacks.py::test_rejections_write_nothing_to_state_file",
       "outcome": "passed",
-      "duration_s": 0.1402
+      "duration_s": 0.1346
     },
     {
       "test": "tests/test_attacks.py::test_malformed_frames_rejected",
       "outcome": "passed",
-      "duration_s": 0.0993
+      "duration_s": 0.1032
     },
     {
       "test": "tests/test_attacks.py::test_check_order_matches_prd",
       "outcome": "passed",
-      "duration_s": 0.109
+      "duration_s": 0.117
     },
     {
       "test": "tests/test_attacks.py::test_frame_sizes_match_nfr01",
       "outcome": "passed",
-      "duration_s": 0.1209
+      "duration_s": 0.0935
     },
     {
       "test": "tests/test_attacks.py::test_separate_satellite_process_end_to_end",
       "outcome": "passed",
-      "duration_s": 3.3738
+      "duration_s": 4.155
     },
     {
       "test": "tests/test_judge.py::test_qrng_job_detail_and_stats",
       "outcome": "passed",
-      "duration_s": 30.1017
+      "duration_s": 25.0936
     },
     {
       "test": "tests/test_judge.py::test_nonce_verify_recomputes_and_matches",
       "outcome": "passed",
-      "duration_s": 0.2095
+      "duration_s": 0.1786
     },
     {
       "test": "tests/test_judge.py::test_nonce_verify_detects_tampered_counts",
       "outcome": "passed",
-      "duration_s": 0.1456
+      "duration_s": 0.1369
     },
     {
       "test": "tests/test_judge.py::test_refetch_needs_a_cloud_job",
       "outcome": "passed",
-      "duration_s": 0.0162
+      "duration_s": 0.0129
     },
     {
       "test": "tests/test_judge.py::test_refetch_compares_remote_counts",
       "outcome": "passed",
-      "duration_s": 0.0227
+      "duration_s": 0.0157
     },
     {
       "test": "tests/test_judge.py::test_compose_variants",
       "outcome": "passed",
-      "duration_s": 0.3971
+      "duration_s": 0.4327
     },
     {
       "test": "tests/test_judge.py::test_raw_and_last_frame",
       "outcome": "passed",
-      "duration_s": 0.1457
+      "duration_s": 0.1464
     },
     {
       "test": "tests/test_judge.py::test_sample_cases_all_pass_json_and_csv",
       "outcome": "passed",
-      "duration_s": 0.8699
+      "duration_s": 0.4742
     },
     {
       "test": "tests/test_judge.py::test_cases_report_wrong_expectations",
       "outcome": "passed",
-      "duration_s": 0.0976
+      "duration_s": 0.1145
     },
     {
       "test": "tests/test_judge.py::test_cases_validation",
       "outcome": "passed",
-      "duration_s": 0.005
+      "duration_s": 0.0046
     },
     {
       "test": "tests/test_keys.py::test_every_suite_signs_and_rejects_tampering[falcon512]",
       "outcome": "passed",
-      "duration_s": 0.0205
+      "duration_s": 0.0215
     },
     {
       "test": "tests/test_keys.py::test_every_suite_signs_and_rejects_tampering[mldsa44]",
       "outcome": "passed",
-      "duration_s": 0.0012
+      "duration_s": 0.0018
     },
     {
       "test": "tests/test_keys.py::test_every_suite_signs_and_rejects_tampering[hybrid]",
       "outcome": "passed",
-      "duration_s": 0.1797
+      "duration_s": 0.1891
     },
     {
       "test": "tests/test_keys.py::test_hybrid_needs_both_signatures",
       "outcome": "passed",
-      "duration_s": 0.0607
+      "duration_s": 0.0449
     },
     {
       "test": "tests/test_keys.py::test_standby_key_is_refused_without_signature_work",
       "outcome": "passed",
-      "duration_s": 0.0995
+      "duration_s": 0.0961
     },
     {
       "test": "tests/test_keys.py::test_operator_cannot_manage_keys",
       "outcome": "passed",
-      "duration_s": 0.101
+      "duration_s": 0.1021
     },
     {
       "test": "tests/test_keys.py::test_rotation_activate_then_revoke_in_single_writes",
       "outcome": "passed",
-      "duration_s": 0.284
+      "duration_s": 0.2973
     },
     {
       "test": "tests/test_keys.py::test_last_admin_key_cannot_be_revoked",
       "outcome": "passed",
-      "duration_s": 0.0293
+      "duration_s": 0.0276
     },
     {
       "test": "tests/test_keys.py::test_migration_to_ml_dsa_and_hybrid",
       "outcome": "passed",
-      "duration_s": 0.2429
+      "duration_s": 0.2527
     },
     {
       "test": "tests/test_keys.py::test_algorithm_is_bound_to_the_key_no_downgrade",
       "outcome": "passed",
-      "duration_s": 0.1113
+      "duration_s": 0.1824
     },
     {
       "test": "tests/test_keys.py::test_private_keys_encrypted_at_rest",
       "outcome": "passed",
-      "duration_s": 1.7942
+      "duration_s": 2.2733
     },
     {
       "test": "tests/test_keys.py::test_rotate_and_migrate_through_the_api",
       "outcome": "passed",
-      "duration_s": 0.9894
+      "duration_s": 1.2022
     },
     {
       "test": "tests/test_nasa.py::test_synthetic_tle_is_well_formed",
@@ -295,7 +295,7 @@
     {
       "test": "tests/test_nasa.py::test_pass_prediction_is_physical",
       "outcome": "passed",
-      "duration_s": 0.5444
+      "duration_s": 0.4601
     },
     {
       "test": "tests/test_nasa.py::test_budget_formula_and_short_pass_filter",
@@ -305,32 +305,32 @@
     {
       "test": "tests/test_nasa.py::test_space_weather_margin_policy",
       "outcome": "passed",
-      "duration_s": 0.0005
+      "duration_s": 0.0007
     },
     {
       "test": "tests/test_nasa.py::test_pull_records_evidence_without_secrets",
       "outcome": "passed",
-      "duration_s": 0.0268
+      "duration_s": 0.0322
     },
     {
       "test": "tests/test_nasa.py::test_http_retries_transient_errors_then_gives_up",
       "outcome": "passed",
-      "duration_s": 0.0018
+      "duration_s": 0.0016
     },
     {
       "test": "tests/test_nasa.py::test_donki_falls_back_to_ccmc_when_gateway_fails",
       "outcome": "passed",
-      "duration_s": 0.0003
+      "duration_s": 0.0002
     },
     {
       "test": "tests/test_packet_loss.py::test_onboard_reports_counter_gap_in_the_same_single_write",
       "outcome": "passed",
-      "duration_s": 0.1451
+      "duration_s": 0.1344
     },
     {
       "test": "tests/test_packet_loss.py::test_link_loss_is_deterministic_and_first_tx_only",
       "outcome": "passed",
-      "duration_s": 0.0371
+      "duration_s": 0.0486
     },
     {
       "test": "tests/test_packet_loss.py::test_replan_subinstance_keeps_deadlines_and_dependencies",
@@ -340,22 +340,22 @@
     {
       "test": "tests/test_packet_loss.py::test_lost_frame_hold_gap_report_retransmit_and_carry_over",
       "outcome": "passed",
-      "duration_s": 6.4743
+      "duration_s": 6.1215
     },
     {
       "test": "tests/test_packet_loss.py::test_replan_moves_carried_command_and_next_pass_delivers_it",
       "outcome": "passed",
-      "duration_s": 0.1335
+      "duration_s": 0.1495
     },
     {
       "test": "tests/test_packet_loss.py::test_rerunning_a_pass_never_resends_delivered_commands",
       "outcome": "passed",
-      "duration_s": 0.0739
+      "duration_s": 0.0719
     },
     {
       "test": "tests/test_packet_loss.py::test_nasa_routes_validate_and_never_expose_keys",
       "outcome": "passed",
-      "duration_s": 0.0095
+      "duration_s": 0.01
     },
     {
       "test": "tests/test_qrng.py::test_nonce_derivation_reproducible_and_input_sensitive",
@@ -365,7 +365,7 @@
     {
       "test": "tests/test_qrng.py::test_fuzz_stream_deterministic_and_bounded",
       "outcome": "passed",
-      "duration_s": 0.0226
+      "duration_s": 0.0234
     },
     {
       "test": "tests/test_qrng.py::test_labels",
@@ -375,22 +375,22 @@
     {
       "test": "tests/test_qrng.py::test_nonce_requires_a_qpiai_run",
       "outcome": "passed",
-      "duration_s": 0.0005
+      "duration_s": 0.0004
     },
     {
       "test": "tests/test_qrng.py::test_local_simulator_run_supplies_nonce_by_default",
       "outcome": "passed",
-      "duration_s": 0.059
+      "duration_s": 0.0547
     },
     {
       "test": "tests/test_qrng.py::test_local_simulator_can_be_disabled",
       "outcome": "passed",
-      "duration_s": 0.0174
+      "duration_s": 0.0178
     },
     {
       "test": "tests/test_qrng.py::test_cloud_entry_consumed_once",
       "outcome": "passed",
-      "duration_s": 0.0437
+      "duration_s": 0.0445
     },
     {
       "test": "tests/test_qrng.py::test_qcloud_simulator_job_recorded",
@@ -400,27 +400,27 @@
     {
       "test": "tests/test_scheduler.py::test_baselines_feasible_and_brute_force_optimal",
       "outcome": "passed",
-      "duration_s": 5.9633
+      "duration_s": 5.9472
     },
     {
       "test": "tests/test_scheduler.py::test_validator_catches_violations[<lambda>-before its dependency]",
       "outcome": "passed",
-      "duration_s": 6.5378
+      "duration_s": 5.9054
     },
     {
       "test": "tests/test_scheduler.py::test_validator_catches_violations[<lambda>-after its deadline]",
       "outcome": "passed",
-      "duration_s": 5.8025
+      "duration_s": 5.9918
     },
     {
       "test": "tests/test_scheduler.py::test_validator_catches_violations[<lambda>-not scheduled]",
       "outcome": "passed",
-      "duration_s": 5.7656
+      "duration_s": 5.9536
     },
     {
       "test": "tests/test_scheduler.py::test_validator_catches_violations[<lambda>-invalid pass]",
       "outcome": "passed",
-      "duration_s": 5.8468
+      "duration_s": 6.3113
     },
     {
       "test": "tests/test_scheduler.py::test_validator_catches_budget_overrun",
@@ -430,7 +430,7 @@
     {
       "test": "tests/test_scheduler.py::test_over_budget_queue_defers_low_priority",
       "outcome": "passed",
-      "duration_s": 0.0132
+      "duration_s": 0.0134
     },
     {
       "test": "tests/test_scheduler.py::test_order_within_pass_respects_dependencies",
@@ -440,12 +440,12 @@
     {
       "test": "tests/test_scheduler.py::test_instance_rejects_cycles_and_unknown_deps",
       "outcome": "passed",
-      "duration_s": 0.0005
+      "duration_s": 0.0003
     },
     {
       "test": "tests/test_scheduler.py::test_opt_model_structure_and_qpiai_feasibility_agree",
       "outcome": "passed",
-      "duration_s": 8.0268
+      "duration_s": 8.1576
     },
     {
       "test": "tests/test_scheduler.py::test_decode_rejects_double_assignment",
@@ -460,12 +460,22 @@
     {
       "test": "tests/test_scheduler.py::test_reduced_qaoa_instance_size",
       "outcome": "passed",
-      "duration_s": 0.1562
+      "duration_s": 0.1656
     },
     {
       "test": "tests/test_scheduler.py::test_opt_local_solve_matches_brute_force",
       "outcome": "passed",
-      "duration_s": 6.6757
+      "duration_s": 6.7757
+    },
+    {
+      "test": "tests/test_txtlog.py::test_website_tests_and_qpiai_calls_are_written_as_text",
+      "outcome": "passed",
+      "duration_s": 0.3458
+    },
+    {
+      "test": "tests/test_txtlog.py::test_secrets_are_scrubbed",
+      "outcome": "passed",
+      "duration_s": 0.0172
     }
   ],
   "python": "3.11.9",

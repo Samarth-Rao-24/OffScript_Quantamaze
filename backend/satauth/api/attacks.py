@@ -94,6 +94,15 @@ def run_attack(mc: MissionControl, kind: str) -> dict:
     }
     if kind == "flood":
         out["flood_summary"] = _flood_summary(frames, mc.s.flood_limit)
+    from ..common import txtlog
+
+    txtlog.record_event(mc.ev, "test", {
+        "kind": "attack", "attack": kind, "title": title, "description": desc, "expected": expected,
+        "observed": out["observed"], "passed": out["passed"], "counter_check": out["counter_check"],
+        "counter_before": before.get("last_counter"), "counter_after": after.get("last_counter"),
+        "sig_verifications_spent": out["sig_verifications_spent"], "nv_writes_delta": out["nv_writes_delta"],
+        "frame_count": out["frame_count"], "elapsed_ms": out["elapsed_ms"], "window": mc.link.window_id,
+        "fuzz_source": (fuzz_meta or {}).get("source")})
     mc.emit({"type": "attack", "attack": kind, "passed": out["passed"], "observed": out["observed"],
              "summary": out.get("flood_summary")})
     return out

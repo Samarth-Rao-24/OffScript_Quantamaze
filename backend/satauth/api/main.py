@@ -22,6 +22,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
+from ..common import txtlog
 from ..common.atomic import atomic_write_json, read_json, read_jsonl
 from ..config import PROJECT_ROOT, load_settings
 from .attacks import ATTACKS, run_attack
@@ -151,9 +152,13 @@ async def qrng_fetch(payload: dict = Body(default={})):
         raise
     except Exception as exc:
         bus.emit({"type": "qrng", "phase": "failed", "device": device, "error": str(exc)})
+        await asyncio.to_thread(txtlog.record_event, settings.evidence_dir, "qpiai",
+                                {"tool": "qrng", "status": "failed", "requested": f"QRNG circuit on {device}",
+                                 "error": f"{type(exc).__name__}: {exc}"})
         raise HTTPException(502, f"QCloud QRNG job failed: {type(exc).__name__}: {exc}") from exc
     bus.emit({"type": "qrng", "phase": "done", "job_id": rec["job_id"], "device": rec["device"],
               "randomness_class": rec["randomness_class"]})
+    await asyncio.to_thread(txtlog.refresh, settings.evidence_dir)
     return rec
 
 
@@ -179,11 +184,15 @@ async def qaoa_run(payload: dict = Body(default={})):
         raise
     except Exception as exc:
         bus.emit({"type": "qaoa", "phase": "failed", "error": str(exc)})
+        await asyncio.to_thread(txtlog.record_event, settings.evidence_dir, "qpiai",
+                                {"tool": "qaoa", "status": "failed", "error": f"{type(exc).__name__}: {exc}",
+                                 "requested": f"QAOA, mode {mode}, device {kwargs['device_name']}"})
         raise HTTPException(502, f"QAOA run failed: {type(exc).__name__}: {exc}") from exc
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     fname = f"qaoa_{stamp}_{mode}.json"
     rec["evidence_file"] = f"qcloud_jobs/{fname}"
     atomic_write_json(settings.evidence_dir / "qcloud_jobs" / fname, rec)
+    await asyncio.to_thread(txtlog.refresh, settings.evidence_dir)
     bus.emit({"type": "qaoa", "phase": "done", "jobs": len(rec["qaoa"]["job_ids"]), "comparison": rec["comparison"]})
     return rec
 

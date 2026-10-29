@@ -1,0 +1,160 @@
+============================================================================================
+TEST DATA LOG  -  Q-Uplink Mission Control (team OffScript, Quant-A-Maze 3.0, PQC-03)
+============================================================================================
+Generated     : 2026-10-29 21:41:34 UTC
+What this is  : every test the website ran against the real onboard verifier (Attack lab and
+                Judge console), the latest automated test run and the final end-to-end run.
+                Full records: evidence/logs/test_runs.jsonl, evidence/judge_runs/*.json.
+Totals        : attack runs 0 (0 passed), judge entries 1
+No API keys, passphrases or private keys appear in this file.
+============================================================================================
+
+--------------------------------------------------------------------------------------------
+BASELINE RUNS
+--------------------------------------------------------------------------------------------
+
+[2026-10-29 21:41:03 UTC]  Automated tests (pytest)  |  93 passed, 1 skipped
+  Platform            : Python 3.11.9 on win32
+  Evidence file       : tests/summary.json
+  PASSED   tests/test_api.py::test_health_and_no_secrets  (0.2792 s)
+  PASSED   tests/test_api.py::test_plan_without_key_returns_503_and_no_plan  (0.0842 s)
+  PASSED   tests/test_api.py::test_attacks_require_window_then_all_pass  (1.3036 s)
+  PASSED   tests/test_api.py::test_run_pass_uses_validated_plan  (5.537 s)
+  PASSED   tests/test_api.py::test_evidence_zip_has_no_private_keys  (0.1617 s)
+  PASSED   tests/test_api.py::test_log_endpoint_filters  (0.0866 s)
+  PASSED   tests/test_api.py::test_websocket_streams_frame_events  (0.0534 s)
+  PASSED   tests/test_attacks.py::test_01_valid_command_accepted  (0.1206 s)
+  PASSED   tests/test_attacks.py::test_02_tampered_command_rejected  (0.5712 s)
+  PASSED   tests/test_attacks.py::test_02b_tampered_header_counter_rejected  (0.0964 s)
+  PASSED   tests/test_attacks.py::test_03_replayed_command_rejected  (0.1066 s)
+  PASSED   tests/test_attacks.py::test_03b_older_counter_rejected  (0.1221 s)
+  PASSED   tests/test_attacks.py::test_04_expired_command_rejected  (0.1025 s)
+  PASSED   tests/test_attacks.py::test_04b_expired_and_badly_signed_fails_cheaply  (0.1307 s)
+  PASSED   tests/test_attacks.py::test_05_unauthorized_command_rejected  (0.1192 s)
+  PASSED   tests/test_attacks.py::test_05b_operator_cannot_open_pass  (0.1035 s)
+  PASSED   tests/test_attacks.py::test_06_forged_random_signature_rejected  (0.0016 s)
+  PASSED   tests/test_attacks.py::test_06b_forged_with_attacker_key_rejected  (0.0342 s)
+  PASSED   tests/test_attacks.py::test_06c_unknown_key_id_rejected  (0.0976 s)
+  PASSED   tests/test_attacks.py::test_07_cross_pass_replay_rejected  (0.119 s)
+  PASSED   tests/test_attacks.py::test_07b_nonce_binding_is_what_rejects  (0.1018 s)
+  PASSED   tests/test_attacks.py::test_07c_replayed_pass_open_rejected  (0.0151 s)
+  PASSED   tests/test_attacks.py::test_08_wrong_satellite_rejected  (0.0969 s)
+  PASSED   tests/test_attacks.py::test_09_flood_attack_bounded  (0.6895 s)
+  PASSED   tests/test_attacks.py::test_09b_flood_of_wellformed_signatures_also_capped  (0.3677 s)
+  PASSED   tests/test_attacks.py::test_10_link_never_exceeds_pass_budget  (0.1227 s)
+  PASSED   tests/test_attacks.py::test_counter_survives_reboot  (0.1106 s)
+  PASSED   tests/test_attacks.py::test_atomic_write_crash_leaves_previous_state  (0.1186 s)
+  PASSED   tests/test_attacks.py::test_rejections_write_nothing_to_state_file  (0.1346 s)
+  PASSED   tests/test_attacks.py::test_malformed_frames_rejected  (0.1032 s)
+  PASSED   tests/test_attacks.py::test_check_order_matches_prd  (0.117 s)
+  PASSED   tests/test_attacks.py::test_frame_sizes_match_nfr01  (0.0935 s)
+  PASSED   tests/test_attacks.py::test_separate_satellite_process_end_to_end  (4.155 s)
+  PASSED   tests/test_judge.py::test_qrng_job_detail_and_stats  (25.0936 s)
+  PASSED   tests/test_judge.py::test_nonce_verify_recomputes_and_matches  (0.1786 s)
+  PASSED   tests/test_judge.py::test_nonce_verify_detects_tampered_counts  (0.1369 s)
+  PASSED   tests/test_judge.py::test_refetch_needs_a_cloud_job  (0.0129 s)
+  PASSED   tests/test_judge.py::test_refetch_compares_remote_counts  (0.0157 s)
+  PASSED   tests/test_judge.py::test_compose_variants  (0.4327 s)
+  PASSED   tests/test_judge.py::test_raw_and_last_frame  (0.1464 s)
+  PASSED   tests/test_judge.py::test_sample_cases_all_pass_json_and_csv  (0.4742 s)
+  PASSED   tests/test_judge.py::test_cases_report_wrong_expectations  (0.1145 s)
+  PASSED   tests/test_judge.py::test_cases_validation  (0.0046 s)
+  PASSED   tests/test_keys.py::test_every_suite_signs_and_rejects_tampering[falcon512]  (0.0215 s)
+  PASSED   tests/test_keys.py::test_every_suite_signs_and_rejects_tampering[mldsa44]  (0.0018 s)
+  PASSED   tests/test_keys.py::test_every_suite_signs_and_rejects_tampering[hybrid]  (0.1891 s)
+  PASSED   tests/test_keys.py::test_hybrid_needs_both_signatures  (0.0449 s)
+  PASSED   tests/test_keys.py::test_standby_key_is_refused_without_signature_work  (0.0961 s)
+  PASSED   tests/test_keys.py::test_operator_cannot_manage_keys  (0.1021 s)
+  PASSED   tests/test_keys.py::test_rotation_activate_then_revoke_in_single_writes  (0.2973 s)
+  PASSED   tests/test_keys.py::test_last_admin_key_cannot_be_revoked  (0.0276 s)
+  PASSED   tests/test_keys.py::test_migration_to_ml_dsa_and_hybrid  (0.2527 s)
+  PASSED   tests/test_keys.py::test_algorithm_is_bound_to_the_key_no_downgrade  (0.1824 s)
+  PASSED   tests/test_keys.py::test_private_keys_encrypted_at_rest  (2.2733 s)
+  PASSED   tests/test_keys.py::test_rotate_and_migrate_through_the_api  (1.2022 s)
+  PASSED   tests/test_nasa.py::test_synthetic_tle_is_well_formed  (0.0002 s)
+  PASSED   tests/test_nasa.py::test_parse_both_payload_shapes_and_reject_bad_checksum  (0.0002 s)
+  PASSED   tests/test_nasa.py::test_pass_prediction_is_physical  (0.4601 s)
+  PASSED   tests/test_nasa.py::test_budget_formula_and_short_pass_filter  (0.0002 s)
+  PASSED   tests/test_nasa.py::test_space_weather_margin_policy  (0.0007 s)
+  PASSED   tests/test_nasa.py::test_pull_records_evidence_without_secrets  (0.0322 s)
+  PASSED   tests/test_nasa.py::test_http_retries_transient_errors_then_gives_up  (0.0016 s)
+  PASSED   tests/test_nasa.py::test_donki_falls_back_to_ccmc_when_gateway_fails  (0.0002 s)
+  PASSED   tests/test_packet_loss.py::test_onboard_reports_counter_gap_in_the_same_single_write  (0.1344 s)
+  PASSED   tests/test_packet_loss.py::test_link_loss_is_deterministic_and_first_tx_only  (0.0486 s)
+  PASSED   tests/test_packet_loss.py::test_replan_subinstance_keeps_deadlines_and_dependencies  (0.0006 s)
+  PASSED   tests/test_packet_loss.py::test_lost_frame_hold_gap_report_retransmit_and_carry_over  (6.1215 s)
+  PASSED   tests/test_packet_loss.py::test_replan_moves_carried_command_and_next_pass_delivers_it  (0.1495 s)
+  PASSED   tests/test_packet_loss.py::test_rerunning_a_pass_never_resends_delivered_commands  (0.0719 s)
+  PASSED   tests/test_packet_loss.py::test_nasa_routes_validate_and_never_expose_keys  (0.01 s)
+  PASSED   tests/test_qrng.py::test_nonce_derivation_reproducible_and_input_sensitive  (0.0002 s)
+  PASSED   tests/test_qrng.py::test_fuzz_stream_deterministic_and_bounded  (0.0234 s)
+  PASSED   tests/test_qrng.py::test_labels  (0.0001 s)
+  PASSED   tests/test_qrng.py::test_nonce_requires_a_qpiai_run  (0.0004 s)
+  PASSED   tests/test_qrng.py::test_local_simulator_run_supplies_nonce_by_default  (0.0547 s)
+  PASSED   tests/test_qrng.py::test_local_simulator_can_be_disabled  (0.0178 s)
+  PASSED   tests/test_qrng.py::test_cloud_entry_consumed_once  (0.0445 s)
+  SKIPPED  tests/test_qrng.py::test_qcloud_simulator_job_recorded  (0.0001 s)
+  PASSED   tests/test_scheduler.py::test_baselines_feasible_and_brute_force_optimal  (5.9472 s)
+  PASSED   tests/test_scheduler.py::test_validator_catches_violations[<lambda>-before its dependency]  (5.9054 s)
+  PASSED   tests/test_scheduler.py::test_validator_catches_violations[<lambda>-after its deadline]  (5.9918 s)
+  PASSED   tests/test_scheduler.py::test_validator_catches_violations[<lambda>-not scheduled]  (5.9536 s)
+  PASSED   tests/test_scheduler.py::test_validator_catches_violations[<lambda>-invalid pass]  (6.3113 s)
+  PASSED   tests/test_scheduler.py::test_validator_catches_budget_overrun  (0.0002 s)
+  PASSED   tests/test_scheduler.py::test_over_budget_queue_defers_low_priority  (0.0134 s)
+  PASSED   tests/test_scheduler.py::test_order_within_pass_respects_dependencies  (0.0002 s)
+  PASSED   tests/test_scheduler.py::test_instance_rejects_cycles_and_unknown_deps  (0.0003 s)
+  PASSED   tests/test_scheduler.py::test_opt_model_structure_and_qpiai_feasibility_agree  (8.1576 s)
+  PASSED   tests/test_scheduler.py::test_decode_rejects_double_assignment  (0.0002 s)
+  PASSED   tests/test_scheduler.py::test_opt_refuses_without_key_and_never_falls_back  (0.0002 s)
+  PASSED   tests/test_scheduler.py::test_reduced_qaoa_instance_size  (0.1656 s)
+  PASSED   tests/test_scheduler.py::test_opt_local_solve_matches_brute_force  (6.7757 s)
+  PASSED   tests/test_txtlog.py::test_website_tests_and_qpiai_calls_are_written_as_text  (0.3458 s)
+  PASSED   tests/test_txtlog.py::test_secrets_are_scrubbed  (0.0172 s)
+
+[2026-10-29 13:01:19 UTC]  Final end-to-end run (scripts/final_run.py)
+  Evidence file       : final_run_summary.json, final_run_log.txt
+  OK     1. Key check  (9.2 s)
+         both keys present; QCloud login accepted; experiment 'Default Experiment' found (id 52e4fc50-cd7b-41af-a247-1ca79051d95d)
+  OK     2.1 QRNG job on QpiAI-QSV-Local  (1.3 s)
+         job_id=None status=completed credits_used=0 outcomes=253/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+  OK     2.2 QRNG job on QpiAI-QSV-Local  (0.2 s)
+         job_id=None status=completed credits_used=0 outcomes=253/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+  OK     2.3 QRNG job on QpiAI-QSV-Local  (0.1 s)
+         job_id=None status=completed credits_used=0 outcomes=254/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+  OK     2.4 QRNG job on QpiAI-QSV-Local  (0.1 s)
+         job_id=None status=completed credits_used=0 outcomes=252/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+  OK     2.5 QRNG job on QpiAI-QSV-Local  (0.1 s)
+         job_id=None status=completed credits_used=0 outcomes=253/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+  OK     2.6 QRNG job on QpiAI-QSV-Local  (0.1 s)
+         job_id=None status=completed credits_used=0 outcomes=251/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+  OK     2b. NASA orbit + space weather -> pass budgets  (109.5 s)
+         ISS (ZARYA) TLE from NASA TLE API (api.nasa.gov catalogue) (epoch 2026-10-28T14:18, 0.94 d old); 8 passes over Bengaluru in 72 h; space weather x1.0 (max Kp None); budgets [3982, 3700, 3798, 2620]; note: {'donki': 'could not reach https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/GST?startDate=2026-10-22&endDate=2026-10-29: <urlopen error timed out>'} -> applied to the queue
+  OK     3a. QpiAI Opt schedule (local solver, drives the uplink)  (6.8 s)
+         job_id=None mode=local objective=66.8 optimum=66.8 greedy=55.4 sent=14/14
+  OK     4. QAOA (local QpiAI simulator)  (5.2 s)
+         12 qubits, QpiAI local simulator (QpiAI-QSV-Local, no cloud job IDs), QAOA=30.3 classical Opt=30.3 exact=30.3
+  OK     5. Resource benchmarks  (43.9 s)
+         verify p50 54.7 us, peak RAM 52581 B, flood checks 8/500
+  OK     6. Mission run on the satellite process  (9.4 s)
+         attacks passed: 10; judge sample: {"cases": 10, "errors": 0, "failed": 0, "false_accepts": 0, "false_rejects": 0, "pass_rate; key management drill: {"after rotation: revoked": {"observed": ["E_KEY_REVOKED"], "passed": true}, "after rotati; missing-packet drill: {"carried_over": ["C09"], "detected_no_ack": true, "dropped": "C07", "held": ["C08", "C09"; nonce verified: true; pass 1: "4 accepted (ACC
+  OK     7. Evidence bundle  (2.9 s)
+         F:\OffScript\q-uplink-evidence.zip (619 KB)
+
+--------------------------------------------------------------------------------------------
+WEBSITE TEST RUNS (oldest first)
+--------------------------------------------------------------------------------------------
+
+[2026-10-29 13:01:13 UTC]  Judge console  |  case file, 10 case(s)  |  10/10 matched, 0 false accepts
+  Totals              : passed 10, failed 0, false accepts 0, false rejects 0, other reason 0, case errors 0
+  Evidence file       : judge_runs/judge_20261029T130113Z.json
+  id     expect           got                    counter      outcome                    description
+  J1     ACCEPT           ACCEPT OK              18->19       correct accept             Valid operator image capture
+  J2     E_REPLAY         REJECT E_REPLAY        19->19       correct reject             Replay J1 unchanged
+  J3     E_UNAUTHORIZED   REJECT E_UNAUTHORIZED  19->19       correct reject             Operator tries a thruster burn
+  J4     E_BAD_SIG        REJECT E_BAD_SIG       19->19       correct reject             Admin burn, but flip one bit of the body after signing
+  J5     E_WRONG_SAT      REJECT E_WRONG_SAT     19->19       correct reject             Addressed to satellite 7
+  J6     E_EXPIRED        REJECT E_EXPIRED       19->19       correct reject             Expired 30 s ago
+  J7     E_BAD_SIG        REJECT E_BAD_SIG       19->19       correct reject             Attacker key pretending to be OPERATOR
+  J8     E_BAD_SIG        REJECT E_BAD_SIG       19->19       correct reject             Signed under a random nonce
+  J9     REJECT           REJECT E_MALFORMED     19->19       correct reject             Garbage bytes
+  J10    ACCEPT           ACCEPT OK              19->26       correct accept             Valid admin heater command

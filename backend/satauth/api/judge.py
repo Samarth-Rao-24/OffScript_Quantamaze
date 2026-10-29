@@ -20,7 +20,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from ..common import crypto, suites
+from ..common import crypto, suites, txtlog
 from ..common.atomic import atomic_write_bytes, atomic_write_json
 from ..common.frame import FRAME_VERSION, HEADER_FMT, HEADER_LEN, NONCE_LEN, SIG_LEN, pack_header, signed_message
 from ..common.roles import OPCODE_INFO, ROLE_KEY_ID, Opcode, Role, opcode_name
@@ -213,7 +213,9 @@ def compose_and_send(mc: MissionControl, spec: dict) -> dict:
         except ValueError as exc:
             raise ServiceError(str(exc), 400) from exc
         out = _send(mc, data, "judge-compose")
-        return {"frame_hex": data.hex(), "decoded": decode(data), "built": desc, **out}
+        res = {"frame_hex": data.hex(), "decoded": decode(data), "built": desc, **out}
+    _log_single(mc, "compose", res)
+    return res
 
 
 def send_raw(mc: MissionControl, hex_text: str) -> dict:
@@ -228,7 +230,17 @@ def send_raw(mc: MissionControl, hex_text: str) -> dict:
         if len(data) > 4096:
             raise ServiceError("frame longer than 4096 bytes refused by the link", 400)
         out = _send(mc, data, "judge-raw")
-        return {"frame_hex": data.hex(), "decoded": decode(data), **out}
+        res = {"frame_hex": data.hex(), "decoded": decode(data), **out}
+    _log_single(mc, "raw", res)
+    return res
+
+
+def _log_single(mc: MissionControl, kind: str, res: dict) -> None:
+    v = res.get("verdict") or {}
+    txtlog.record_event(mc.ev, "test", {
+        "kind": kind, "built": res.get("built"), "decoded": res.get("decoded"), "frame_len": len(res["frame_hex"]) // 2,
+        "frame_hex": res["frame_hex"][:128], "verdict": v.get("verdict"), "reason": v.get("reason"),
+        "counter_before": res.get("counter_before"), "counter_after": res.get("counter_after")})
 
 
 def last_frame(mc: MissionControl) -> dict:
@@ -346,6 +358,7 @@ def run_cases(mc: MissionControl, payload: dict) -> dict:
     fname = f"judge_{stamp}.json"
     atomic_write_json(mc.ev / "judge_runs" / fname, run)
     run["evidence_file"] = f"judge_runs/{fname}"
+    txtlog.refresh(mc.ev)
     mc.emit({"type": "judge_run", "totals": totals})
     return run
 

@@ -1,0 +1,22 @@
+[
+  {"id": "T01", "description": "Valid OPERATOR image capture (opens a fresh contact window first)", "new_window": true, "key": "OPERATOR", "opcode": "CAPTURE_IMAGE", "args_hex": "0b01", "expect": "ACCEPT"},
+  {"id": "T02", "description": "Replay: T01 sent again byte for byte", "replay_of": "T01", "expect": "E_REPLAY"},
+  {"id": "T03", "description": "Replay with an old counter: valid signature, counter 1", "key": "OPERATOR", "opcode": "NOOP_PING", "counter": 1, "expect": "E_REPLAY"},
+  {"id": "T04", "description": "Unauthorized: OPERATOR key orders a thruster burn", "key": "OPERATOR", "opcode": "ORBIT_BURN", "args_hex": "0000000a", "expect": "E_UNAUTHORIZED"},
+  {"id": "T05", "description": "Unauthorized: OPERATOR key tries to revoke a key", "key": "OPERATOR", "opcode": "KEY_REVOKE", "args_hex": "02", "expect": "E_UNAUTHORIZED"},
+  {"id": "T06", "description": "Tamper: ADMIN burn with one bit of the body flipped after signing", "key": "ADMIN", "opcode": "ORBIT_BURN", "args_hex": "0000000a", "mutate": {"flip_bit": 140}, "expect": "E_BAD_SIG"},
+  {"id": "T07", "description": "Tamper: counter field changed after signing (bit 60)", "key": "OPERATOR", "opcode": "NOOP_PING", "mutate": {"flip_bit": 60}, "expect": "E_BAD_SIG"},
+  {"id": "T08", "description": "Forged: attacker's own Falcon key claiming to be OPERATOR", "key": "ATTACKER", "opcode": "SET_SAFE_MODE", "args_hex": "01", "expect": "E_BAD_SIG"},
+  {"id": "T09", "description": "Relabel: ADMIN-signed frame that claims key_id 1 (OPERATOR)", "key": "ADMIN", "opcode": "NOOP_PING", "key_id": 1, "expect": "E_BAD_SIG"},
+  {"id": "T10", "description": "Nonce: signed under a random nonce no pass uses", "key": "ADMIN", "opcode": "NOOP_PING", "nonce": "random", "expect": "E_BAD_SIG"},
+  {"id": "T11", "description": "Wrong satellite: addressed to satellite 7", "key": "OPERATOR", "opcode": "NOOP_PING", "sat_id": 7, "expect": "E_WRONG_SAT"},
+  {"id": "T12", "description": "Expired: expiry 30 seconds in the past", "key": "OPERATOR", "opcode": "NOOP_PING", "expiry_offset_s": -30, "expect": "E_EXPIRED"},
+  {"id": "T13", "description": "Standby key: signed claiming spare key 3, not yet activated (shows E_KEY_INACTIVE)", "key": "OPERATOR", "opcode": "NOOP_PING", "key_id": 3, "expect": "REJECT"},
+  {"id": "T14", "description": "Unknown opcode 0x99 from OPERATOR", "key": "OPERATOR", "opcode": "0x99", "expect": "REJECT"},
+  {"id": "T15", "description": "Garbage bytes on the link", "raw_hex": "deadbeef", "expect": "E_MALFORMED"},
+  {"id": "T16", "description": "Valid ADMIN battery heater set-point", "key": "ADMIN", "opcode": "SET_HEATER", "args_hex": "0112", "expect": "ACCEPT"},
+  {"id": "T17", "description": "Valid ADMIN safe-mode command", "key": "ADMIN", "opcode": "SET_SAFE_MODE", "args_hex": "01", "expect": "ACCEPT"},
+  {"id": "T18", "description": "Cross-pass: new window opened, frame signed under the previous pass nonce", "new_window": true, "key": "OPERATOR", "opcode": "CAPTURE_IMAGE", "args_hex": "0c02", "nonce": "previous", "expect": "E_BAD_SIG"},
+  {"id": "T19", "description": "Valid OPERATOR command in the new pass (rejections did not disturb the counter)", "key": "OPERATOR", "opcode": "DOWNLINK_DATA", "args_hex": "03", "expect": "ACCEPT"},
+  {"id": "T20", "description": "Replay of T16 into the new pass", "replay_of": "T16", "expect": "REJECT"}
+]

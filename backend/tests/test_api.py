@@ -97,7 +97,8 @@ def test_evidence_zip_has_no_private_keys(client):
     assert sum(n.endswith(".pk") for n in names) == 8  # the whole public key ring
     assert not any(n.endswith((".sk", ".sk.enc")) for n in names)
     for n in names:
-        assert b"QPIAI" not in z.read(n) or n.endswith(".json")  # env var *names* only appear in docs/json
+        # env var *names* (e.g. "QPIAI_OPT_API_KEY is not set") appear only in json/jsonl records and the txt logs
+        assert b"QPIAI" not in z.read(n) or n.endswith((".json", ".jsonl", ".txt"))
 
 
 def test_log_endpoint_filters(client):

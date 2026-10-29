@@ -16,6 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
 
+from ..common import txtlog
 from ..common.atomic import atomic_write_json, read_json, read_jsonl
 from ..common.frame import NONCE_LEN
 from ..common.roles import OPCODE_INFO, default_role_table, opcode_name
@@ -206,6 +207,8 @@ class MissionControl:
             result = plan_with_opt(inst, api_key=self.s.opt_api_key, mode=mode)
         except Exception as exc:
             self.emit({"type": "plan", "phase": "failed", "error": str(exc)})
+            txtlog.record_event(self.ev, "qpiai", {"tool": "opt", "status": "failed",
+                                                   "requested": f"multi-pass schedule, mode {mode}", "error": str(exc)})
             raise ServiceError(str(exc), status=503) from exc
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         tag = result["opt"].get("job_id") or f"{result['opt']['execution_mode']}-nojobid"
@@ -213,6 +216,7 @@ class MissionControl:
         result["evidence_file"] = f"opt_jobs/{fname}"
         atomic_write_json(self.ev / "opt_jobs" / fname, result)
         atomic_write_json(self.plan_path, result)
+        txtlog.refresh(self.ev)
         self.emit({"type": "plan", "phase": "done", "job_id": result["opt"].get("job_id"),
                    "execution_mode": result["opt"]["execution_mode"], "feasible": result["validation"]["feasible"]})
         return result
@@ -357,6 +361,8 @@ class MissionControl:
                     res = plan_with_opt(sub, api_key=self.s.opt_api_key, mode=mode)
                 except Exception as exc:
                     self.emit({"type": "plan", "phase": "failed", "error": str(exc)})
+                    txtlog.record_event(self.ev, "qpiai", {"tool": "opt", "status": "failed", "error": str(exc),
+                                                           "requested": f"re-plan from pass {fp}, mode {mode}"})
                     raise ServiceError(str(exc), status=503) from exc
                 sub_plan = res["opt"]["plan"]
             else:
@@ -390,6 +396,7 @@ class MissionControl:
             atomic_write_json(self.ev / "opt_jobs" / fname, new)
             if validation["feasible"]:
                 atomic_write_json(self.plan_path, new)
+            txtlog.refresh(self.ev)
             moved = {c: merged[c] for c in cut["remaining"] if merged.get(c) is not None}
             self._alert("REPLANNED", "info" if validation["feasible"] else "error",
                         f"QpiAI Opt re-planned passes {fp}..{inst.T}: "

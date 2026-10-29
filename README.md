@@ -184,9 +184,20 @@ For any recorded QRNG job the inspector shows:
 Lets judges test the satellite with their own inputs instead of our attack buttons. Open a contact window first.
 - **Compose a frame:** signing key (ground OPERATOR, ground ADMIN, or an attacker key the satellite has never seen), opcode, argument bytes, satellite ID, expiry, counter (next or a fixed value), the nonce to sign under (current, previous, random or custom), a key_id override, and an optional bit to flip after signing. The frame is really signed and sent, and the check-by-check result is shown.
 - **Raw bytes:** paste or edit any hex. **Load last frame sent** fills the box so a judge can flip any bit and resend.
-- **Case file:** paste or upload JSON or CSV. Each case states its expected outcome (`ACCEPT`, `REJECT`, or a reason code such as `E_REPLAY`); the runner reports per-case match/mismatch and totals including **false accepts** (must be 0), false rejects and different-reason rejections. Results are saved to `evidence/judge_runs/`. Samples: `docs/judge_cases_sample.json` and `docs/judge_cases_sample.csv`. Bits are numbered from 0 = most significant bit of byte 0.
+- **Case file:** paste or upload JSON or CSV. Each case states its expected outcome (`ACCEPT`, `REJECT`, or a reason code such as `E_REPLAY`); the runner reports per-case match/mismatch and totals including **false accepts** (must be 0), false rejects and different-reason rejections. Results are saved to `evidence/judge_runs/`. Samples: `docs/judge_cases_sample.json` and `docs/judge_cases_sample.csv`; a fuller 20-case pack covering every attack is in `docs/judge_test_pack.json` / `.csv`, and `docs/judge_template.csv` is a blank template for a judge's own cases. Bits are numbered from 0 = most significant bit of byte 0.
 
 Judges can also **add or remove commands** in the Pass planner (then **Save queue** and **Optimize**), so the scheduling problem can be theirs too.
+
+### Plain-text logs (open in Notepad)
+
+Two text files sit beside the JSON evidence and are rewritten automatically after every QpiAI call and every test run from the website:
+
+| File | What it lists |
+|---|---|
+| `evidence/txt/qpiai_usage_log.txt` | Every QpiAI Opt schedule and re-plan, QRNG circuit, QAOA run and QRNG-derived pass nonce: mode, device, job ID (or "none, local"), solver, inputs, result, timing and the JSON evidence file. Failed QpiAI calls are listed with QpiAI's own error. |
+| `evidence/txt/test_data_log.txt` | Every Attack lab run and Judge console frame or case file (inputs, expected vs observed, counter before/after), plus the latest pytest run and final end-to-end run. |
+
+API keys, the key passphrase and private keys never appear (secret values are scrubbed even from QpiAI error messages). To rebuild both files from existing evidence: `..\.venv\Scripts\python.exe scripts\export_txt_logs.py` (from `backend\`). Records without a JSON file of their own go to `evidence/logs/qpiai_calls.jsonl` and `evidence/logs/test_runs.jsonl`.
 
 ---
 
@@ -194,7 +205,7 @@ Judges can also **add or remove commands** in the Pass planner (then **Save queu
 
 ```powershell
 cd backend
-..\.venv\Scripts\python.exe -m pytest -q                         # 90 tests without keys (92 with Opt + QCloud integration enabled)
+..\.venv\Scripts\python.exe -m pytest -q                         # 92 tests without keys (94 with Opt + QCloud integration enabled)
 ..\.venv\Scripts\python.exe -m satauth.bench.measure             # latency, RAM, NV writes, flood
 ..\.venv\Scripts\python.exe -m satauth.bench.scheme_compare      # Falcon / ML-DSA / ECDSA / Ed25519
 .\scripts\run_all.ps1                                            # all of the above + UI build (from repo root)
