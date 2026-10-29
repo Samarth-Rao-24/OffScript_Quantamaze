@@ -15,7 +15,8 @@ from dotenv import load_dotenv
 
 # backend/satauth/config.py -> project root is two levels above backend/
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-load_dotenv(PROJECT_ROOT / ".env", override=False)
+if os.environ.get("QUPLINK_NO_DOTENV") != "1":  # tests that must run key-free set this
+    load_dotenv(PROJECT_ROOT / ".env", override=False)
 
 
 def _env(name: str, default: str | None = None) -> str | None:

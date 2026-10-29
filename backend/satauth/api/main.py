@@ -194,6 +194,83 @@ async def qaoa_latest():
     return read_json(files[-1]) if files else {}
 
 
+@app.get("/api/qrng/jobs")
+async def qrng_jobs():
+    from .qrng_inspect import list_jobs
+
+    return {"jobs": list_jobs(settings.evidence_dir / "qcloud_jobs", mc.qrng.entries())}
+
+
+@app.get("/api/qrng/job/{fname}")
+async def qrng_job(fname: str):
+    from .qrng_inspect import job_detail
+
+    try:
+        return await asyncio.to_thread(job_detail, settings.evidence_dir / "qcloud_jobs", fname)
+    except FileNotFoundError:
+        raise HTTPException(404, "no such QRNG job record")
+
+
+@app.post("/api/qrng/job/{fname}/refetch")
+async def qrng_refetch(fname: str):
+    """Read-only: ask QCloud for this job again by ID (status + stored results)."""
+    from .qrng_inspect import refetch
+
+    try:
+        return await _exclusive("refetch", refetch, settings.evidence_dir / "qcloud_jobs", fname, settings.qcloud_api_key)
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(502, f"QCloud re-fetch failed: {type(exc).__name__}: {exc}") from exc
+
+
+@app.post("/api/nonce/verify")
+async def nonce_verify(payload: dict = Body(default={})):
+    from .qrng_inspect import verify_nonce
+
+    st = await asyncio.to_thread(mc.state)
+    nonce = (payload.get("nonce") or st["onboard"]["pass_nonce"]).lower()
+    chain = read_json(settings.data_dir / "ground" / "nonce_chain.json", default={}) or {}
+    return await asyncio.to_thread(verify_nonce, settings.evidence_dir / "qcloud_jobs", nonce,
+                                   onboard_nonce=st["onboard"]["pass_nonce"], chain=chain, log_rows=mc.log_tail(5000))
+
+
+# ---------------------------------------------------------------- judge console
+@app.post("/api/judge/compose")
+async def judge_compose(payload: dict = Body(...)):
+    from .judge import compose_and_send
+
+    return await asyncio.to_thread(compose_and_send, mc, payload)
+
+
+@app.post("/api/judge/raw")
+async def judge_raw(payload: dict = Body(...)):
+    from .judge import send_raw
+
+    return await asyncio.to_thread(send_raw, mc, payload.get("hex", ""))
+
+
+@app.get("/api/judge/last")
+async def judge_last():
+    from .judge import last_frame
+
+    return last_frame(mc)
+
+
+@app.post("/api/judge/cases")
+async def judge_cases(payload: dict = Body(...)):
+    from .judge import run_cases
+
+    return await _exclusive("judge", run_cases, mc, payload)
+
+
+@app.get("/api/judge/sample")
+async def judge_sample():
+    from .judge import CSV_FIELDS, SAMPLE_CASES, sample_csv
+
+    return {"cases": SAMPLE_CASES, "csv": sample_csv(), "csv_columns": CSV_FIELDS}
+
+
 # ---------------------------------------------------------------- uplink
 @app.post("/api/pass/open")
 async def pass_open(payload: dict = Body(default={})):
@@ -299,7 +376,11 @@ def _job_index() -> dict:
         qc.append({"file": f"qcloud_jobs/{p.name}", "kind": "qaoa", "job_ids": q.get("job_ids", []),
                    "device": q.get("backend") or d.get("device_name"), "execution_mode": q.get("execution_mode"),
                    "created_utc": d.get("created_utc"), "qubits": d.get("qubits"), "comparison": d.get("comparison")})
-    return {"opt_jobs": opt, "qcloud_jobs": qc,
+    judge = []
+    for p in sorted((ev / "judge_runs").glob("judge_*.json")):
+        d = read_json(p) or {}
+        judge.append({"file": f"judge_runs/{p.name}", "created_utc": d.get("created_utc"), "totals": d.get("totals")})
+    return {"opt_jobs": opt, "qcloud_jobs": qc, "judge_runs": judge,
             "nonce_derivations": read_jsonl(ev / "qcloud_jobs" / "nonce_derivations.jsonl", limit=100),
             "tests": read_json(ev / "tests" / "summary.json", default=None)}
 

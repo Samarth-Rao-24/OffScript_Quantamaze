@@ -148,6 +148,9 @@ export default function Planner() {
                   <th title="Latest pass it may be sent in">Deadline</th>
                   <th>After</th>
                   <th className="text-right">Frame</th>
+                  <th>
+                    <span className="sr-only">Remove</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -185,12 +188,30 @@ export default function Planner() {
                         aria-label={`${c.id} depends on`}
                       />
                     </td>
-                    <td className="whitespace-nowrap text-right tabular-nums text-mute">{c.frame_bytes} B</td>
+                    <td className="whitespace-nowrap text-right tabular-nums text-mute">{c.frame_bytes ? `${c.frame_bytes} B` : "on save"}</td>
+                    <td>
+                      <button
+                        className="rounded px-1.5 text-mute hover:bg-reject/10 hover:text-reject focus-visible:outline focus-visible:outline-2 focus-visible:outline-quantum"
+                        aria-label={`Remove ${c.id}`}
+                        title={`Remove ${c.id}`}
+                        onClick={() =>
+                          setDraft((d: Json) => ({
+                            ...d,
+                            commands: d.commands
+                              .filter((x: Json) => x.id !== c.id)
+                              .map((x: Json) => ({ ...x, depends_on: (x.depends_on ?? []).filter((dep: string) => dep !== c.id) })),
+                          }))
+                        }
+                      >
+                        ✕
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          <AddCommand draft={draft} onAdd={(c) => setDraft((d: Json) => ({ ...d, commands: [...d.commands, c] }))} />
           <p className="mt-3 text-xs text-mute">
             Each frame is a 16 B header, the command body and a 666 B Falcon signature. Every pass also carries a 715 B PASS_OPEN frame with the new QRNG nonce.
           </p>
@@ -455,5 +476,108 @@ function QaoaPanel() {
         </div>
       )}
     </Panel>
+  );
+}
+
+function AddCommand({ draft, onAdd }: { draft: Json; onAdd: (c: Json) => void }) {
+  const ops = Object.entries(draft.opcodes ?? {})
+    .map(([k, v]: [string, Json]) => ({ code: Number(k), ...v }))
+    .filter((o) => o.name !== "PASS_OPEN");
+  const nextId = () => {
+    const nums = draft.commands.map((c: Json) => Number(String(c.id).replace(/\D/g, ""))).filter((n: number) => !Number.isNaN(n));
+    return `C${String((nums.length ? Math.max(...nums) : 0) + 1).padStart(2, "0")}`;
+  };
+  const blank = () => ({ id: nextId(), name: "", opcode: ops[0]?.code ?? 16, args_hex: "", role: "OPERATOR", priority: 5, deadline_pass: draft.passes.length, after: "" });
+  const [open, setOpen] = useState(false);
+  const [f, setF] = useState<Json>(blank);
+  const [err, setErr] = useState<string | null>(null);
+  const op = ops.find((o) => o.code === Number(f.opcode));
+  const add = () => {
+    const id = String(f.id).trim().toUpperCase();
+    if (!id) return setErr("Give the command an ID.");
+    if (draft.commands.some((c: Json) => c.id === id)) return setErr(`${id} already exists.`);
+    if (!/^([0-9a-fA-F]{2})*$/.test(f.args_hex.replace(/\s+/g, ""))) return setErr("Arguments must be hex bytes, e.g. 0b01.");
+    if (f.args_hex.replace(/\s+/g, "").length / 2 > 31) return setErr("Arguments are limited to 31 bytes (32-byte body).");
+    onAdd({
+      id, name: f.name.trim() || op?.name || id, opcode: Number(f.opcode), args_hex: f.args_hex.replace(/\s+/g, "").toLowerCase(),
+      role: f.role, priority: Number(f.priority), deadline_pass: Number(f.deadline_pass),
+      depends_on: String(f.after).split(",").map((x: string) => x.trim().toUpperCase()).filter(Boolean), note: "added in planner",
+    });
+    setErr(null);
+    setOpen(false);
+  };
+  if (!open)
+    return (
+      <div className="mt-3">
+        <Button kind="secondary" onClick={() => { setF(blank()); setOpen(true); }}>
+          Add command
+        </Button>
+      </div>
+    );
+  const set = (k: string, v: Json) => setF((x: Json) => ({ ...x, [k]: v }));
+  return (
+    <div className="mt-3 rounded border border-rule bg-white p-3">
+      <div className="grid gap-2 sm:grid-cols-4">
+        <label className="text-sm">
+          <span className="block text-mute">ID</span>
+          <input className="w-full" value={f.id} onChange={(e) => set("id", e.target.value)} />
+        </label>
+        <label className="text-sm sm:col-span-3">
+          <span className="block text-mute">Name</span>
+          <input className="w-full" value={f.name} onChange={(e) => set("name", e.target.value)} placeholder={op?.desc} />
+        </label>
+        <label className="text-sm sm:col-span-2">
+          <span className="block text-mute">Opcode</span>
+          <select className="w-full" value={f.opcode} onChange={(e) => set("opcode", Number(e.target.value))}>
+            {ops.map((o) => (
+              <option key={o.code} value={o.code}>
+                0x{o.code.toString(16).padStart(2, "0")} {o.name}
+                {o.admin_only ? " (admin only)" : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="text-sm sm:col-span-2">
+          <span className="block text-mute">Arguments (hex)</span>
+          <input className="w-full font-mono" value={f.args_hex} onChange={(e) => set("args_hex", e.target.value)} placeholder="none" />
+        </label>
+        <label className="text-sm">
+          <span className="block text-mute">Signing key</span>
+          <select className="w-full" value={f.role} onChange={(e) => set("role", e.target.value)}>
+            <option>OPERATOR</option>
+            <option>ADMIN</option>
+          </select>
+        </label>
+        <label className="text-sm">
+          <span className="block text-mute">Priority (1-100)</span>
+          <input className="w-full" type="number" min={1} max={100} value={f.priority} onChange={(e) => set("priority", e.target.value)} />
+        </label>
+        <label className="text-sm">
+          <span className="block text-mute">Deadline</span>
+          <select className="w-full" value={f.deadline_pass} onChange={(e) => set("deadline_pass", e.target.value)}>
+            {draft.passes.map((p: Json) => (
+              <option key={p.index} value={p.index}>
+                pass {p.index}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="text-sm">
+          <span className="block text-mute">After (IDs)</span>
+          <input className="w-full" value={f.after} onChange={(e) => set("after", e.target.value)} placeholder="none" />
+        </label>
+      </div>
+      {op?.admin_only && f.role === "OPERATOR" && (
+        <p className="mt-2 text-sm text-caution">{op.name} is admin-only: signed with the OPERATOR key it will be scheduled but rejected onboard with E_UNAUTHORIZED.</p>
+      )}
+      {err && <p className="mt-2 text-sm text-reject">{err}</p>}
+      <div className="mt-2 flex gap-2">
+        <Button onClick={add}>Add to queue</Button>
+        <Button kind="secondary" onClick={() => setOpen(false)}>
+          Cancel
+        </Button>
+      </div>
+      <p className="mt-1 text-xs text-mute">Then press Save queue; the server checks body size, IDs, dependencies and cycles.</p>
+    </div>
   );
 }

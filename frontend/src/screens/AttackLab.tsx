@@ -3,6 +3,7 @@ import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxi
 import { api, REASON_TEXT, type Json } from "../api";
 import { useLive } from "../live";
 import { Button, ErrorNote, Fact, Mono, Panel, StepLadder, VerdictTag } from "../components/ui";
+import JudgeConsole from "../components/JudgeConsole";
 
 const ORDER = ["valid", "tamper", "replay", "expired", "unauthorized", "forged", "crosspass", "wrongsat", "flood", "overbudget"];
 
@@ -115,6 +116,8 @@ export default function AttackLab() {
       </div>
 
       {r && <Result r={r} />}
+
+      <JudgeConsole windowOpen={windowOpen} />
     </div>
   );
 }

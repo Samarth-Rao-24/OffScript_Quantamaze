@@ -60,6 +60,7 @@ class MissionControl:
                              shots=settings.qrng_shots, default_device=settings.qrng_device,
                              allow_dev_nonce=settings.allow_dev_nonce)
         self.last_accepted_frame: bytes | None = None
+        self.last_sent_frame: bytes | None = None
         self.window_counter = 0
         self.busy: str | None = None
 
@@ -187,6 +188,7 @@ class MissionControl:
     def _deliver(self, data: bytes, *, context: dict, now: float | None = None) -> dict:
         assert self.sat is not None
         res = self.sat.send_frame(data, now=now, context=context)
+        self.last_sent_frame = data
         if res["verdict"] == "ACCEPT":
             self.last_accepted_frame = data
         return res

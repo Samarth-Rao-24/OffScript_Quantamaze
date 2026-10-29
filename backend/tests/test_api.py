@@ -17,6 +17,7 @@ def client(tmp_path_factory):
     mp.setenv("QUPLINK_DATA_DIR", str(root / "data"))
     mp.setenv("QUPLINK_EVIDENCE_DIR", str(root / "evidence"))
     mp.setenv("QUPLINK_ALLOW_DEV_NONCE", "true")  # no QCloud in CI; nonces are labelled DEV
+    mp.setenv("QUPLINK_NO_DOTENV", "1")  # these tests must never see real keys
     mp.delenv("QPIAI_OPT_API_KEY", raising=False)
     mp.delenv("QPIAI_QCLOUD_API_KEY", raising=False)
     mp.delenv("QCLOUD_API_KEY", raising=False)

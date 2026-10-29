@@ -87,6 +87,44 @@ export default function Evidence() {
         </Panel>
       </div>
 
+      {ev?.judge_runs?.length > 0 && (
+        <Panel title="Judge case runs" aside={`${ev.judge_runs.length} run${ev.judge_runs.length === 1 ? "" : "s"}`}>
+          <table className="data w-full text-sm">
+            <thead>
+              <tr>
+                <th>When (UTC)</th>
+                <th className="text-right">Cases</th>
+                <th className="text-right">Matched</th>
+                <th className="text-right">False accepts</th>
+                <th className="text-right">False rejects</th>
+                <th className="text-right">Errors</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {ev.judge_runs
+                .slice()
+                .reverse()
+                .map((r: Json) => (
+                  <tr key={r.file}>
+                    <td className="tabular-nums">{r.created_utc?.slice(0, 19).replace("T", " ")}</td>
+                    <td className="text-right tabular-nums">{r.totals?.cases}</td>
+                    <td className="text-right tabular-nums">{r.totals?.passed}</td>
+                    <td className={`text-right tabular-nums font-semibold ${r.totals?.false_accepts ? "text-reject" : "text-accept"}`}>{r.totals?.false_accepts}</td>
+                    <td className="text-right tabular-nums">{r.totals?.false_rejects}</td>
+                    <td className="text-right tabular-nums">{r.totals?.errors}</td>
+                    <td>
+                      <button className="text-ink underline" onClick={() => open(r.file)}>
+                        Raw results
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </Panel>
+      )}
+
       <Panel
         title="Onboard accept / reject log"
         aside={

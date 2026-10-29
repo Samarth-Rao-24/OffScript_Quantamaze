@@ -13,6 +13,7 @@ import pytest
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
 
+import satauth.config  # noqa: E402,F401  (loads the project .env so key-gated integration tests can run)
 from satauth.common.roles import Opcode, Role, default_role_table  # noqa: E402
 from satauth.ground.keygen import ensure_role_keys, load_public_keys  # noqa: E402
 from satauth.ground.signer import Signer  # noqa: E402

@@ -1,0 +1,328 @@
+{
+  "finished_utc": "2026-10-29T05:30:42.746586+00:00",
+  "exit_status": 0,
+  "counts": {
+    "passed": 62,
+    "skipped": 1
+  },
+  "total": 63,
+  "results": [
+    {
+      "test": "tests/test_api.py::test_health_and_no_secrets",
+      "outcome": "passed",
+      "duration_s": 0.1449
+    },
+    {
+      "test": "tests/test_api.py::test_plan_without_key_returns_503_and_no_plan",
+      "outcome": "passed",
+      "duration_s": 0.1377
+    },
+    {
+      "test": "tests/test_api.py::test_attacks_require_window_then_all_pass",
+      "outcome": "passed",
+      "duration_s": 1.1673
+    },
+    {
+      "test": "tests/test_api.py::test_run_pass_uses_validated_plan",
+      "outcome": "passed",
+      "duration_s": 5.3911
+    },
+    {
+      "test": "tests/test_api.py::test_evidence_zip_has_no_private_keys",
+      "outcome": "passed",
+      "duration_s": 0.1184
+    },
+    {
+      "test": "tests/test_api.py::test_log_endpoint_filters",
+      "outcome": "passed",
+      "duration_s": 0.0699
+    },
+    {
+      "test": "tests/test_api.py::test_websocket_streams_frame_events",
+      "outcome": "passed",
+      "duration_s": 0.0444
+    },
+    {
+      "test": "tests/test_attacks.py::test_01_valid_command_accepted",
+      "outcome": "passed",
+      "duration_s": 0.0482
+    },
+    {
+      "test": "tests/test_attacks.py::test_02_tampered_command_rejected",
+      "outcome": "passed",
+      "duration_s": 0.4074
+    },
+    {
+      "test": "tests/test_attacks.py::test_02b_tampered_header_counter_rejected",
+      "outcome": "passed",
+      "duration_s": 0.0216
+    },
+    {
+      "test": "tests/test_attacks.py::test_03_replayed_command_rejected",
+      "outcome": "passed",
+      "duration_s": 0.0303
+    },
+    {
+      "test": "tests/test_attacks.py::test_03b_older_counter_rejected",
+      "outcome": "passed",
+      "duration_s": 0.0395
+    },
+    {
+      "test": "tests/test_attacks.py::test_04_expired_command_rejected",
+      "outcome": "passed",
+      "duration_s": 0.022
+    },
+    {
+      "test": "tests/test_attacks.py::test_04b_expired_and_badly_signed_fails_cheaply",
+      "outcome": "passed",
+      "duration_s": 0.0201
+    },
+    {
+      "test": "tests/test_attacks.py::test_05_unauthorized_command_rejected",
+      "outcome": "passed",
+      "duration_s": 0.0403
+    },
+    {
+      "test": "tests/test_attacks.py::test_05b_operator_cannot_open_pass",
+      "outcome": "passed",
+      "duration_s": 0.0203
+    },
+    {
+      "test": "tests/test_attacks.py::test_06_forged_random_signature_rejected",
+      "outcome": "passed",
+      "duration_s": 0.0016
+    },
+    {
+      "test": "tests/test_attacks.py::test_06b_forged_with_attacker_key_rejected",
+      "outcome": "passed",
+      "duration_s": 0.0366
+    },
+    {
+      "test": "tests/test_attacks.py::test_06c_unknown_key_id_rejected",
+      "outcome": "passed",
+      "duration_s": 0.0194
+    },
+    {
+      "test": "tests/test_attacks.py::test_07_cross_pass_replay_rejected",
+      "outcome": "passed",
+      "duration_s": 0.0393
+    },
+    {
+      "test": "tests/test_attacks.py::test_07b_nonce_binding_is_what_rejects",
+      "outcome": "passed",
+      "duration_s": 0.0255
+    },
+    {
+      "test": "tests/test_attacks.py::test_07c_replayed_pass_open_rejected",
+      "outcome": "passed",
+      "duration_s": 0.0149
+    },
+    {
+      "test": "tests/test_attacks.py::test_08_wrong_satellite_rejected",
+      "outcome": "passed",
+      "duration_s": 0.0206
+    },
+    {
+      "test": "tests/test_attacks.py::test_09_flood_attack_bounded",
+      "outcome": "passed",
+      "duration_s": 0.6244
+    },
+    {
+      "test": "tests/test_attacks.py::test_09b_flood_of_wellformed_signatures_also_capped",
+      "outcome": "passed",
+      "duration_s": 0.3615
+    },
+    {
+      "test": "tests/test_attacks.py::test_10_link_never_exceeds_pass_budget",
+      "outcome": "passed",
+      "duration_s": 0.048
+    },
+    {
+      "test": "tests/test_attacks.py::test_counter_survives_reboot",
+      "outcome": "passed",
+      "duration_s": 0.0398
+    },
+    {
+      "test": "tests/test_attacks.py::test_atomic_write_crash_leaves_previous_state",
+      "outcome": "passed",
+      "duration_s": 0.044
+    },
+    {
+      "test": "tests/test_attacks.py::test_rejections_write_nothing_to_state_file",
+      "outcome": "passed",
+      "duration_s": 0.0606
+    },
+    {
+      "test": "tests/test_attacks.py::test_malformed_frames_rejected",
+      "outcome": "passed",
+      "duration_s": 0.0244
+    },
+    {
+      "test": "tests/test_attacks.py::test_check_order_matches_prd",
+      "outcome": "passed",
+      "duration_s": 0.0299
+    },
+    {
+      "test": "tests/test_attacks.py::test_frame_sizes_match_nfr01",
+      "outcome": "passed",
+      "duration_s": 0.0186
+    },
+    {
+      "test": "tests/test_attacks.py::test_separate_satellite_process_end_to_end",
+      "outcome": "passed",
+      "duration_s": 0.3022
+    },
+    {
+      "test": "tests/test_judge.py::test_qrng_job_detail_and_stats",
+      "outcome": "passed",
+      "duration_s": 28.244
+    },
+    {
+      "test": "tests/test_judge.py::test_nonce_verify_recomputes_and_matches",
+      "outcome": "passed",
+      "duration_s": 0.0931
+    },
+    {
+      "test": "tests/test_judge.py::test_nonce_verify_detects_tampered_counts",
+      "outcome": "passed",
+      "duration_s": 0.1267
+    },
+    {
+      "test": "tests/test_judge.py::test_refetch_needs_a_cloud_job",
+      "outcome": "passed",
+      "duration_s": 0.0145
+    },
+    {
+      "test": "tests/test_judge.py::test_refetch_compares_remote_counts",
+      "outcome": "passed",
+      "duration_s": 0.0243
+    },
+    {
+      "test": "tests/test_judge.py::test_compose_variants",
+      "outcome": "passed",
+      "duration_s": 0.2557
+    },
+    {
+      "test": "tests/test_judge.py::test_raw_and_last_frame",
+      "outcome": "passed",
+      "duration_s": 0.08
+    },
+    {
+      "test": "tests/test_judge.py::test_sample_cases_all_pass_json_and_csv",
+      "outcome": "passed",
+      "duration_s": 0.3786
+    },
+    {
+      "test": "tests/test_judge.py::test_cases_report_wrong_expectations",
+      "outcome": "passed",
+      "duration_s": 0.0833
+    },
+    {
+      "test": "tests/test_judge.py::test_cases_validation",
+      "outcome": "passed",
+      "duration_s": 0.0044
+    },
+    {
+      "test": "tests/test_qrng.py::test_nonce_derivation_reproducible_and_input_sensitive",
+      "outcome": "passed",
+      "duration_s": 0.0002
+    },
+    {
+      "test": "tests/test_qrng.py::test_fuzz_stream_deterministic_and_bounded",
+      "outcome": "passed",
+      "duration_s": 0.0221
+    },
+    {
+      "test": "tests/test_qrng.py::test_labels",
+      "outcome": "passed",
+      "duration_s": 0.0001
+    },
+    {
+      "test": "tests/test_qrng.py::test_nonce_requires_qcloud_job_unless_dev",
+      "outcome": "passed",
+      "duration_s": 0.0388
+    },
+    {
+      "test": "tests/test_qrng.py::test_cloud_entry_consumed_once",
+      "outcome": "passed",
+      "duration_s": 0.0565
+    },
+    {
+      "test": "tests/test_qrng.py::test_qcloud_simulator_job_recorded",
+      "outcome": "skipped",
+      "duration_s": 0.0002
+    },
+    {
+      "test": "tests/test_scheduler.py::test_baselines_feasible_and_brute_force_optimal",
+      "outcome": "passed",
+      "duration_s": 5.6492
+    },
+    {
+      "test": "tests/test_scheduler.py::test_validator_catches_violations[<lambda>-before its dependency]",
+      "outcome": "passed",
+      "duration_s": 5.5852
+    },
+    {
+      "test": "tests/test_scheduler.py::test_validator_catches_violations[<lambda>-after its deadline]",
+      "outcome": "passed",
+      "duration_s": 5.6044
+    },
+    {
+      "test": "tests/test_scheduler.py::test_validator_catches_violations[<lambda>-not scheduled]",
+      "outcome": "passed",
+      "duration_s": 5.7889
+    },
+    {
+      "test": "tests/test_scheduler.py::test_validator_catches_violations[<lambda>-invalid pass]",
+      "outcome": "passed",
+      "duration_s": 5.6769
+    },
+    {
+      "test": "tests/test_scheduler.py::test_validator_catches_budget_overrun",
+      "outcome": "passed",
+      "duration_s": 0.0002
+    },
+    {
+      "test": "tests/test_scheduler.py::test_over_budget_queue_defers_low_priority",
+      "outcome": "passed",
+      "duration_s": 0.014
+    },
+    {
+      "test": "tests/test_scheduler.py::test_order_within_pass_respects_dependencies",
+      "outcome": "passed",
+      "duration_s": 0.0001
+    },
+    {
+      "test": "tests/test_scheduler.py::test_instance_rejects_cycles_and_unknown_deps",
+      "outcome": "passed",
+      "duration_s": 0.0003
+    },
+    {
+      "test": "tests/test_scheduler.py::test_opt_model_structure_and_qpiai_feasibility_agree",
+      "outcome": "passed",
+      "duration_s": 6.2121
+    },
+    {
+      "test": "tests/test_scheduler.py::test_decode_rejects_double_assignment",
+      "outcome": "passed",
+      "duration_s": 0.0003
+    },
+    {
+      "test": "tests/test_scheduler.py::test_opt_refuses_without_key_and_never_falls_back",
+      "outcome": "passed",
+      "duration_s": 0.0002
+    },
+    {
+      "test": "tests/test_scheduler.py::test_reduced_qaoa_instance_size",
+      "outcome": "passed",
+      "duration_s": 0.1331
+    },
+    {
+      "test": "tests/test_scheduler.py::test_opt_local_solve_matches_brute_force",
+      "outcome": "passed",
+      "duration_s": 6.3895
+    }
+  ],
+  "python": "3.11.9",
+  "platform": "win32"
+}

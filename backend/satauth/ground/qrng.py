@@ -167,6 +167,7 @@ class QRNGPool:
             "device": device,
             "randomness_class": randomness_class(device),
             "circuit": f"{n} qubits: H on each, measure all",
+            "qasm": circ.to_qasm(),
             "n_qubits": n,
             "shots": self.shots,
             "counts": counts,

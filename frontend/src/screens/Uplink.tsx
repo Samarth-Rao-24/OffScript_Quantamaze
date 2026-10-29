@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { api, fmtBytes, REASON_TEXT, short, type Json } from "../api";
 import { useLive } from "../live";
+import QrngInspector from "../components/QrngInspector";
 import { Button, CopyId, ErrorNote, Mono, Panel, Provenance, StepLadder, VerdictTag, randomnessKind } from "../components/ui";
 
 const DEVICES = [
@@ -266,6 +267,7 @@ export default function Uplink() {
           </table>
         </div>
       </Panel>
+      <QrngInspector />
     </div>
   );
 }

@@ -1,0 +1,81 @@
+[
+  {
+    "id": "J1",
+    "description": "Valid operator image capture",
+    "key": "OPERATOR",
+    "opcode": "CAPTURE_IMAGE",
+    "args_hex": "0b01",
+    "expect": "ACCEPT"
+  },
+  {
+    "id": "J2",
+    "description": "Replay J1 unchanged",
+    "replay_of": "J1",
+    "expect": "E_REPLAY"
+  },
+  {
+    "id": "J3",
+    "description": "Operator tries a thruster burn",
+    "key": "OPERATOR",
+    "opcode": "ORBIT_BURN",
+    "args_hex": "0000000a",
+    "expect": "E_UNAUTHORIZED"
+  },
+  {
+    "id": "J4",
+    "description": "Admin burn, but flip one bit of the body after signing",
+    "key": "ADMIN",
+    "opcode": "ORBIT_BURN",
+    "args_hex": "0000000a",
+    "mutate": {
+      "flip_bit": 140
+    },
+    "expect": "E_BAD_SIG"
+  },
+  {
+    "id": "J5",
+    "description": "Addressed to satellite 7",
+    "key": "OPERATOR",
+    "opcode": "NOOP_PING",
+    "sat_id": 7,
+    "expect": "E_WRONG_SAT"
+  },
+  {
+    "id": "J6",
+    "description": "Expired 30 s ago",
+    "key": "OPERATOR",
+    "opcode": "NOOP_PING",
+    "expiry_offset_s": -30,
+    "expect": "E_EXPIRED"
+  },
+  {
+    "id": "J7",
+    "description": "Attacker key pretending to be OPERATOR",
+    "key": "ATTACKER",
+    "opcode": "SET_SAFE_MODE",
+    "args_hex": "01",
+    "expect": "E_BAD_SIG"
+  },
+  {
+    "id": "J8",
+    "description": "Signed under a random nonce",
+    "key": "ADMIN",
+    "opcode": "NOOP_PING",
+    "nonce": "random",
+    "expect": "E_BAD_SIG"
+  },
+  {
+    "id": "J9",
+    "description": "Garbage bytes",
+    "raw_hex": "deadbeef",
+    "expect": "REJECT"
+  },
+  {
+    "id": "J10",
+    "description": "Valid admin heater command",
+    "key": "ADMIN",
+    "opcode": "SET_HEATER",
+    "args_hex": "0112",
+    "expect": "ACCEPT"
+  }
+]

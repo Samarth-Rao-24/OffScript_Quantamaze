@@ -111,13 +111,41 @@ The server binds to `127.0.0.1` only. On first start it generates OPERATOR and A
 
 Or from the command line: `.\scripts\run_all.ps1 -WithQpiAI`.
 
+### Checking cost before a paid QCloud run
+
+```powershell
+cd backend
+..\.venv\Scripts\python.exe scripts\qpiai_runs.py credits                                       # free: device list + QpiAI price estimates
+..\.venv\Scripts\python.exe scripts\qpiai_runs.py qrng --device QpiAI-Indus-1 --shots 256       # shows the estimate, asks 'yes', then runs
+..\.venv\Scripts\python.exe scripts\qpiai_runs.py job <JOB_ID>                                  # free: re-fetch status and credits_used from QCloud
+```
+
+The QCloud estimator prices simulators per circuit (1 credit on QSV-Simulator) and hardware per shot. QpiAI API keys cannot read account balances, so check your balance on the dashboards.
+
+### QRNG job inspector (Live uplink, bottom)
+
+For any recorded QRNG job the inspector shows:
+- the circuit that was submitted, drawn from its stored OpenQASM;
+- a histogram of all 2^n outcomes against the uniform expectation, with chi-square, p-value, empirical entropy and per-bit bias. Hardware bias shows up here honestly;
+- **Verify current nonce**: recomputes the satellite's pass nonce from the recorded OS entropy, the job's counts and the job ID, and checks that the counts are unchanged, the ground installed the nonce, and the audit log shows the PASS_OPEN accepted;
+- **Ask QCloud for this job**: read-only GET requests for the job by ID (status, credits used, stored counts), compared with our record. No circuit is executed. Each re-fetch is saved in `evidence/qcloud_jobs/refetch_*.json`.
+
+### Judge console (Attack lab, bottom)
+
+Lets judges test the satellite with their own inputs instead of our attack buttons. Open a contact window first.
+- **Compose a frame:** signing key (ground OPERATOR, ground ADMIN, or an attacker key the satellite has never seen), opcode, argument bytes, satellite ID, expiry, counter (next or a fixed value), the nonce to sign under (current, previous, random or custom), a key_id override, and an optional bit to flip after signing. The frame is really signed and sent, and the check-by-check result is shown.
+- **Raw bytes:** paste or edit any hex. **Load last frame sent** fills the box so a judge can flip any bit and resend.
+- **Case file:** paste or upload JSON or CSV. Each case states its expected outcome (`ACCEPT`, `REJECT`, or a reason code such as `E_REPLAY`); the runner reports per-case match/mismatch and totals including **false accepts** (must be 0), false rejects and different-reason rejections. Results are saved to `evidence/judge_runs/`. Samples: `docs/judge_cases_sample.json` and `docs/judge_cases_sample.csv`. Bits are numbered from 0 = most significant bit of byte 0.
+
+Judges can also **add or remove commands** in the Pass planner (then **Save queue** and **Optimize**), so the scheduling problem can be theirs too.
+
 ---
 
 ## 5. Tests and benchmarks
 
 ```powershell
 cd backend
-..\.venv\Scripts\python.exe -m pytest -q                         # 51 tests, no keys needed
+..\.venv\Scripts\python.exe -m pytest -q                         # 61 tests without keys (63 with Opt + QCloud integration enabled)
 ..\.venv\Scripts\python.exe -m satauth.bench.measure             # latency, RAM, NV writes, flood
 ..\.venv\Scripts\python.exe -m satauth.bench.scheme_compare      # Falcon / ML-DSA / ECDSA / Ed25519
 .\scripts\run_all.ps1                                            # all of the above + UI build (from repo root)
@@ -184,7 +212,7 @@ A pass opens with `PASS_OPEN`, signed with the ADMIN key over the *previous* non
 ## 8. What was verified, and what still needs you
 
 Verified in the build workspace (Linux, Python 3.11.18, Node 22):
-- 51 tests pass; the 2 integration tests are skipped there for lack of keys.
+- 61 tests pass; the 2 integration tests are skipped there for lack of keys. On your PC (keys in .env) the real Opt test also runs and passed.
 - The frontend type-checks and builds. All five screens were rendered and visually reviewed against the real API, including a mobile width.
 - The API, satellite process, attacks and benchmarks were exercised end to end.
 - The Opt model compiles (MILP, 56 binaries, 53 constraints), and QpiAI's `feasibility()` agrees with the independent validator.

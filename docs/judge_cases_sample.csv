@@ -1,0 +1,11 @@
+id,description,expect,new_window,key,key_id,opcode,args_hex,sat_id,expiry_offset_s,counter,nonce,raw_hex,replay_of,flip_bit
+J1,Valid operator image capture,ACCEPT,,OPERATOR,,CAPTURE_IMAGE,0b01,,,,,,,
+J2,Replay J1 unchanged,E_REPLAY,,,,,,,,,,,J1,
+J3,Operator tries a thruster burn,E_UNAUTHORIZED,,OPERATOR,,ORBIT_BURN,0000000a,,,,,,,
+J4,"Admin burn, but flip one bit of the body after signing",E_BAD_SIG,,ADMIN,,ORBIT_BURN,0000000a,,,,,,,140
+J5,Addressed to satellite 7,E_WRONG_SAT,,OPERATOR,,NOOP_PING,,7,,,,,,
+J6,Expired 30 s ago,E_EXPIRED,,OPERATOR,,NOOP_PING,,,-30,,,,,
+J7,Attacker key pretending to be OPERATOR,E_BAD_SIG,,ATTACKER,,SET_SAFE_MODE,01,,,,,,,
+J8,Signed under a random nonce,E_BAD_SIG,,ADMIN,,NOOP_PING,,,,,random,,,
+J9,Garbage bytes,REJECT,,,,,,,,,,deadbeef,,
+J10,Valid admin heater command,ACCEPT,,ADMIN,,SET_HEATER,0112,,,,,,,
