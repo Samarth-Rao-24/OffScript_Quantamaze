@@ -2,12 +2,12 @@
 
 **Quant-A-Maze 3.0 (Q-BITS × QpiAI), Post-Quantum Cryptography track, PQC-03: Quantum-Resistant Satellite Command Authentication.**
 
-Ground-side Falcon-512 command signing, a separate simulated onboard verifier, an accept/reject audit log and a measured resource budget. Every command frame is bound to a per-pass nonce derived from a QpiAI QCloud quantum-circuit job. Which commands are signed in which pass is decided by a QpiAI Opt model with byte budgets, deadlines and dependencies. A reduced instance of the same schedule is also solved with QAOA on QCloud.
+Ground-side Falcon-512 command signing, a separate simulated onboard verifier, an accept/reject audit log and a measured resource budget. Every command frame is bound to a per-pass nonce derived from a QpiAI quantum-circuit run (QpiAI Quantum SDK local simulator by default; QCloud devices optional). Which commands are signed in which pass is decided by a QpiAI Opt model with byte budgets, deadlines and dependencies. A reduced instance of the same schedule is also solved with QAOA (QpiAI local simulator by default).
 
 ```
 queue ──► QpiAI Opt (MILP) ──► independent feasibility check ──► Falcon-512 signer ──► link (byte budget) ──► onboard verifier process ──► audit log
               │                                                     ▲                                          │
-              └─ greedy / brute force (comparison only)              └── pass nonce = SHA-256(OS entropy ∥ QCloud QRNG job) ─┘
+              └─ greedy / brute force (comparison only)              └── pass nonce = SHA-256(OS entropy ∥ QpiAI QRNG run) ──┘
 ```
 
 ---
@@ -19,16 +19,16 @@ queue ──► QpiAI Opt (MILP) ──► independent feasibility check ──�
 | `backend/satauth/common/` | Frame format (`frame.py`), roles/opcodes (`roles.py`), Falcon wrapper (`crypto.py`), atomic file I/O |
 | `backend/satauth/ground/` | Key generation, signer + persisted counter, queue, **QpiAI Opt scheduler**, feasibility validator, greedy/brute-force baselines, **QCloud QRNG**, **QAOA experiment** |
 | `backend/satauth/link/` | Byte-budgeted uplink simulator |
-| `backend/satauth/onboard/` | Verifier pipeline, flood guard, NV state store, audit logger, separate satellite **process** |
+| `backend/satauth/onboard/` | Verifier pipeline, flood guard, NV state store, audit logger, separate satellite **process**, key activation/revocation |
 | `backend/satauth/api/` | FastAPI app, WebSocket stream, attack lab, service layer |
 | `backend/satauth/bench/` | `measure.py` (latency, RAM, NV writes, flood CPU), `scheme_compare.py` (Falcon vs ML-DSA vs ECDSA vs Ed25519) |
 | `backend/tests/` | pytest suite: the 10 required scenarios plus state-safety, scheduler, QRNG and API tests |
 | `backend/scripts/qpiai_runs.py` | Command-line QpiAI runs: key check, Opt plan, QRNG job, QAOA |
 | `frontend/` | React + Vite + TypeScript + Tailwind + Recharts, five screens |
 | `scripts/` | `start.ps1`, `run_all.ps1` (Windows), `run_all.sh` (Linux/macOS) |
-| `evidence/` | Generated on **your** machine: logs, Opt/QCloud job records, benchmarks, test summary |
-| `data/` | Generated runtime state: **private keys**, counters, nonce chain (git-ignored, never served) |
-| `docs/` | `DEMO_SCRIPT.md` (3 minutes), `REQUIREMENTS_CHECKLIST.md` |
+| `evidence/` | Generated on **your** machine: logs (`onboard_log.jsonl`, `alerts.jsonl`, `ack_log.jsonl`), Opt/QpiAI run records, NASA pulls (`evidence/nasa/`), benchmarks, test summary |
+| `data/` | Generated runtime state: **private keys** (optionally encrypted at rest), counters, nonce chain (git-ignored, never served) |
+| `docs/` | `DEMO_SCRIPT.md` (3 minutes), `REQUIREMENTS_CHECKLIST.md`, `MIGRATION_AND_DEPLOYMENT.md`, sample judge case files |
 | `poc/`, `PRD_*.docx`, rubric PDF | Your original files, left untouched |
 
 ---
@@ -38,7 +38,7 @@ queue ──► QpiAI Opt (MILP) ──► independent feasibility check ──�
 **Prerequisites:** Python **3.11** (64-bit) from python.org (`py -3.11 --version` should work) and Node.js **20 LTS or newer** (`node --version`). Git is optional.
 
 ```powershell
-cd F:\OffScript
+cd <your project folder>        # e.g. F:\OffScript
 
 # 1) Python environment (installs the pinned packages from PyPI)
 py -3.11 -m venv .venv
@@ -53,7 +53,7 @@ cd ..
 
 # 3) Secrets
 Copy-Item .env.example .env
-notepad .env        # paste your two keys, save, close
+notepad .env        # paste your QpiAI keys (and optionally NASA_API_KEY, QUPLINK_KEY_PASSPHRASE), save, close
 ```
 
 If PowerShell blocks scripts, run once: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
@@ -75,6 +75,7 @@ cp .env.example .env && $EDITOR .env
 | QpiAI Opt | https://opt.qpiai.tech (register, copy your API key) | `QPIAI_OPT_API_KEY` | `qpiai_opt.opt_solvers.Client(api_key=...)` for every Opt solve |
 | QpiAI QCloud | https://qcloud.qpiai.tech (register, copy your API key) | `QPIAI_QCLOUD_API_KEY` | `QpiAIQuantumAuth.login(api_key=...)` for QRNG circuits and QAOA |
 | NASA Open APIs (optional) | https://api.nasa.gov (fill in the form; the key is shown and emailed at once) | `NASA_API_KEY` | DONKI space-weather requests. Without it `DEMO_KEY` is used (rate-limited). The TLE API needs no key. |
+| Key passphrase (optional) | You choose it | `QUPLINK_KEY_PASSPHRASE` | Encrypts every private key at rest (scrypt + AES-256-GCM); see 4c. |
 
 - `.env` is git-ignored. The backend reads it on start-up. Keys are never logged, never returned by the API and never sent to the browser; the UI shows only "Opt key ✓/✗".
 - `QCLOUD_API_KEY` (the name your `poc/` used) is accepted as a fallback.
@@ -114,12 +115,12 @@ The server binds to `127.0.0.1` only. On first start it generates OPERATOR and A
 6. *Resource budget*: **Run benchmarks**.
 7. *Evidence*: **Download evidence bundle**.
 
-Or from the command line: `.\scripts\run_all.ps1 -WithQpiAI`.
+Or from the command line, use `final_run.py` below (no credits). Note: `.\scripts\run_all.ps1 -WithQpiAI` runs the **paid cloud path** (Opt platform plan, QRNG on QpiAI-Indus-1, QAOA on the QCloud simulator) and asks before each paid step; without `-WithQpiAI` it runs only tests, benchmarks and the UI build.
 
 **Recommended single command for the recorded submission run** (no credits; logs everything to `evidence\final_run_log.txt`, writes `q-uplink-evidence.zip`):
 ```powershell
-cd F:\OffScript\backend
-F:\OffScript\.venv\Scripts\python.exe scripts\final_run.py --fresh
+cd backend
+..\.venv\Scripts\python.exe scripts\final_run.py --fresh
 ```
 It runs: key check (both keys authenticate with QpiAI), 6 QRNG circuits on the QpiAI Quantum SDK simulator (4 passes + 2 contact windows), the NASA pull (real ISS passes over Bengaluru + DONKI space weather, applied as the pass budgets; skipped with a note if NASA is unreachable, or with `--no-nasa`), the QpiAI Opt local solver plan (validated, compared with greedy and brute force), QAOA on the QpiAI simulator, benchmarks, then passes with a **missing-packet drill** in pass 3 (one frame lost on the link, detected, reconciled, recovered or re-planned with QpiAI Opt; `--no-drill` to skip), nonce verification, judge sample cases, all attacks, and a **key-management drill** (rotate OPERATOR to its spare, prove the old key is refused, migrate to hybrid Ed25519 + Falcon) on the real satellite process. `--fresh` archives the previous evidence to `evidence\_previous_runs\`. Options: `--quantum cloud` and `--opt-mode platform-qubo` for cloud jobs (need platform access and credits), `--qrng-jobs`, `--skip-qaoa`.
 
@@ -215,6 +216,8 @@ Two integration tests run only when keys are present:
 | Wrong satellite | `test_08_*` | `E_WRONG_SAT` |
 | Flood | `test_09_*` (500 random, 60 well-formed) | first N=8 `E_BAD_SIG`, rest `E_FLOOD_LOCKOUT`, exactly 8 signature checks |
 | Over budget | `test_10_*`, `test_over_budget_queue_defers_low_priority` | link refuses the frame that would exceed the budget; scheduler defers the lowest priorities |
+| Missing packet | packet-loss drill tests | lost frame raises an alert, dependents are held, the counter gap is reconciled, the command is re-signed with a fresh counter (the old counter is rejected as `E_REPLAY`) |
+| Revoked key | key-management tests | after rotation, a validly signed frame from the old key is rejected as `E_KEY_REVOKED` before any signature work |
 
 Every test asserts the reason code **and** the state effect (counter, NV writes, flood count, log line). Extra tests cover counter persistence across reboot, a simulated crash during the atomic write, check ordering, malformed frames, the separate satellite process, the Opt model structure (cross-checked with QpiAI's `feasibility()`), and the API (including that the evidence zip contains no private keys).
 
@@ -222,7 +225,7 @@ Every test asserts the reason code **and** the state effect (counter, NV writes,
 
 ## 6. How the security pipeline works
 
-Frame: `version(1) sat_id(1) key_id(1) cmd_len(1) counter(8) expiry(4) | command(≤32 B) | Falcon-padded-512 signature (666 B)`. Authentication overhead is exactly **682 B**. The signature covers `"Q-UPLINK/FRAME/v1" ∥ header ∥ command ∥ current pass nonce`; the nonce itself is never resent.
+Frame: `version(1) sat_id(1) key_id(1) cmd_len(1) counter(8) expiry(4) | command(≤32 B) | signature`. With the default Falcon-padded-512 key the signature is 666 B and the authentication overhead is exactly **682 B**. The signature algorithm is bound to the key named by `key_id` (Falcon-512, hybrid Ed25519 + Falcon-512, or ML-DSA-44), so frame sizes change after a migration and plans are re-sized to match. The signature covers `"Q-UPLINK/FRAME/v1" ∥ header ∥ command ∥ current pass nonce`; the nonce itself is never resent.
 
 Onboard checks run in this order. The first failure stops processing.
 
@@ -233,9 +236,10 @@ Onboard checks run in this order. The first failure stops processing.
 | 1 | `sat_id` matches | `E_WRONG_SAT` |
 | 2 | expiry ≥ onboard clock | `E_EXPIRED` |
 | 3 | counter > last accepted (check only) | `E_REPLAY` |
-| 4 | Falcon signature with the key named by `key_id`, over frame + pass nonce | `E_BAD_SIG` |
+| – | key named by `key_id` is active, not revoked (no signature work) | `E_KEY_REVOKED` |
+| 4 | signature with the key named by `key_id` (that key's algorithm), over frame + pass nonce | `E_BAD_SIG` |
 | 5 | opcode allowed for that key's role | `E_UNAUTHORIZED` |
-| – | commit counter (one atomic NV write), execute | `OK` |
+| – | commit counter and any counter gap (one atomic NV write), execute | `OK` |
 
 A pass opens with `PASS_OPEN`, signed with the ADMIN key over the *previous* nonce and carrying the new one. The pass nonce is SHA-256 of 32 B of OS entropy, the digest of the QCloud job's measurement counts, the job ID and the pass number. Every input is recorded in `evidence/qcloud_jobs/nonce_derivations.jsonl`, so each nonce can be recomputed.
 
@@ -251,25 +255,26 @@ A pass opens with `PASS_OPEN`, signed with the ADMIN key over the *previous* non
 | "quantum random bytes" | Labelled by device | The SDK documents that only `QpiAI-Indus-1` output is physical quantum randomness; simulators sample with a classical PRNG. The UI and evidence label every nonce accordingly. QCloud returns aggregated counts, not per-shot order, so the entropy used is that of the count histogram (about 780 bits for an ideal 8-qubit, 1024-shot job); OS entropy is always mixed in. |
 | §5 command ≤ 32 B | PASS_OPEN body is 33 B | 1-byte opcode + 32-byte nonce cannot fit in 32 B. |
 | "few hundred bytes per pass" | Default budgets 3600/3600/2900/2200 B | One authenticated frame is at least 683 B, so a few-hundred-byte pass could not carry any frame. Budgets are editable in the planner. |
-| §7 codes | Added `E_MALFORMED` | Unparseable bytes need a code; they are rejected before any signature work. |
+| §7 codes | Added `E_MALFORMED` and `E_KEY_REVOKED` | Unparseable bytes and revoked keys need their own codes; both are rejected before any signature work. |
+| §2.3 key rotation/revocation out of scope | **Implemented** (4c) | Spare, ML-DSA-44 and hybrid keys are preloaded; `KEY_ACTIVATE` / `KEY_REVOKE` are ADMIN-only frames. |
 | Flood guard reset | Reset at the start of each contact window by the onboard pass timer (and on PASS_OPEN) | If only PASS_OPEN reset it, a lockout could never be lifted. Trade-off: a flood early in a window denies the rest of that window (DoS) while keeping onboard CPU bounded. |
 | QAOA instance | 5 commands × 2 passes, budgets as 2 frame slots, 12 qubits | Exact byte budgets need ~11 slack qubits per pass. The slot form is conservative (every frame ≤ 715 B) and decoded plans are re-checked against exact bytes. |
 
 ---
 
-## 8. What was verified, and what still needs you
+## 8. What was verified
 
-Verified in the build workspace (Linux, Python 3.11.18, Node 22):
-- 61 tests pass; the 2 integration tests are skipped there for lack of keys. On your PC (keys in .env) the real Opt test also runs and passed.
-- The frontend type-checks and builds. All five screens were rendered and visually reviewed against the real API, including a mobile width.
-- The API, satellite process, attacks and benchmarks were exercised end to end.
-- The Opt model compiles (MILP, 56 binaries, 53 constraints), and QpiAI's `feasibility()` agrees with the independent validator.
+**On our Windows PC (Python 3.11.9, keys in `.env`)**, recorded in `evidence/final_run_log.txt` and `evidence/tests/summary.json`:
+- Installation on Windows and the full pytest suite, including the real QpiAI Opt integration test.
+- Both QpiAI keys authenticate.
+- QpiAI Opt local solve: proven optimal (65.8 delivered priority, 13 of 14 commands), matching brute force and beating greedy (55.3).
+- QRNG circuits and QAOA on the QpiAI Quantum SDK simulator; every pass nonce recomputes from the recorded inputs.
+- All four passes, every attack, and the judge sample cases (0 false accepts) on the separate satellite process.
+- Benchmarks on our CPU, labelled as emulated host measurements.
 
-**Not yet verified, needs your machine and keys:**
-- Installation on Windows (expected to work: every package has a win_amd64/py3 wheel).
-- A real QpiAI Opt solve, local and platform. The code path stops at authentication without a key.
-- QCloud cloud jobs (Indus-1, QCloud simulators) and Opt platform jobs: refused on our account (subscription / QUBO Solver access). Per organiser guidance the submission uses the QpiAI local solver and simulator instead, which ran successfully on the PC.
-- Benchmark numbers on your CPU. The evidence folder is intentionally empty until you run them.
+**In the Linux build workspace (Python 3.11.18, Node 22):** the frontend type-checks and builds; all screens were rendered against the real API, including a mobile width; the Opt model (MILP, 56 binaries, 53 constraints) agrees with QpiAI's `feasibility()` and the independent validator.
+
+**Not run:** QCloud cloud jobs (Indus-1, QCloud simulators) and Opt platform jobs. They were refused on our account (subscription / QUBO Solver access), so per organiser guidance the submission uses the QpiAI local solver and simulator. The cloud path is still in the code (`--quantum cloud`, `--opt-mode platform-qubo`).
 
 ---
 
@@ -287,6 +292,8 @@ Verified in the build workspace (Linux, Python 3.11.18, Node 22):
 | Port 8000 busy | `netstat -ano | findstr :8000`, stop that process, or change the port in `scripts\start.ps1` and `frontend\vite.config.ts`. |
 | Want a clean demo | Sidebar **Reset demo state**. It archives the log, re-provisions onboard state and keeps the keys. |
 | Lost or corrupted keys | Stop the server, delete `data\` (this regenerates keys and state), restart. |
+| **Fetch from NASA** fails or is rate-limited | Without `NASA_API_KEY`, `DEMO_KEY` is rate-limited: add your own key to `.env`. If NASA is unreachable, keep the default budgets, or run `final_run.py --no-nasa`. |
+| Server asks for a key passphrase or keys fail to load | `QUPLINK_KEY_PASSPHRASE` in `.env` must match the one the keys were encrypted with. |
 
 ---
 
@@ -294,7 +301,9 @@ Verified in the build workspace (Linux, Python 3.11.18, Node 22):
 
 - Software-only. All timings are **emulated host** measurements, labelled with the CPU model; they are not flight-hardware numbers.
 - `tracemalloc` sees only the Python heap. C stack and static memory inside PQClean are not counted.
-- The ground counter, keys and nonce chain are local JSON files; there is no HSM. Key revocation and rotation are out of scope (PRD §2.3).
+- The ground counter, keys and nonce chain are local files; there is no HSM. Private keys are encrypted at rest only when `QUPLINK_KEY_PASSPHRASE` is set. Key rotation, revocation and algorithm migration use the keys pre-loaded before launch (4c).
+- NASA orbit and space-weather data are real, but they drive a **simulated** satellite (the ISS is a stand-in orbit). The command-uplink allocation (default 80 bit/s) is our assumption.
+- Ground and satellite stay in sync through the simulated acknowledgement channel (4b); a real mission would carry these acknowledgements in telemetry.
 - The flood guard trades availability for bounded CPU within a window (see §7).
 - Commands are authenticated, not encrypted (PRD §2.3).
 - The stretch two-tier mode (ML-KEM + HMAC, FR-21, "Could") is not implemented.
