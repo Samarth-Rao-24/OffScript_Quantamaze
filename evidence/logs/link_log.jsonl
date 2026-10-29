@@ -300,3 +300,33 @@
 {"budget":3600,"bytes":684,"event":"TX","label":"KEY_ACTIVATE 7","lost":false,"pass":null,"time_utc":"2026-10-29T13:01:15.515292+00:00","used":2767,"window":5}
 {"budget":3600,"bytes":684,"event":"TX","label":"KEY_REVOKE 3","lost":false,"pass":null,"time_utc":"2026-10-29T13:01:15.676579+00:00","used":3451,"window":5}
 {"bytes":749,"event":"HOSTILE","label":"valid","pass":null,"time_utc":"2026-10-29T13:01:15.898901+00:00","window":5}
+{"budget":3700,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":2,"time_utc":"2026-10-29T13:38:28.261222+00:00","used":715,"window":1}
+{"budget":3700,"bytes":685,"event":"TX","label":"C06","lost":false,"pass":2,"time_utc":"2026-10-29T13:38:29.582415+00:00","used":1400,"window":1}
+{"budget":3700,"bytes":695,"event":"TX","label":"C13","lost":false,"pass":2,"time_utc":"2026-10-29T13:38:31.202243+00:00","used":2095,"window":1}
+{"budget":3982,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":1,"time_utc":"2026-10-29T17:58:36.322783+00:00","used":715,"window":3}
+{"budget":3982,"bytes":699,"event":"TX","label":"C05","lost":false,"pass":1,"time_utc":"2026-10-29T17:58:37.461496+00:00","used":1414,"window":3}
+{"budget":3982,"bytes":684,"event":"TX","label":"C01","lost":false,"pass":1,"time_utc":"2026-10-29T17:58:39.212792+00:00","used":2098,"window":3}
+{"budget":3982,"bytes":685,"event":"TX","label":"C02","lost":false,"pass":1,"time_utc":"2026-10-29T17:58:40.839272+00:00","used":2783,"window":3}
+{"budget":3982,"bytes":695,"event":"TX","label":"C11","lost":false,"pass":1,"time_utc":"2026-10-29T17:58:42.381117+00:00","used":3478,"window":3}
+{"budget":3700,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":2,"time_utc":"2026-10-29T17:58:51.744620+00:00","used":715,"window":4}
+{"budget":3700,"bytes":695,"event":"TX","label":"C03","lost":false,"pass":2,"time_utc":"2026-10-29T17:58:52.866086+00:00","used":1410,"window":4}
+{"budget":3700,"bytes":691,"event":"TX","label":"C04","lost":false,"pass":2,"time_utc":"2026-10-29T17:58:54.493475+00:00","used":2101,"window":4}
+{"budget":3798,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":3,"time_utc":"2026-10-29T17:59:14.182473+00:00","used":715,"window":12}
+{"budget":3798,"bytes":714,"event":"TX","label":"C07","lost":false,"pass":3,"time_utc":"2026-10-29T17:59:15.351150+00:00","used":1429,"window":12}
+{"budget":3798,"bytes":714,"event":"TX","label":"C08","lost":false,"pass":3,"time_utc":"2026-10-29T17:59:16.978199+00:00","used":2143,"window":12}
+{"budget":3798,"bytes":689,"event":"TX","label":"C12","lost":false,"pass":3,"time_utc":"2026-10-29T17:59:18.593208+00:00","used":2832,"window":12}
+{"bytes":683,"event":"HOSTILE","label":"crosspass","pass":4,"time_utc":"2026-10-29T17:59:48.456308+00:00","window":16}
+{"budget":2621,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":4,"time_utc":"2026-10-29T18:40:44.624909+00:00","used":715,"window":14}
+{"budget":2621,"bytes":685,"event":"TX","label":"C14","lost":false,"pass":4,"time_utc":"2026-10-29T18:40:46.010984+00:00","used":1400,"window":14}
+{"budget":2621,"bytes":683,"event":"TX","label":"C10","lost":false,"pass":4,"time_utc":"2026-10-29T18:40:47.562227+00:00","used":2083,"window":14}
+{"budget":3982,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":1,"time_utc":"2026-10-29T18:54:52.722793+00:00","used":715,"window":15}
+{"budget":2621,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":4,"time_utc":"2026-10-29T18:55:46.238099+00:00","used":715,"window":19}
+{"budget":3698,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":2,"time_utc":"2026-10-29T18:56:11.567857+00:00","used":715,"window":32}
+{"budget":3799,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":3,"time_utc":"2026-10-29T18:56:19.495995+00:00","used":715,"window":33}
+{"budget":3799,"bytes":684,"event":"TX","label":"C09","lost":false,"pass":3,"time_utc":"2026-10-29T18:56:20.642788+00:00","used":1399,"window":33}
+{"budget":3799,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":3,"time_utc":"2026-10-29T18:57:17.813292+00:00","used":715,"window":35}
+{"budget":2621,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":4,"time_utc":"2026-10-29T18:57:21.442177+00:00","used":715,"window":36}
+{"budget":3698,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":2,"time_utc":"2026-10-29T18:57:25.390974+00:00","used":715,"window":37}
+{"budget":3698,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":2,"time_utc":"2026-10-29T19:02:04.981810+00:00","used":715,"window":38}
+{"budget":3799,"bytes":715,"event":"TX","label":"PASS_OPEN","lost":false,"pass":3,"time_utc":"2026-10-29T19:02:08.824757+00:00","used":715,"window":39}
+{"bytes":685,"event":"HOSTILE","label":"wrongsat","pass":3,"time_utc":"2026-10-29T19:03:06.936905+00:00","window":39}
