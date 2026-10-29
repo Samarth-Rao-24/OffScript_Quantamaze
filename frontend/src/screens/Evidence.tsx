@@ -71,13 +71,13 @@ export default function Evidence() {
             onOpen={open}
           />
         </Panel>
-        <Panel title="QCloud jobs" aside={`${ev?.qcloud_jobs?.length ?? 0} record${ev?.qcloud_jobs?.length === 1 ? "" : "s"}`}>
+        <Panel title="QpiAI quantum runs (QRNG, QAOA)" aside={`${ev?.qcloud_jobs?.length ?? 0} record${ev?.qcloud_jobs?.length === 1 ? "" : "s"}`}>
           <JobsTable
             rows={ev?.qcloud_jobs ?? []}
-            empty="No QCloud jobs yet. Fetch QRNG on the live uplink screen or run QAOA in the planner."
+            empty="No quantum runs yet. Run a QRNG circuit on the live uplink screen or run QAOA in the planner."
             cols={[
               ["Kind", (r: Json) => <span className="font-semibold uppercase">{r.kind}</span>],
-              ["Job ID", (r: Json) => (r.job_ids?.length > 1 ? <span>{r.job_ids.length} circuit jobs</span> : <CopyId value={r.job_ids?.[0]} empty="local run" />)],
+              ["Cloud job ID", (r: Json) => (r.job_ids?.length > 1 ? <span>{r.job_ids.length} circuit jobs</span> : <CopyId value={r.job_ids?.[0]} empty="local (no cloud ID)" />)],
               ["Device", (r: Json) => <span className="text-sm">{r.device}</span>],
               ["Source", (r: Json) => <Provenance kind={r.kind === "qaoa" ? (r.execution_mode === "platform" ? "cloud" : "local") : randomnessKind(r.randomness_class)} />],
               ["When", (r: Json) => <span className="text-mute">{r.created_utc?.slice(0, 19).replace("T", " ")}</span>],

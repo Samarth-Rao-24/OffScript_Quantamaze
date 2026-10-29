@@ -1,0 +1,69 @@
+
+
+######## final_run started 2026-10-29T07:26:14.382068+00:00 ########
+settings: {"opt_key_configured": true, "qcloud_key_configured": true, "opt_mode": "local", "qrng_device": "QpiAI-QSV-Local", "qrng_qubits": 8, "qrng_shots": 1024, "qaoa_device": "QpiAI-QSV-Simulator", "qaoa_mode": "local", "qaoa_max_iterations": 30, "allow_dev_nonce": false, "allow_local_qrng": true, "sat_id": 42, "flood_limit": 8, "pass_budgets": [3600, 3600, 2900, 2200]}
+
+QUANTUM MODE: LOCAL (organiser-recommended). QRNG and QAOA run in the QpiAI Quantum SDK simulator, authenticated with the QCloud key; no credits, no cloud job IDs. Records are labelled as 'QpiAI local simulator (not a cloud run)'.
+
+This run submits: 4 QRNG job(s) on QpiAI-QSV-Local (no credits), one QpiAI Opt local solve, QAOA on the local QpiAI simulator (no credits).
+Nothing in this run uses credits, so it starts without a confirmation.
+
+=== 1. Key check ===
+[OK] 1. Key check: both keys present; QCloud login accepted; experiment 'Default Experiment' found (id 52e4fc50-cd7b-41af-a247-1ca79051d95d)
+
+=== 2.1 QRNG job on QpiAI-QSV-Local ===
+[OK] 2.1 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=249/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+
+=== 2.2 QRNG job on QpiAI-QSV-Local ===
+[OK] 2.2 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=250/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+
+=== 2.3 QRNG job on QpiAI-QSV-Local ===
+[OK] 2.3 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=252/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+
+=== 2.4 QRNG job on QpiAI-QSV-Local ===
+[OK] 2.4 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=249/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+
+=== 3a. QpiAI Opt schedule (local solver, drives the uplink) ===
+[OK] 3a. QpiAI Opt schedule (local solver, drives the uplink): job_id=None mode=local objective=65.8 optimum=65.8 greedy=55.3 sent=13/14
+
+=== 4. QAOA (local QpiAI simulator) ===
+[OK] 4. QAOA (local QpiAI simulator): 12 qubits, QpiAI local simulator (QpiAI-QSV-Local, no cloud job IDs), QAOA=30.3 classical Opt=30.3 exact=30.3
+
+=== 5. Resource benchmarks ===
+[OK] 5. Resource benchmarks: verify p50 53.7 us, peak RAM 21292 B, flood checks 8/500
+
+=== 6. Mission run on the satellite process ===
+  pass 1: 4/4 accepted, nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  pass 2: 4/4 accepted, nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  pass 3: 3/3 accepted, nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  pass 4: 2/2 accepted, nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)
+  nonce verified: True
+  judge sample cases: {'cases': 10, 'passed': 10, 'failed': 0, 'errors': 0, 'false_accepts': 0, 'false_rejects': 0, 'wrong_reason': 0, 'pass_rate': 1.0}
+  attack valid        passed=True observed=['OK']
+  attack tamper       passed=True observed=['E_BAD_SIG']
+  attack replay       passed=True observed=['E_REPLAY']
+  attack expired      passed=True observed=['E_EXPIRED']
+  attack unauthorized passed=True observed=['E_UNAUTHORIZED']
+  attack forged       passed=True observed=['E_BAD_SIG']
+  attack crosspass    passed=True observed=['E_BAD_SIG']
+  attack wrongsat     passed=True observed=['E_WRONG_SAT']
+  attack overbudget   passed=True observed=['LINK_REFUSED']
+  attack flood        passed=True observed=['E_BAD_SIG', 'E_FLOOD_LOCKOUT']
+[OK] 6. Mission run on the satellite process: {'pass 1': '4/4 accepted, nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)', 'pass 2': '4/4 accepted, nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)', 'pass 3': '3/3 accepted, nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)', 'pass 4': '2/2 accepted, nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)', 'nonce verified': True, 'judge sample': {'cases': 10, 'passed': 10, 'failed': 0, 'errors': 0, 'false_accepts': 0, 'false_rejects': 0, 'wrong_reason': 0, 'pass_rate': 1.0}, 'attacks passed': 10}
+
+=== 7. Evidence bundle ===
+[OK] 7. Evidence bundle: F:\OffScript\q-uplink-evidence.zip (274 KB)
+
+######## SUMMARY ########
+OK      1. Key check  (5.9 s)
+OK      2.1 QRNG job on QpiAI-QSV-Local  (1.3 s)
+OK      2.2 QRNG job on QpiAI-QSV-Local  (0.1 s)
+OK      2.3 QRNG job on QpiAI-QSV-Local  (0.1 s)
+OK      2.4 QRNG job on QpiAI-QSV-Local  (0.1 s)
+OK      3a. QpiAI Opt schedule (local solver, drives the uplink)  (6.0 s)
+OK      4. QAOA (local QpiAI simulator)  (4.6 s)
+OK      5. Resource benchmarks  (33.8 s)
+OK      6. Mission run on the satellite process  (5.0 s)
+OK      7. Evidence bundle  (2.0 s)
+
+10 OK, 0 failed, 0 unavailable on this QpiAI account. Full log: evidence/final_run_log.txt

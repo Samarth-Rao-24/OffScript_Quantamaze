@@ -121,8 +121,8 @@ async def reset_queue():
 @app.post("/api/plan")
 async def plan(payload: dict = Body(default={})):
     mode = payload.get("mode") or settings.opt_mode
-    if mode not in ("platform", "local"):
-        raise HTTPException(400, "mode must be platform or local")
+    if mode not in ("platform", "platform-qubo", "local"):
+        raise HTTPException(400, "mode must be platform, platform-qubo or local")
     return await _exclusive("opt", mc.plan, mode)
 
 
@@ -411,30 +411,31 @@ async def evidence_file(path: str):
     raise HTTPException(415, "unsupported file type")
 
 
+def build_evidence_zip() -> bytes:
+    buf = io.BytesIO()
+    ev = settings.evidence_dir
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        for p in sorted(ev.rglob("*")):
+            if p.is_file() and not p.name.endswith((".sk", ".env")):
+                z.write(p, f"evidence/{p.relative_to(ev).as_posix()}")
+        gd = settings.data_dir / "ground"
+        for name in ("current_plan.json", "nonce_chain.json", "pass_runs.json", "queue.json"):
+            if (gd / name).exists():
+                z.write(gd / name, f"ground/{name}")
+        kd = gd / "keys"
+        for p in sorted(kd.glob("*.pk")) + [kd / "keys_meta.json"]:
+            if p.exists():
+                z.write(p, f"ground/public_keys/{p.name}")  # public keys only, never *.sk
+        z.writestr("manifest.json", json.dumps(mc.evidence_manifest(), indent=2))
+        z.writestr("job_index.json", json.dumps(_job_index(), indent=2, default=str))
+        z.writestr("README.txt", "Q-Uplink Mission Control evidence bundle. Private keys and API secrets are never "
+                                 "included. See manifest.json for SHA-256 of every file and host details.\n")
+    return buf.getvalue()
+
+
 @app.get("/api/evidence.zip")
 async def evidence_zip():
-    def build() -> bytes:
-        buf = io.BytesIO()
-        ev = settings.evidence_dir
-        with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
-            for p in sorted(ev.rglob("*")):
-                if p.is_file() and not p.name.endswith((".sk", ".env")):
-                    z.write(p, f"evidence/{p.relative_to(ev).as_posix()}")
-            gd = settings.data_dir / "ground"
-            for name in ("current_plan.json", "nonce_chain.json", "pass_runs.json", "queue.json"):
-                if (gd / name).exists():
-                    z.write(gd / name, f"ground/{name}")
-            kd = gd / "keys"
-            for p in sorted(kd.glob("*.pk")) + [kd / "keys_meta.json"]:
-                if p.exists():
-                    z.write(p, f"ground/public_keys/{p.name}")  # public keys only, never *.sk
-            z.writestr("manifest.json", json.dumps(mc.evidence_manifest(), indent=2))
-            z.writestr("job_index.json", json.dumps(_job_index(), indent=2, default=str))
-            z.writestr("README.txt", "Q-Uplink Mission Control evidence bundle. Private keys and API secrets are never "
-                                     "included. See manifest.json for SHA-256 of every file and host details.\n")
-        return buf.getvalue()
-
-    data = await asyncio.to_thread(build)
+    data = await asyncio.to_thread(build_evidence_zip)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     return StreamingResponse(io.BytesIO(data), media_type="application/zip",
                              headers={"Content-Disposition": f'attachment; filename="q-uplink-evidence-{stamp}.zip"'})

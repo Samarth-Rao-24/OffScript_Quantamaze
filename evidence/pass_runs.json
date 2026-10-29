@@ -1,0 +1,990 @@
+{
+  "runs": [
+    {
+      "frames": [
+        {
+          "bytes": 699,
+          "cmd_id": "C05",
+          "counter": 2,
+          "name": "Collision-avoidance burn",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 4.3
+            },
+            {
+              "detail": "699 B, body 17 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 20.2
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 1.7
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 1.2
+            },
+            {
+              "detail": "2 > 1",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 1.6
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 67 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 76.2
+            },
+            {
+              "detail": "ADMIN -> ORBIT_BURN",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 6.2
+            }
+          ],
+          "verdict": "ACCEPT"
+        },
+        {
+          "bytes": 684,
+          "cmd_id": "C01",
+          "counter": 3,
+          "name": "Exit safe mode",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 5.1
+            },
+            {
+              "detail": "684 B, body 2 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 55.2
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 2.9
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 1.9
+            },
+            {
+              "detail": "3 > 2",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 2.3
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 112 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 128.3
+            },
+            {
+              "detail": "ADMIN -> SET_SAFE_MODE",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 8.1
+            }
+          ],
+          "verdict": "ACCEPT"
+        },
+        {
+          "bytes": 685,
+          "cmd_id": "C02",
+          "counter": 4,
+          "name": "Point nadir",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 4.0
+            },
+            {
+              "detail": "685 B, body 3 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 20.6
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 2.0
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 1.4
+            },
+            {
+              "detail": "4 > 3",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 1.4
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 67 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 75.9
+            },
+            {
+              "detail": "OPERATOR -> SET_ATTITUDE_MODE",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 5.0
+            }
+          ],
+          "verdict": "ACCEPT"
+        },
+        {
+          "bytes": 695,
+          "cmd_id": "C11",
+          "counter": 5,
+          "name": "Image target B (wildfire)",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 4.6
+            },
+            {
+              "detail": "695 B, body 13 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 36.6
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 3.5
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 2.5
+            },
+            {
+              "detail": "5 > 4",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 2.8
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 136 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 153.4
+            },
+            {
+              "detail": "OPERATOR -> CAPTURE_IMAGE",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 8.2
+            }
+          ],
+          "verdict": "ACCEPT"
+        }
+      ],
+      "link": {
+        "budget_bytes": 3600,
+        "frames_sent": 5,
+        "hostile_bytes": 0,
+        "hostile_frames": 0,
+        "pass": 1,
+        "refused": 0,
+        "remaining_bytes": 122,
+        "used_bytes": 3478,
+        "window_id": 1
+      },
+      "nonce": {
+        "counts_sha256": "f2a31b67d95534148e58392dad3adbeda681c311213c9692da4d2dbd348150de",
+        "device": "QpiAI-QSV-Local",
+        "job_id": null,
+        "nonce": "10163f6ad4be779c6af8996f2ea580c55cb543ce61a48510dc09d468af9b9feb",
+        "os_entropy_hex": "57e35b94b5e8a88b79ba0c5cc5846ae28bd0e92e64701eecf61a9fcb2448217b",
+        "pass": 1,
+        "qrng_file": "qrng_20261029T072620Z_local_369259.json",
+        "randomness_class": "qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
+        "source": "SHA-256(OS 32 B || QCloud counts digest || job_id || pass)",
+        "time_utc": "2026-10-29T07:27:07.307314+00:00"
+      },
+      "pass": 1,
+      "plan_execution_mode": "local",
+      "plan_job_id": null,
+      "time_utc": "2026-10-29T07:27:07.805375+00:00",
+      "window": 1
+    },
+    {
+      "frames": [
+        {
+          "bytes": 695,
+          "cmd_id": "C03",
+          "counter": 7,
+          "name": "Image target A (flood zone)",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 8.6
+            },
+            {
+              "detail": "695 B, body 13 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 57.6
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 3.4
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 2.6
+            },
+            {
+              "detail": "7 > 6",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 2.5
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 130 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 147.6
+            },
+            {
+              "detail": "OPERATOR -> CAPTURE_IMAGE",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 7.8
+            }
+          ],
+          "verdict": "ACCEPT"
+        },
+        {
+          "bytes": 691,
+          "cmd_id": "C04",
+          "counter": 8,
+          "name": "Downlink image A",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 3.5
+            },
+            {
+              "detail": "691 B, body 9 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 27.5
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 2.2
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 1.6
+            },
+            {
+              "detail": "8 > 7",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 1.8
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 73 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 84.1
+            },
+            {
+              "detail": "OPERATOR -> DOWNLINK_DATA",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 5.2
+            }
+          ],
+          "verdict": "ACCEPT"
+        },
+        {
+          "bytes": 685,
+          "cmd_id": "C06",
+          "counter": 9,
+          "name": "Battery heater set-point",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 3.3
+            },
+            {
+              "detail": "685 B, body 3 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 25.0
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 1.8
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 1.4
+            },
+            {
+              "detail": "9 > 8",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 1.8
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 71 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 80.3
+            },
+            {
+              "detail": "OPERATOR -> SET_HEATER",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 4.8
+            }
+          ],
+          "verdict": "ACCEPT"
+        },
+        {
+          "bytes": 695,
+          "cmd_id": "C13",
+          "counter": 10,
+          "name": "Image target C (glacier)",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 6.1
+            },
+            {
+              "detail": "695 B, body 13 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 36.3
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 3.2
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 2.4
+            },
+            {
+              "detail": "10 > 9",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 2.6
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 146 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 161.7
+            },
+            {
+              "detail": "OPERATOR -> CAPTURE_IMAGE",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 7.9
+            }
+          ],
+          "verdict": "ACCEPT"
+        }
+      ],
+      "link": {
+        "budget_bytes": 3600,
+        "frames_sent": 5,
+        "hostile_bytes": 0,
+        "hostile_frames": 0,
+        "pass": 2,
+        "refused": 0,
+        "remaining_bytes": 119,
+        "used_bytes": 3481,
+        "window_id": 2
+      },
+      "nonce": {
+        "counts_sha256": "4b9aca0f8d79b2d9a728cbe538839fb15c93f25038c1759a2d4064ee062bef00",
+        "device": "QpiAI-QSV-Local",
+        "job_id": null,
+        "nonce": "263360ee624f3b8e6a191cb69f1961d55a37dc919e5716da2ebad608180d117a",
+        "os_entropy_hex": "63a6e36f55b2b77820339b28545b36a67901db219bacaf8a671e3726da0419f6",
+        "pass": 2,
+        "qrng_file": "qrng_20261029T072621Z_local_b6e247.json",
+        "randomness_class": "qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
+        "source": "SHA-256(OS 32 B || QCloud counts digest || job_id || pass)",
+        "time_utc": "2026-10-29T07:27:07.933442+00:00"
+      },
+      "pass": 2,
+      "plan_execution_mode": "local",
+      "plan_job_id": null,
+      "time_utc": "2026-10-29T07:27:08.428842+00:00",
+      "window": 2
+    },
+    {
+      "frames": [
+        {
+          "bytes": 714,
+          "cmd_id": "C07",
+          "counter": 12,
+          "name": "Firmware patch chunk 1/2",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 2.9
+            },
+            {
+              "detail": "714 B, body 32 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 22.9
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 2.2
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 1.3
+            },
+            {
+              "detail": "12 > 11",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 1.3
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 71 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 80.1
+            },
+            {
+              "detail": "ADMIN -> PATCH_FIRMWARE",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 4.4
+            }
+          ],
+          "verdict": "ACCEPT"
+        },
+        {
+          "bytes": 714,
+          "cmd_id": "C08",
+          "counter": 13,
+          "name": "Firmware patch chunk 2/2",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 5.5
+            },
+            {
+              "detail": "714 B, body 32 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 40.7
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 3.6
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 2.9
+            },
+            {
+              "detail": "13 > 12",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 2.9
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 157 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 175.4
+            },
+            {
+              "detail": "ADMIN -> PATCH_FIRMWARE",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 8.3
+            }
+          ],
+          "verdict": "ACCEPT"
+        },
+        {
+          "bytes": 689,
+          "cmd_id": "C12",
+          "counter": 14,
+          "name": "Housekeeping downlink",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 3.8
+            },
+            {
+              "detail": "689 B, body 7 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 29.1
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 2.3
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 2.0
+            },
+            {
+              "detail": "14 > 13",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 2.0
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 105 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 116.2
+            },
+            {
+              "detail": "OPERATOR -> DOWNLINK_DATA",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 6.0
+            }
+          ],
+          "verdict": "ACCEPT"
+        }
+      ],
+      "link": {
+        "budget_bytes": 2900,
+        "frames_sent": 4,
+        "hostile_bytes": 0,
+        "hostile_frames": 0,
+        "pass": 3,
+        "refused": 0,
+        "remaining_bytes": 68,
+        "used_bytes": 2832,
+        "window_id": 3
+      },
+      "nonce": {
+        "counts_sha256": "e689b92e37ce3ddadc13a6accc97f310d640455481215643dab1c41d9f10d6b4",
+        "device": "QpiAI-QSV-Local",
+        "job_id": null,
+        "nonce": "1836cc456a6f33ba76ba88754475be3eb806ae4b22789f6c3995cc466171caae",
+        "os_entropy_hex": "aeebc1a1133400a2952e00531d02a357609b3fb8bf4dd79bd6737c0dfcad1d5b",
+        "pass": 3,
+        "qrng_file": "qrng_20261029T072621Z_local_644cba.json",
+        "randomness_class": "qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
+        "source": "SHA-256(OS 32 B || QCloud counts digest || job_id || pass)",
+        "time_utc": "2026-10-29T07:27:08.545541+00:00"
+      },
+      "pass": 3,
+      "plan_execution_mode": "local",
+      "plan_job_id": null,
+      "time_utc": "2026-10-29T07:27:08.943366+00:00",
+      "window": 3
+    },
+    {
+      "frames": [
+        {
+          "bytes": 684,
+          "cmd_id": "C09",
+          "counter": 16,
+          "name": "Reboot ADCS after patch",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 2.9
+            },
+            {
+              "detail": "684 B, body 2 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 22.9
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 1.7
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 1.2
+            },
+            {
+              "detail": "16 > 15",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 1.4
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 69 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 77.3
+            },
+            {
+              "detail": "ADMIN -> REBOOT_SUBSYSTEM",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 4.5
+            }
+          ],
+          "verdict": "ACCEPT"
+        },
+        {
+          "bytes": 685,
+          "cmd_id": "C14",
+          "counter": 17,
+          "name": "Sun-pointing for charge",
+          "reason": "OK",
+          "steps": [
+            {
+              "detail": "0/8",
+              "label": "Flood guard below limit",
+              "name": "flood_guard",
+              "status": "pass",
+              "step": 0,
+              "us": 3.4
+            },
+            {
+              "detail": "685 B, body 3 B",
+              "label": "Frame well-formed",
+              "name": "parse",
+              "status": "pass",
+              "step": null,
+              "us": 26.0
+            },
+            {
+              "detail": "sat_id=42",
+              "label": "Satellite ID matches",
+              "name": "sat_id",
+              "status": "pass",
+              "step": 1,
+              "us": 1.7
+            },
+            {
+              "detail": "600 s remaining",
+              "label": "Not expired",
+              "name": "expiry",
+              "status": "pass",
+              "step": 2,
+              "us": 1.2
+            },
+            {
+              "detail": "17 > 16",
+              "label": "Counter > last accepted",
+              "name": "counter",
+              "status": "pass",
+              "step": 3,
+              "us": 1.8
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 64 us)",
+              "label": "Falcon signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 4,
+              "us": 73.1
+            },
+            {
+              "detail": "OPERATOR -> SET_ATTITUDE_MODE",
+              "label": "Opcode allowed for key role",
+              "name": "role",
+              "status": "pass",
+              "step": 5,
+              "us": 4.0
+            }
+          ],
+          "verdict": "ACCEPT"
+        }
+      ],
+      "link": {
+        "budget_bytes": 2200,
+        "frames_sent": 3,
+        "hostile_bytes": 0,
+        "hostile_frames": 0,
+        "pass": 4,
+        "refused": 0,
+        "remaining_bytes": 116,
+        "used_bytes": 2084,
+        "window_id": 4
+      },
+      "nonce": {
+        "counts_sha256": "d581a3c2d087bf84b45a16e426d1b1f9e8f2aa17050c616cfad81c0e461a1d7f",
+        "device": "QpiAI-QSV-Local",
+        "job_id": null,
+        "nonce": "4d7738de8959ed6e0daa2a7cc9ee0b0bbf9f573fb4e6b467747cf81370a2bbb2",
+        "os_entropy_hex": "29f70b3d98aabfaa60fbc573d17b12287e31d3fa8df6e2ee6468e184076326d2",
+        "pass": 4,
+        "qrng_file": "qrng_20261029T072621Z_local_a6f878.json",
+        "randomness_class": "qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
+        "source": "SHA-256(OS 32 B || QCloud counts digest || job_id || pass)",
+        "time_utc": "2026-10-29T07:27:09.061237+00:00"
+      },
+      "pass": 4,
+      "plan_execution_mode": "local",
+      "plan_job_id": null,
+      "time_utc": "2026-10-29T07:27:09.375232+00:00",
+      "window": 4
+    }
+  ]
+}

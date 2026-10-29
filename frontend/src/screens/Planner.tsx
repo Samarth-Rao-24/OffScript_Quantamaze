@@ -24,7 +24,7 @@ export default function Planner() {
   const [queue, setQueue] = useState<Json | null>(null);
   const [draft, setDraft] = useState<Json | null>(null);
   const [plan, setPlan] = useState<Json | null>(null);
-  const [mode, setMode] = useState<"platform" | "local">("platform");
+  const [mode, setMode] = useState<string>("local");
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -91,9 +91,10 @@ export default function Planner() {
           <label className="text-sm text-mute" htmlFor="optmode">
             Solver run
           </label>
-          <select id="optmode" value={mode} onChange={(e) => setMode(e.target.value as "platform" | "local")}>
-            <option value="platform">Platform job (records job ID, may use credits)</option>
-            <option value="local">Local QpiAI solver (free, no job ID)</option>
+          <select id="optmode" value={mode} onChange={(e) => setMode(e.target.value)}>
+            <option value="local">QpiAI Opt local solver (no credits)</option>
+            <option value="platform-qubo">Platform job, QUBO (records job ID, may use credits)</option>
+            <option value="platform">Platform job, MILP (needs Opt storage quota)</option>
           </select>
           <Button onClick={optimize} busy={busy === "opt"} disabled={dirty} title={dirty ? "Save the queue first" : undefined}>
             Optimize with QpiAI Opt
@@ -276,6 +277,8 @@ function PlanResult({ plan, stale }: { plan: Json; stale: boolean }) {
             <dt className="inline text-mute">Model </dt>
             <dd className="inline">
               {o.model?.problem_class}, {o.model?.binary_variables} binaries, {o.model?.constraints} constraints
+              {o.model?.submitted_as?.problem_class?.startsWith("QUBO") &&
+                `; sent as a QUBO with ${o.model.submitted_as.binaries} binaries (${o.model.submitted_as.slack_binaries} slack)`}
             </dd>
           </div>
           <div>
@@ -406,7 +409,7 @@ function WhyPanel({ plan }: { plan: Json }) {
 function QaoaPanel() {
   const [rec, setRec] = useState<Json | null>(null);
   const [cfg, setCfg] = useState<Json | null>(null);
-  const [mode, setMode] = useState("platform");
+  const [mode, setMode] = useState("local");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
@@ -436,7 +439,7 @@ function QaoaPanel() {
         <span className="flex flex-wrap items-center gap-2">
           <select value={mode} onChange={(e) => setMode(e.target.value)} aria-label="QAOA execution">
             <option value="platform">QCloud ({cfg?.qaoa_device ?? "simulator"})</option>
-            <option value="local">Local QpiAI simulator (labelled)</option>
+            <option value="local">QpiAI local simulator (no credits)</option>
           </select>
           <Button kind="quantum" onClick={run} busy={busy}>
             Run QAOA

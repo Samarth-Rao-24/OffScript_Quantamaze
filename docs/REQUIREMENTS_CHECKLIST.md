@@ -17,8 +17,8 @@ Status key: **Done** = implemented and tested in the build workspace. **Needs yo
 | Criterion | How it is met | Status |
 |---|---|---|
 | A1 product choice and domain integration | The Opt plan decides what is signed and sent; the QCloud nonce sits inside every signature (cross-pass test proves it) | Done |
-| A2 QCloud formulation | Hadamard-measure circuits on QCloud for pass nonces and fuzz seeds; QAOA on the scheduling QUBO via qpiai-opt[quantum] | Needs your run |
-| A2 Opt formulation | MILP: at-most-once, byte budget (minus PASS_OPEN), deadlines, dependency precedence; feasibility re-checked before signing | Done; platform job ID needs your run |
+| A2 QCloud formulation | Hadamard-measure circuits for pass nonces and fuzz seeds; QAOA on the scheduling QUBO via qpiai-opt[quantum]. Run on the QpiAI Quantum SDK simulator, authenticated with the QCloud key (organiser-recommended path) | Done (QpiAI local simulator; labelled, no cloud job IDs) |
+| A2 Opt formulation | MILP: at-most-once, byte budget (minus PASS_OPEN), deadlines, dependency precedence; feasibility re-checked before signing | Done (QpiAI Opt local solver, proven optimal 65.8 vs greedy 55.3) |
 | A3 recorded execution evidence | Job IDs, raw inputs and outputs, nonce derivations, SHA-256 manifest, evidence zip | Needs your run |
 
 ## PRD functional requirements
@@ -38,11 +38,11 @@ Status key: **Done** = implemented and tested in the build workspace. **Needs yo
 | FR-11 | One log line per frame | Done |
 | FR-12 | Link byte budget per pass | Done |
 | FR-13 | Flood guard | Done (N=8, per contact window) |
-| FR-14 | PASS_OPEN with QCloud nonce | Done; real QCloud jobs need your run |
-| FR-15 | Opt multi-pass scheduling | Done; real solve needs your key |
+| FR-14 | PASS_OPEN with QRNG nonce | Done (QpiAI local simulator runs; nonces recompute from evidence) |
+| FR-15 | Opt multi-pass scheduling | Done (QpiAI Opt local solver, authenticated) |
 | FR-16 | Feasibility check before signing | Done (again at pass run time) |
 | FR-17 | Key seed mixes OS + QRNG | **Deviation**: not supported by any vetted Falcon library (approved) |
-| FR-18 | QAOA on QCloud via qpiai-opt[quantum] | Done (12 qubits); needs your run |
+| FR-18 | QAOA via qpiai-opt[quantum] | Done (12 qubits, QpiAI local simulator, reached the exact optimum) |
 | FR-19 | Greedy + brute-force baselines, comparison only | Done |
 | FR-20 | Falcon / ML-DSA / ECDSA benchmark | Done (+ Ed25519) |
 | FR-21 | Two-tier ML-KEM mode (Could) | Not implemented |
@@ -61,3 +61,5 @@ Status key: **Done** = implemented and tested in the build workspace. **Needs yo
 | NFR-06 | ≤ N + accepted verifications under flood | 8 of 500 |
 | NFR-07 | Reproducible from seeds and job IDs | Fuzz seeds and nonce inputs recorded; the run_all scripts |
 | NFR-08 | Vetted libraries only | pqcrypto (PQClean), cryptography (OpenSSL), QpiAI SDKs |
+
+**Note on QpiAI execution path.** The organisers confirmed: "You do not need workspaces or platform utilities after getting the API key and use that to run local solvers and simulators. They do not need any credits as well." The submission therefore uses the QpiAI Opt local solver and the QpiAI Quantum SDK simulator, both authenticated with our API keys. Cloud job paths remain in the code (`--quantum cloud`, `--opt-mode platform-qubo`) but were refused on our account for subscription reasons.

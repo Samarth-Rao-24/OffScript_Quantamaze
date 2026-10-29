@@ -144,7 +144,7 @@ export function Provenance({ kind }: { kind: "cloud" | "hardware" | "local" | "d
   const map: Record<string, [string, string]> = {
     hardware: ["Quantum hardware", "bg-quantum text-white"],
     cloud: ["QCloud simulator", "bg-quantum/15 text-quantum"],
-    local: ["Local simulation", "bg-caution/15 text-caution"],
+    local: ["QpiAI local simulator", "bg-quantum/10 text-quantum"],
     dev: ["Development only", "bg-reject/10 text-reject"],
     provisioning: ["Pre-launch provisioning", "bg-ink/10 text-ink"],
     fixture: ["Test fixture", "bg-reject/10 text-reject"],
@@ -160,6 +160,6 @@ export function randomnessKind(cls?: string | null): string {
   if (!cls) return "dev";
   if (cls === "quantum-hardware") return "hardware";
   if (cls.startsWith("qcloud")) return "cloud";
-  if (cls.startsWith("local")) return "local";
+  if (cls.startsWith("local") || cls.startsWith("qpiai-local")) return "local";
   return "dev";
 }

@@ -1,37 +1,69 @@
 {
-  "checked_utc": "2026-10-29T01:02:39.300479+00:00",
+  "checked_utc": "2026-10-29T06:27:16.270858+00:00",
   "estimates": [
     {
       "circuit": "qrng_8q",
       "device": "QpiAI-Indus-1",
-      "response": {
-        "error": "shots is required for hardware credit estimation"
-      },
-      "status": 400
+      "error": "no active compute resource for QpiAI-Indus-1",
+      "shots": 256
+    },
+    {
+      "circuit": "qrng_8q",
+      "device": "QpiAI-Indus-1",
+      "error": "no active compute resource for QpiAI-Indus-1",
+      "shots": 1024
     },
     {
       "circuit": "qaoa_12q_one_step",
       "device": "QpiAI-Indus-1",
-      "response": {
-        "error": "shots is required for hardware credit estimation"
-      },
-      "status": 400
+      "error": "no active compute resource for QpiAI-Indus-1",
+      "shots": 256
+    },
+    {
+      "circuit": "qaoa_12q_one_step",
+      "device": "QpiAI-Indus-1",
+      "error": "no active compute resource for QpiAI-Indus-1",
+      "shots": 1024
     },
     {
       "circuit": "qrng_8q",
       "device": "QpiAI-QSV-Simulator",
+      "http_status": 200,
       "response": {
         "credits": 1
       },
-      "status": 200
+      "shots": 256,
+      "usage_rate": 1
+    },
+    {
+      "circuit": "qrng_8q",
+      "device": "QpiAI-QSV-Simulator",
+      "http_status": 200,
+      "response": {
+        "credits": 1
+      },
+      "shots": 1024,
+      "usage_rate": 1
     },
     {
       "circuit": "qaoa_12q_one_step",
       "device": "QpiAI-QSV-Simulator",
+      "http_status": 200,
       "response": {
         "credits": 1
       },
-      "status": 200
+      "shots": 256,
+      "usage_rate": 1
+    },
+    {
+      "circuit": "qaoa_12q_one_step",
+      "device": "QpiAI-QSV-Simulator",
+      "http_status": 200,
+      "response": {
+        "credits": 1
+      },
+      "shots": 1024,
+      "usage_rate": 1
     }
   ],
   "opt": {
@@ -137,12 +169,12 @@
       "device_name": "QpiAI-Indus-1",
       "max_qubits": 0,
       "method": "qpu",
-      "status": "active",
+      "status": "maintenance",
       "supported_results": [
         "statevector",
         "density_matrix"
       ],
-      "updated_at": "2026-10-28T18:29:42.715807Z",
+      "updated_at": "2026-10-29T05:10:10.791902Z",
       "usage_rate": 4
     }
   ]

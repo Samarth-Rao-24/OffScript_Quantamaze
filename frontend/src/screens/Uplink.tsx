@@ -5,9 +5,9 @@ import QrngInspector from "../components/QrngInspector";
 import { Button, CopyId, ErrorNote, Mono, Panel, Provenance, StepLadder, VerdictTag, randomnessKind } from "../components/ui";
 
 const DEVICES = [
-  ["QpiAI-Indus-1", "Indus-1 quantum computer"],
+  ["QpiAI-QSV-Local", "QpiAI local simulator (no credits)"],
   ["QpiAI-QSV-Simulator", "QCloud statevector simulator"],
-  ["QpiAI-QSV-Local", "Local simulator (dev only)"],
+  ["QpiAI-Indus-1", "Indus-1 quantum computer"],
 ];
 
 export default function Uplink() {
@@ -94,7 +94,7 @@ export default function Uplink() {
               </div>
               <div>
                 <dt className="inline text-mute">QCloud job </dt>
-                <dd className="inline"><CopyId value={nonceInfo?.job_id} empty={nonceInfo?.pass === 0 ? "n/a" : "none (dev nonce)"} /></dd>
+                <dd className="inline"><CopyId value={nonceInfo?.job_id} empty={nonceInfo?.pass === 0 ? "n/a" : "none (QpiAI local simulator)"} /></dd>
               </div>
               <div>
                 <dt className="inline text-mute">Device </dt>
@@ -112,7 +112,7 @@ export default function Uplink() {
               <span className="tabular-nums">{pool?.unused_for_nonce ?? 0} unused job(s)</span>
             </div>
             <p className="mt-1 text-mute">
-              One {pool?.n_qubits}-qubit Hadamard circuit ({pool?.shots} shots) per pass nonce. Only Indus-1 output is physical quantum randomness; simulators sample with a classical PRNG and are labelled so.
+              One {pool?.n_qubits}-qubit Hadamard circuit ({pool?.shots} shots) per pass nonce. Default: the QpiAI local simulator (no credits, as the organisers advised). Only Indus-1 output would be physical quantum randomness; simulators sample with a classical PRNG and are labelled so. Either way it is mixed with OS entropy.
             </p>
             <div className="mt-2 flex flex-wrap items-center gap-2">
               <select value={device} onChange={(e) => setDevice(e.target.value)} aria-label="QRNG device">
@@ -130,7 +130,7 @@ export default function Uplink() {
                   act("qrng", () => api.post("/api/qrng/fetch", { device }));
                 }}
               >
-                Fetch QRNG from QCloud
+                Run QRNG circuit
               </Button>
             </div>
           </div>

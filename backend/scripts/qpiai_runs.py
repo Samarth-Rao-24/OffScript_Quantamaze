@@ -168,8 +168,8 @@ def cmd_credits(s) -> int:
 def cmd_plan(s, mode: str, yes: bool) -> int:
     from satauth.api.service import MissionControl
 
-    if mode == "platform":
-        confirm("This submits a QpiAI Opt platform job and may consume Opt credits.", yes)
+    if mode in ("platform", "platform-qubo"):
+        confirm(f"This submits a QpiAI Opt platform job ({'QUBO' if mode == 'platform-qubo' else 'MILP'}) and may consume Opt credits.", yes)
     mc = MissionControl(s)
     mc.data.mkdir(parents=True, exist_ok=True)
     res = mc.plan(mode)
@@ -202,7 +202,8 @@ def cmd_qrng(s, device: str, shots: int, yes: bool) -> int:
             print(f"[INFO] Could not get an estimate ({type(exc).__name__}: {exc}); you can still cancel below.")
         confirm(f"Submit this job to {device}? It will consume QCloud credits.", yes)
     pool = QRNGPool(s.data_dir, s.evidence_dir, api_key=s.qcloud_api_key, n_qubits=s.qrng_qubits, shots=shots,
-                    default_device=s.qrng_device, allow_dev_nonce=s.allow_dev_nonce)
+                    default_device=s.qrng_device, allow_dev_nonce=s.allow_dev_nonce,
+                    allow_local_qrng=s.allow_local_qrng)
     print("Submitted; waiting for QCloud (hardware jobs can queue for several minutes)...")
     rec = pool.fetch(device)
     print(f"[DONE] QRNG job_id={rec['job_id']} device={rec['device']} class={rec['randomness_class']}")
@@ -211,7 +212,7 @@ def cmd_qrng(s, device: str, shots: int, yes: bool) -> int:
     if rec["job_id"]:
         print(f"Verify any time (free): python scripts/qpiai_runs.py job {rec['job_id']}")
     if device == "QpiAI-QSV-Local":
-        print("Local simulator run: recorded, but NOT used for pass nonces unless QUPLINK_ALLOW_DEV_NONCE=true.")
+        print("QpiAI local simulator run recorded; it will supply the next pass nonce (one run per pass).")
     else:
         print("The job is now in the app's QRNG pool and will supply the next pass nonce (one job per pass).")
     return 0
@@ -262,7 +263,7 @@ def main() -> int:
     sub.add_parser("check")
     sub.add_parser("credits")
     pp = sub.add_parser("plan")
-    pp.add_argument("--mode", choices=["platform", "local"], default=s.opt_mode)
+    pp.add_argument("--mode", choices=["platform", "platform-qubo", "local"], default=s.opt_mode)
     pq = sub.add_parser("qrng")
     pq.add_argument("--device", default=s.qrng_device)
     pq.add_argument("--shots", type=int, default=s.qrng_shots)

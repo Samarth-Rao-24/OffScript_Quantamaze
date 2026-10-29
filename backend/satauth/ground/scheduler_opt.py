@@ -24,6 +24,9 @@ from .feasibility import explain, validate_plan
 from .queue import Instance
 
 
+OPT_MODES = ("platform", "platform-qubo", "local")
+
+
 class OptUnavailable(RuntimeError):
     """QpiAI Opt could not be executed (missing key, auth failure, network...)."""
 
@@ -110,8 +113,8 @@ def run_opt(inst: Instance, *, api_key: str | None, mode: str) -> dict:
     if not api_key:
         raise OptUnavailable("QPIAI_OPT_API_KEY is not set in .env, so QpiAI Opt cannot run. "
                              "No plan was produced (classical baselines are never substituted).")
-    if mode not in ("platform", "local"):
-        raise ValueError("mode must be 'platform' or 'local'")
+    if mode not in OPT_MODES:
+        raise ValueError(f"mode must be one of {OPT_MODES}")
     from qpiai_opt.opt_solvers import Client, solve
 
     model, _ = build_model(inst)
@@ -120,9 +123,27 @@ def run_opt(inst: Instance, *, api_key: str | None, mode: str) -> dict:
     t0 = time.perf_counter()
     started = datetime.now(timezone.utc).isoformat()
     try:
-        result = solve(model, mode=mode, client=client)
+        if mode == "platform-qubo":
+            # Same model, compiled by the Opt modeller to a penalty QUBO (exact slack encoding) and
+            # submitted to the QpiAI Opt platform QUBO solver. Unlike platform MILP, this needs no
+            # file-storage quota. The returned assignment is re-validated like any other plan.
+            from qpiai_opt.opt_solvers.qubo import QUBOProblem
+
+            qubo = QUBOProblem.from_model(model)
+            names = list(model.qubo_variable_names)
+            summary["submitted_as"] = {"problem_class": "QUBO (penalty form of the MILP above)",
+                                       "binaries": len(names),
+                                       "slack_binaries": sum(1 for n in names if n.startswith("__"))}
+            result = solve(qubo, mode="platform", client=client)
+        else:
+            summary["submitted_as"] = {"problem_class": "MILP"}
+            result = solve(model, mode=mode, client=client)
     except Exception as exc:
-        raise OptUnavailable(f"QpiAI Opt {mode} solve failed: {type(exc).__name__}: {exc}") from exc
+        hint = ""
+        if "storage quota" in str(exc):
+            hint = (" (platform MILP uploads the model file and this Opt organisation has no storage quota; "
+                    "use mode 'platform-qubo', which needs no storage, or 'local')")
+        raise OptUnavailable(f"QpiAI Opt {mode} solve failed: {type(exc).__name__}: {exc}{hint}") from exc
     wall = time.perf_counter() - t0
     raw = result.model_dump(mode="json")
     try:
@@ -130,7 +151,13 @@ def run_opt(inst: Instance, *, api_key: str | None, mode: str) -> dict:
         info_d = {"method": str(info.method), "termination": str(info.termination), "guarantee": str(info.guarantee)}
     except Exception as exc:
         info_d = {"error": str(exc)}
-    plan = decode(inst, result.solution)
+    if mode == "platform-qubo":
+        assignment = raw.get("variable_assignment") or getattr(result, "variable_assignment", None)
+        if not assignment:
+            raise OptUnavailable("QpiAI Opt platform QUBO job returned no variable assignment; nothing to sign.")
+        plan = decode(inst, assignment)
+    else:
+        plan = decode(inst, result.solution)
     return {
         "solver": "QpiAI Opt",
         "execution_mode": getattr(result, "execution_mode", mode),

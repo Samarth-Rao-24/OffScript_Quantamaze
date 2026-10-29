@@ -48,6 +48,7 @@ class Settings:
     qaoa_reps: int
     qaoa_shots: int
     allow_dev_nonce: bool
+    allow_local_qrng: bool
     pass_budgets: list[int] = field(default_factory=list)
 
     # --- secrets: never serialise these ---
@@ -74,6 +75,7 @@ class Settings:
             "qaoa_mode": self.qaoa_mode,
             "qaoa_max_iterations": self.qaoa_max_iterations,
             "allow_dev_nonce": self.allow_dev_nonce,
+            "allow_local_qrng": self.allow_local_qrng,
             "sat_id": self.sat_id,
             "flood_limit": self.flood_limit,
             "pass_budgets": self.pass_budgets,
@@ -85,10 +87,10 @@ def load_settings() -> Settings:
     evidence_dir = Path(_env("QUPLINK_EVIDENCE_DIR", str(PROJECT_ROOT / "evidence")))
     budgets_raw = _env("QUPLINK_PASS_BUDGETS", "3600,3600,2900,2200")
     budgets = [int(b) for b in budgets_raw.split(",") if b.strip()]
-    opt_mode = _env("QUPLINK_OPT_MODE", "platform")
-    qaoa_mode = _env("QUPLINK_QAOA_MODE", "platform")
-    if opt_mode not in ("platform", "local"):
-        raise ValueError("QUPLINK_OPT_MODE must be 'platform' or 'local'")
+    opt_mode = _env("QUPLINK_OPT_MODE", "local")
+    qaoa_mode = _env("QUPLINK_QAOA_MODE", "local")
+    if opt_mode not in ("platform", "platform-qubo", "local"):
+        raise ValueError("QUPLINK_OPT_MODE must be 'platform', 'platform-qubo' or 'local'")
     if qaoa_mode not in ("platform", "local"):
         raise ValueError("QUPLINK_QAOA_MODE must be 'platform' or 'local'")
     return Settings(
@@ -98,7 +100,7 @@ def load_settings() -> Settings:
         flood_limit=_env_int("QUPLINK_FLOOD_LIMIT", 8),
         default_expiry_s=_env_int("QUPLINK_DEFAULT_EXPIRY_S", 600),
         opt_mode=opt_mode,
-        qrng_device=_env("QUPLINK_QRNG_DEVICE", "QpiAI-Indus-1"),
+        qrng_device=_env("QUPLINK_QRNG_DEVICE", "QpiAI-QSV-Local"),
         qrng_qubits=_env_int("QUPLINK_QRNG_QUBITS", 8),
         qrng_shots=_env_int("QUPLINK_QRNG_SHOTS", 1024),
         qaoa_device=_env("QUPLINK_QAOA_DEVICE", "QpiAI-QSV-Simulator"),
@@ -107,5 +109,6 @@ def load_settings() -> Settings:
         qaoa_reps=_env_int("QUPLINK_QAOA_REPS", 1),
         qaoa_shots=_env_int("QUPLINK_QAOA_SHOTS", 1024),
         allow_dev_nonce=(_env("QUPLINK_ALLOW_DEV_NONCE", "false") or "false").lower() == "true",
+        allow_local_qrng=(_env("QUPLINK_ALLOW_LOCAL_QRNG", "true") or "true").lower() == "true",
         pass_budgets=budgets,
     )

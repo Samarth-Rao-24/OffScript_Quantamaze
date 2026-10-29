@@ -1,0 +1,219 @@
+{
+  "created_utc": "2026-10-29T07:27:06.319384+00:00",
+  "falcon_vs_mldsa_signature_saving_pct": 72.5,
+  "host": {
+    "cpu": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel",
+    "machine": "AMD64",
+    "measurement_label": "Emulated host measurement (desktop/laptop CPU), not flight hardware",
+    "packages": {
+      "cryptography": "50.0.2",
+      "fastapi": "0.162.0",
+      "numpy": "2.4.6",
+      "pqcrypto": "0.4.0",
+      "qpiai-opt": "0.0.9",
+      "qpiai-quantum": "0.3.0"
+    },
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9"
+  },
+  "kind": "scheme_compare",
+  "label": "EMULATED HOST MEASUREMENT - not flight hardware",
+  "method": "time.perf_counter_ns; 10 keygens, 200 signs, 1000 verifies per scheme on random 64 B messages. Frame size = 16 B header + 12 B body + worst observed signature. Classical schemes are baselines only.",
+  "schemes": [
+    {
+      "frame_bytes_12B_body_worst_case": 694,
+      "frames_per_3600B_pass": 4,
+      "keygen": {
+        "max_us": 21281.7,
+        "mean_us": 15980.54,
+        "n": 10,
+        "p50_us": 16181.45,
+        "p95_us": 20327.65,
+        "p99_us": 21090.89
+      },
+      "library": "pqcrypto 0.4.0 / PQClean",
+      "public_key_bytes": 897,
+      "quantum_safe": true,
+      "scheme": "Falcon-padded-512",
+      "secret_key_bytes": 1281,
+      "selected": true,
+      "sign": {
+        "max_us": 5724.4,
+        "mean_us": 4999.84,
+        "n": 200,
+        "p50_us": 4960.25,
+        "p95_us": 5239.86,
+        "p99_us": 5714.92
+      },
+      "signature_bytes": {
+        "max": 666,
+        "mean": 666.0,
+        "min": 666
+      },
+      "verify": {
+        "max_us": 115.6,
+        "mean_us": 55.59,
+        "n": 1000,
+        "p50_us": 54.9,
+        "p95_us": 57.3,
+        "p99_us": 73.32
+      }
+    },
+    {
+      "frame_bytes_12B_body_worst_case": 688,
+      "frames_per_3600B_pass": 4,
+      "keygen": {
+        "max_us": 18069.1,
+        "mean_us": 14477.89,
+        "n": 10,
+        "p50_us": 14164.45,
+        "p95_us": 17673.91,
+        "p99_us": 17990.06
+      },
+      "library": "pqcrypto 0.4.0 / PQClean",
+      "public_key_bytes": 897,
+      "quantum_safe": true,
+      "scheme": "Falcon-512 (compressed)",
+      "secret_key_bytes": 1281,
+      "selected": false,
+      "sign": {
+        "max_us": 6864.1,
+        "mean_us": 4985.5,
+        "n": 200,
+        "p50_us": 4942.65,
+        "p95_us": 5204.69,
+        "p99_us": 5768.24
+      },
+      "signature_bytes": {
+        "max": 660,
+        "mean": 655.1,
+        "min": 649
+      },
+      "verify": {
+        "max_us": 82.9,
+        "mean_us": 55.24,
+        "n": 1000,
+        "p50_us": 54.8,
+        "p95_us": 57.21,
+        "p99_us": 71.0
+      }
+    },
+    {
+      "frame_bytes_12B_body_worst_case": 2448,
+      "frames_per_3600B_pass": 1,
+      "keygen": {
+        "max_us": 245.9,
+        "mean_us": 185.41,
+        "n": 10,
+        "p50_us": 178.1,
+        "p95_us": 221.46,
+        "p99_us": 241.01
+      },
+      "library": "pqcrypto 0.4.0 / PQClean",
+      "public_key_bytes": 1312,
+      "quantum_safe": true,
+      "scheme": "ML-DSA-44 (FIPS 204)",
+      "secret_key_bytes": 2560,
+      "selected": false,
+      "sign": {
+        "max_us": 1457.7,
+        "mean_us": 400.1,
+        "n": 200,
+        "p50_us": 344.95,
+        "p95_us": 729.13,
+        "p99_us": 1125.85
+      },
+      "signature_bytes": {
+        "max": 2420,
+        "mean": 2420.0,
+        "min": 2420
+      },
+      "verify": {
+        "max_us": 217.6,
+        "mean_us": 106.53,
+        "n": 1000,
+        "p50_us": 104.4,
+        "p95_us": 111.71,
+        "p99_us": 163.76
+      }
+    },
+    {
+      "frame_bytes_12B_body_worst_case": 92,
+      "frames_per_3600B_pass": 31,
+      "keygen": {
+        "max_us": 40933.7,
+        "mean_us": 4124.28,
+        "n": 10,
+        "p50_us": 28.6,
+        "p95_us": 22549.22,
+        "p99_us": 37256.8
+      },
+      "library": "cryptography (OpenSSL)",
+      "public_key_bytes": 33,
+      "quantum_safe": false,
+      "scheme": "ECDSA P-256",
+      "secret_key_bytes": 32,
+      "selected": false,
+      "sign": {
+        "max_us": 34719.6,
+        "mean_us": 207.52,
+        "n": 200,
+        "p50_us": 33.45,
+        "p95_us": 37.91,
+        "p99_us": 64.42
+      },
+      "signature_bytes": {
+        "max": 64,
+        "mean": 64.0,
+        "min": 64
+      },
+      "verify": {
+        "max_us": 779.4,
+        "mean_us": 126.62,
+        "n": 1000,
+        "p50_us": 114.1,
+        "p95_us": 202.71,
+        "p99_us": 246.58
+      }
+    },
+    {
+      "frame_bytes_12B_body_worst_case": 92,
+      "frames_per_3600B_pass": 31,
+      "keygen": {
+        "max_us": 1402.2,
+        "mean_us": 180.0,
+        "n": 10,
+        "p50_us": 43.0,
+        "p95_us": 794.88,
+        "p99_us": 1280.74
+      },
+      "library": "cryptography (OpenSSL)",
+      "public_key_bytes": 32,
+      "quantum_safe": false,
+      "scheme": "Ed25519",
+      "secret_key_bytes": 32,
+      "selected": false,
+      "sign": {
+        "max_us": 808.6,
+        "mean_us": 40.92,
+        "n": 200,
+        "p50_us": 36.7,
+        "p95_us": 37.55,
+        "p99_us": 57.21
+      },
+      "signature_bytes": {
+        "max": 64,
+        "mean": 64.0,
+        "min": 64
+      },
+      "verify": {
+        "max_us": 255.5,
+        "mean_us": 113.98,
+        "n": 1000,
+        "p50_us": 106.0,
+        "p95_us": 185.63,
+        "p99_us": 213.62
+      }
+    }
+  ]
+}

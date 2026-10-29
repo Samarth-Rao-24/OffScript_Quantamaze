@@ -58,7 +58,7 @@ class MissionControl:
         self.signer: Signer | None = None
         self.qrng = QRNGPool(self.data, self.ev, api_key=settings.qcloud_api_key, n_qubits=settings.qrng_qubits,
                              shots=settings.qrng_shots, default_device=settings.qrng_device,
-                             allow_dev_nonce=settings.allow_dev_nonce)
+                             allow_dev_nonce=settings.allow_dev_nonce, allow_local_qrng=settings.allow_local_qrng)
         self.last_accepted_frame: bytes | None = None
         self.last_sent_frame: bytes | None = None
         self.window_counter = 0

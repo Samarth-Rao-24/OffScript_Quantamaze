@@ -42,16 +42,31 @@ def _fake_entry(pool: QRNGPool, name: str, device: str, job_id):
     atomic_write_json(pool.index_path, idx)
 
 
-def test_nonce_requires_qcloud_job_unless_dev(tmp_path):
+def test_nonce_requires_a_qpiai_run(tmp_path):
+    # no QRNG run at all -> no nonce (OS-only nonces need the explicit dev flag)
     pool = QRNGPool(tmp_path, tmp_path / "ev", api_key=None, allow_dev_nonce=False)
     with pytest.raises(NonceUnavailable):
         pool.take_nonce(1)
+
+
+def test_local_simulator_run_supplies_nonce_by_default(tmp_path):
+    # organiser guidance: the QpiAI local simulator is the intended, credit-free path
+    pool = QRNGPool(tmp_path, tmp_path / "ev", api_key=None)
     _fake_entry(pool, "local.json", "QpiAI-QSV-Local", None)
-    with pytest.raises(NonceUnavailable):  # local simulator output is not accepted for nonces
+    n = pool.take_nonce(1)
+    assert n["randomness_class"] == "qpiai-local-simulator (classical PRNG sampling, not a cloud run)"
+    assert n["job_id"] is None  # honestly recorded: no cloud job ID
+    recomputed = derive_nonce(bytes.fromhex(n["os_entropy_hex"]), {"0000": 500, "1111": 524}, "local", 1)
+    assert recomputed.hex() == n["nonce"]
+    with pytest.raises(NonceUnavailable):  # each run is consumed once
+        pool.take_nonce(2)
+
+
+def test_local_simulator_can_be_disabled(tmp_path):
+    pool = QRNGPool(tmp_path, tmp_path / "ev", api_key=None, allow_local_qrng=False)
+    _fake_entry(pool, "local.json", "QpiAI-QSV-Local", None)
+    with pytest.raises(NonceUnavailable):
         pool.take_nonce(1)
-    dev = QRNGPool(tmp_path, tmp_path / "ev", api_key=None, allow_dev_nonce=True)
-    n = dev.take_nonce(1)
-    assert n["randomness_class"] == "local-simulator (classical PRNG sampling, not a cloud run)"
 
 
 def test_cloud_entry_consumed_once(tmp_path):

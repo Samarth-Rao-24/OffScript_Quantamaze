@@ -1,0 +1,193 @@
+{
+  "created_utc": "2026-10-29T07:27:02.626981+00:00",
+  "flood_wellformed_with_guard": {
+    "by_reason": {
+      "E_BAD_SIG": 8,
+      "E_FLOOD_LOCKOUT": 492
+    },
+    "flood_limit": 8,
+    "frames": 500,
+    "junk_kind": "attacker-key",
+    "per_frame_us": 12.38,
+    "signature_verifications": 8,
+    "total_ms": 6.188
+  },
+  "flood_wellformed_without_guard": {
+    "by_reason": {
+      "E_BAD_SIG": 500
+    },
+    "flood_limit": null,
+    "frames": 500,
+    "junk_kind": "attacker-key",
+    "per_frame_us": 91.92,
+    "signature_verifications": 500,
+    "total_ms": 45.958
+  },
+  "flood_with_guard": {
+    "by_reason": {
+      "E_BAD_SIG": 8,
+      "E_FLOOD_LOCKOUT": 492
+    },
+    "flood_limit": 8,
+    "frames": 500,
+    "junk_kind": "random",
+    "per_frame_us": 12.42,
+    "signature_verifications": 8,
+    "total_ms": 6.208
+  },
+  "flood_without_guard": {
+    "by_reason": {
+      "E_BAD_SIG": 500
+    },
+    "flood_limit": null,
+    "frames": 500,
+    "junk_kind": "random",
+    "per_frame_us": 39.72,
+    "signature_verifications": 500,
+    "total_ms": 19.859
+  },
+  "frame": {
+    "auth_overhead_bytes": 682,
+    "header_bytes": 16,
+    "nfr01_target_bytes": 682,
+    "pass_open_frame_bytes": 715,
+    "per_command": [
+      {
+        "body_bytes": 2,
+        "frame_bytes": 684,
+        "id": "C01",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 3,
+        "frame_bytes": 685,
+        "id": "C02",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 13,
+        "frame_bytes": 695,
+        "id": "C03",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 9,
+        "frame_bytes": 691,
+        "id": "C04",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 17,
+        "frame_bytes": 699,
+        "id": "C05",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 3,
+        "frame_bytes": 685,
+        "id": "C06",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 32,
+        "frame_bytes": 714,
+        "id": "C07",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 32,
+        "frame_bytes": 714,
+        "id": "C08",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 2,
+        "frame_bytes": 684,
+        "id": "C09",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 1,
+        "frame_bytes": 683,
+        "id": "C10",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 13,
+        "frame_bytes": 695,
+        "id": "C11",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 7,
+        "frame_bytes": 689,
+        "id": "C12",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 13,
+        "frame_bytes": 695,
+        "id": "C13",
+        "overhead_bytes": 682
+      },
+      {
+        "body_bytes": 3,
+        "frame_bytes": 685,
+        "id": "C14",
+        "overhead_bytes": 682
+      }
+    ],
+    "signature_bytes": 666
+  },
+  "host": {
+    "cpu": "Intel64 Family 6 Model 158 Stepping 13, GenuineIntel",
+    "machine": "AMD64",
+    "measurement_label": "Emulated host measurement (desktop/laptop CPU), not flight hardware",
+    "packages": {
+      "cryptography": "50.0.2",
+      "fastapi": "0.162.0",
+      "numpy": "2.4.6",
+      "pqcrypto": "0.4.0",
+      "qpiai-opt": "0.0.9",
+      "qpiai-quantum": "0.3.0"
+    },
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9"
+  },
+  "kind": "measure",
+  "label": "EMULATED HOST MEASUREMENT - not flight hardware",
+  "method": {
+    "flood": "500 junk frames with high counters; (a) random 666 B signatures (often fail early in signature decoding), (b) well-formed signatures from an attacker key (full verification cost). Guard N=8 vs no guard.",
+    "latency": "time.perf_counter_ns around crypto.verify and around the full verifier pipeline, 1000 frames",
+    "nv_writes": "StateStore write-call counter per accepted / rejected frame",
+    "peak_ram": "tracemalloc: max over 200 full verifications of (peak during one verification - heap before it); Python heap only, C-stack/static memory inside PQClean is not visible to tracemalloc. peak_ram_loop_bytes is the peak across the whole 200-frame loop."
+  },
+  "nfr02_target_us": 5000,
+  "nfr03_target_bytes": 65536,
+  "nfr06": {
+    "limit": 8,
+    "max_verifications_with_guard": 8
+  },
+  "nv_writes_per_accepted": 1.0,
+  "nv_writes_per_rejected": 0.0,
+  "peak_ram_bytes": 21292,
+  "peak_ram_loop_bytes": 94624,
+  "peak_ram_per_frame_p50_bytes": 21228,
+  "signature_scheme": "Falcon-padded-512",
+  "verify_crypto_only": {
+    "max_us": 111.3,
+    "mean_us": 54.78,
+    "n": 1000,
+    "p50_us": 53.7,
+    "p95_us": 57.2,
+    "p99_us": 75.6
+  },
+  "verify_pipeline": {
+    "max_us": 13341.5,
+    "mean_us": 4867.93,
+    "n": 1000,
+    "p50_us": 4837.05,
+    "p95_us": 5322.61,
+    "p99_us": 5622.14
+  }
+}

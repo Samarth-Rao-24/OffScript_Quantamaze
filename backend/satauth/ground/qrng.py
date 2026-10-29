@@ -41,13 +41,19 @@ class NonceUnavailable(RuntimeError):
     pass
 
 
+def qcloud_experiment() -> str:
+    """QCloud files every job under an existing experiment; the SDK cannot create one, and every account
+    has "Default Experiment". Override with QUPLINK_QCLOUD_EXPERIMENT if you created another on the dashboard."""
+    return os.environ.get("QUPLINK_QCLOUD_EXPERIMENT", "").strip() or "Default Experiment"
+
+
 def randomness_class(device: str) -> str:
     if device in HARDWARE_DEVICES:
         return "quantum-hardware"
     if device in CLOUD_SIMULATORS:
         return "qcloud-simulator (classical PRNG sampling)"
     if device == LOCAL_DEVICE:
-        return "local-simulator (classical PRNG sampling, not a cloud run)"
+        return "qpiai-local-simulator (classical PRNG sampling, not a cloud run)"
     return "unknown"
 
 
@@ -98,7 +104,8 @@ class FuzzStream:
 
 class QRNGPool:
     def __init__(self, data_dir: Path, evidence_dir: Path, *, api_key: str | None, n_qubits: int = 8,
-                 shots: int = 1024, default_device: str = "QpiAI-Indus-1", allow_dev_nonce: bool = False):
+                 shots: int = 1024, default_device: str = "QpiAI-QSV-Local", allow_dev_nonce: bool = False,
+                 allow_local_qrng: bool = True):
         self.index_path = Path(data_dir) / "ground" / "qrng_pool.json"
         self.jobs_dir = Path(evidence_dir) / "qcloud_jobs"
         self.nonce_log = self.jobs_dir / "nonce_derivations.jsonl"
@@ -106,7 +113,8 @@ class QRNGPool:
         self.n_qubits = n_qubits
         self.shots = shots
         self.default_device = default_device
-        self.allow_dev_nonce = allow_dev_nonce
+        self.allow_dev_nonce = allow_dev_nonce  # OS-only nonces with no QpiAI run at all (development)
+        self.allow_local_qrng = allow_local_qrng  # QpiAI local-simulator runs may supply pass nonces
         self._lock = threading.Lock()
 
     # ---- pool index ----
@@ -126,11 +134,12 @@ class QRNGPool:
             "n_qubits": self.n_qubits,
             "shots": self.shots,
             "allow_dev_nonce": self.allow_dev_nonce,
+            "allow_local_qrng": self.allow_local_qrng,
         }
 
     def _usable_for_nonce(self, e: dict) -> bool:
         if e["device"] == LOCAL_DEVICE:
-            return self.allow_dev_nonce
+            return self.allow_local_qrng or self.allow_dev_nonce
         return bool(e.get("job_id"))
 
     def load_record(self, entry: dict) -> dict:
@@ -153,9 +162,9 @@ class QRNGPool:
         circ.measure(list(range(n)), list(range(n)))
         started = datetime.now(timezone.utc)
         t0 = time.perf_counter()
-        res = circ.run(shots=self.shots, experiment_name="q-uplink-qrng", device_name=device)
+        res = circ.run(shots=self.shots, experiment_name=qcloud_experiment(), device_name=device)
         wall = time.perf_counter() - t0
-        counts = {str(k): int(v) for k, v in (res.counts or {}).items()}
+        counts = _normalise_counts(res, n)
         job_id = getattr(res, "job_id", None)
         if device != LOCAL_DEVICE and not job_id:
             raise RuntimeError("QCloud returned no job_id; result not recorded (no IDs are fabricated).")
@@ -181,7 +190,10 @@ class QRNGPool:
             "sdk": _sdk_versions(),
         }
         stamp = started.strftime("%Y%m%dT%H%M%SZ")
-        fname = f"qrng_{stamp}_{(job_id or 'local')[:36]}.json".replace("/", "_")
+        import uuid
+
+        # unique even when several local runs finish within the same second
+        fname = f"qrng_{stamp}_{(job_id or 'local')[:36]}_{uuid.uuid4().hex[:6]}.json".replace("/", "_")
         atomic_write_json(self.jobs_dir / fname, record)
         with self._lock:
             idx = self._index()
@@ -201,7 +213,7 @@ class QRNGPool:
             if entry is None:
                 if not self.allow_dev_nonce:
                     raise NonceUnavailable(
-                        "No unused QCloud QRNG job in the pool. Run 'Fetch QRNG' (QCloud) first. "
+                        "No unused QRNG run in the pool. Run a QRNG circuit first (QpiAI local simulator or QCloud). "
                         "Set QUPLINK_ALLOW_DEV_NONCE=true only for offline development (nonces are then labelled DEV)."
                     )
                 nonce = hashlib.sha256(b"Q-UPLINK/NONCE/DEV-OS-ONLY/v1" + os_entropy + pass_no.to_bytes(4, "big")).digest()
@@ -225,7 +237,7 @@ class QRNGPool:
 
     def fuzz_stream(self) -> tuple[FuzzStream, dict]:
         """Attack-input stream seeded from the newest recorded QRNG job."""
-        ents = [e for e in self.entries() if e.get("job_id") or self.allow_dev_nonce]
+        ents = [e for e in self.entries() if self._usable_for_nonce(e)]
         if not ents:
             seed = hashlib.sha256(b"Q-UPLINK/FUZZ/FIXED-TEST-SEED/v1").digest()
             return FuzzStream(seed), {"fuzz_seed": seed.hex(), "source": "fixed test seed (no QRNG job recorded yet)",
@@ -234,8 +246,33 @@ class QRNGPool:
         rec = read_json(self.jobs_dir / e["file"])
         seed = fuzz_seed_from(rec["counts"], e.get("job_id") or "local")
         return FuzzStream(seed), {"fuzz_seed": seed.hex(), "source": (f"QCloud QRNG job {e['job_id']} ({e['device']})" if e.get("job_id")
-                                             else f"local simulator QRNG run, no job ID ({e['device']}, dev only)"),
+                                             else f"QpiAI local simulator QRNG run ({e['device']}, no cloud job ID)"),
                                   "job_id": e.get("job_id"), "randomness_class": e["randomness_class"]}
+
+
+def _normalise_counts(res, n: int) -> dict[str, int]:
+    """Measurement counts as {n-bit bitstring: count}, whatever shape the SDK result has."""
+    raw = getattr(res, "counts", None)
+    if not raw and hasattr(res, "get"):
+        try:
+            got = res.get()
+            raw = got.get("counts") if isinstance(got, dict) else None
+        except Exception:
+            raw = None
+    if not raw and isinstance(res, dict):
+        raw = res.get("counts") or (res.get("results") or {}).get("counts")
+    if not raw:
+        raise RuntimeError(f"QCloud result has no measurement counts (result type {type(res).__name__})")
+    out: dict[str, int] = {}
+    for k, v in dict(raw).items():
+        key = str(k).strip()
+        if key.lower().startswith("0x"):
+            key = format(int(key, 16), f"0{n}b")
+        elif not set(key) <= {"0", "1"}:
+            key = format(int(key), f"0{n}b")
+        key = key.replace(" ", "").zfill(n)
+        out[key] = out.get(key, 0) + int(v)
+    return out
 
 
 def _sdk_versions() -> dict:

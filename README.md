@@ -77,8 +77,11 @@ cp .env.example .env && $EDITOR .env
 
 - `.env` is git-ignored. The backend reads it on start-up. Keys are never logged, never returned by the API and never sent to the browser; the UI shows only "Opt key ✓/✗".
 - `QCLOUD_API_KEY` (the name your `poc/` used) is accepted as a fallback.
-- **Free:** Opt *local* solves, the key check, all tests and benchmarks.
-- **May consume credits** (the app and CLI ask before each one): Opt *platform* jobs, QRNG circuits on QCloud (Indus-1 hardware or simulators), QAOA on QCloud (about 30 circuit jobs per run).
+- **Default path (organiser guidance):** the Quant-A-Maze organisers confirmed that, once you have the API keys, you run the QpiAI **local solvers and simulators**; workspaces, platform utilities and credits are not needed. So by default:
+  - scheduling uses the **QpiAI Opt local solver** (`solve(model, mode="local", client=Client(api_key=...))`), authenticated with `QPIAI_OPT_API_KEY`;
+  - QRNG circuits and QAOA run on the **QpiAI Quantum SDK simulator** (`QpiAI-QSV-Local`), after `QpiAIQuantumAuth.login` with `QPIAI_QCLOUD_API_KEY`.
+  These runs cost nothing and produce no cloud job IDs. Every record is labelled "QpiAI local simulator (not a cloud run)", and the simulator samples with a classical PRNG, so we never call that randomness physical quantum randomness. OS entropy is always mixed into each nonce.
+- **Optional cloud path** (needs platform resources and credits on the account; the app and CLI ask before each run): Opt *platform* jobs, QRNG circuits on QCloud (Indus-1 hardware or simulators), QAOA on QCloud (about 30 circuit jobs per run). On our account QCloud replied "an active subscription is required to run jobs" and Opt platform replied "no access to 'QUBO Solver'", which is why the organisers pointed us to the local path.
 
 Verify both keys without spending credits:
 
@@ -101,15 +104,22 @@ Manual equivalent: `cd backend; ..\.venv\Scripts\python.exe -m uvicorn satauth.a
 The server binds to `127.0.0.1` only. On first start it generates OPERATOR and ADMIN Falcon key pairs, provisions the onboard state, and starts the satellite verifier as a separate OS process.
 
 **First real run (recorded evidence):**
-1. *Live uplink*: **Fetch QRNG from QCloud** (Indus-1). Fetch one per pass you plan to run, since each pass nonce consumes one job.
-2. *Pass planner*: **Optimize with QpiAI Opt** (platform mode records a job ID).
+1. *Live uplink*: **Run QRNG circuit** (QpiAI local simulator by default). Run one per pass you plan to run, since each pass nonce consumes one run.
+2. *Pass planner*: **Optimize with QpiAI Opt** (QpiAI Opt local solver by default).
 3. *Live uplink*: **Run pass 1 … 4**.
 4. *Attack lab*: fire each attack. Use **Start next window** after Flood.
-5. *Pass planner*: **Run QAOA** (QCloud simulator).
+5. *Pass planner*: **Run QAOA** (QpiAI local simulator by default).
 6. *Resource budget*: **Run benchmarks**.
 7. *Evidence*: **Download evidence bundle**.
 
 Or from the command line: `.\scripts\run_all.ps1 -WithQpiAI`.
+
+**Recommended single command for the recorded submission run** (no credits; logs everything to `evidence\final_run_log.txt`, writes `q-uplink-evidence.zip`):
+```powershell
+cd F:\OffScript\backend
+F:\OffScript\.venv\Scripts\python.exe scripts\final_run.py --fresh
+```
+It runs: key check (both keys authenticate with QpiAI), 4 QRNG circuits on the QpiAI Quantum SDK simulator, the QpiAI Opt local solver plan (validated, compared with greedy and brute force), QAOA on the QpiAI simulator, benchmarks, then passes, nonce verification, judge sample cases and all attacks on the real satellite process. `--fresh` archives the previous evidence to `evidence\_previous_runs\`. Options: `--quantum cloud` and `--opt-mode platform-qubo` for cloud jobs (need platform access and credits), `--qrng-jobs`, `--skip-qaoa`.
 
 ### Checking cost before a paid QCloud run
 
@@ -220,7 +230,7 @@ Verified in the build workspace (Linux, Python 3.11.18, Node 22):
 **Not yet verified, needs your machine and keys:**
 - Installation on Windows (expected to work: every package has a win_amd64/py3 wheel).
 - A real QpiAI Opt solve, local and platform. The code path stops at authentication without a key.
-- Real QCloud QRNG jobs on Indus-1 and QAOA on the QCloud simulator. Device availability and credit cost depend on your account; `qpiai_runs.py check` lists your devices.
+- QCloud cloud jobs (Indus-1, QCloud simulators) and Opt platform jobs: refused on our account (subscription / QUBO Solver access). Per organiser guidance the submission uses the QpiAI local solver and simulator instead, which ran successfully on the PC.
 - Benchmark numbers on your CPU. The evidence folder is intentionally empty until you run them.
 
 ---
@@ -233,9 +243,9 @@ Verified in the build workspace (Linux, Python 3.11.18, Node 22):
 | `pip install` fails on `pqcrypto` | Check the Python version: 3.9–3.11 has Windows wheels for pqcrypto 0.4.0. Do not upgrade to pqcrypto 1.x (no Falcon). |
 | Planner says "QPIAI_OPT_API_KEY is not set" | Create `.env` in the project root (not in `backend/`), then restart the server. |
 | `AuthenticationError ... unreachable` | Opt and QCloud verify keys online even for local solves. Check internet, proxy and firewall. |
-| "No unused QCloud QRNG job in the pool" | Fetch QRNG first, one per pass. For offline UI work only, set `QUPLINK_ALLOW_DEV_NONCE=true` (nonces are labelled DEV). |
+| "No unused QRNG run in the pool" | Press **Run QRNG circuit** first, one per pass. For offline UI work only, set `QUPLINK_ALLOW_DEV_NONCE=true` (nonces are labelled DEV). |
 | Every attack returns `E_FLOOD_LOCKOUT` | The window is locked by the flood guard. Press **Start next window**. |
-| QRNG on Indus-1 is slow or fails | The hardware may be queued or not on your plan. Run `qpiai_runs.py check` to list devices. Using a simulator instead is your choice, and its output is labelled as simulator randomness. |
+| QCloud says "an active subscription is required" | Expected without a subscription. Keep the default `QUPLINK_QRNG_DEVICE=QpiAI-QSV-Local` and `QUPLINK_QAOA_MODE=local` (organiser-recommended, no credits). |
 | Port 8000 busy | `netstat -ano | findstr :8000`, stop that process, or change the port in `scripts\start.ps1` and `frontend\vite.config.ts`. |
 | Want a clean demo | Sidebar **Reset demo state**. It archives the log, re-provisions onboard state and keeps the keys. |
 | Lost or corrupted keys | Stop the server, delete `data\` (this regenerates keys and state), restart. |

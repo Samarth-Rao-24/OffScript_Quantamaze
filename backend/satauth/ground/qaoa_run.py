@@ -162,6 +162,8 @@ def run_qaoa_experiment(
     from qpiai_opt.opt_solvers import Client, solve
     from qpiai_opt.quantum import QAOA, QpiAIQuantumAuth, QuantumRun
 
+    from .qrng import qcloud_experiment
+
     command_ids = command_ids or DEFAULT_REDUCED
     comp = compile_qubo(inst, command_ids, n_passes)
     red = comp["red"]
@@ -193,7 +195,7 @@ def run_qaoa_experiment(
     QpiAIQuantumAuth.login(api_key=qcloud_api_key)
     algorithm = QAOA(reps=reps, optimizer="cobyla", max_iterations=max_iterations)
     if mode == "platform":
-        execution = QuantumRun(shots=shots, experiment_name="q-uplink-qaoa", device_name=device_name)
+        execution = QuantumRun(shots=shots, experiment_name=qcloud_experiment(), device_name=device_name)
     else:
         execution = QuantumRun(shots=shots, seed=seed)
     t0 = time.perf_counter()
