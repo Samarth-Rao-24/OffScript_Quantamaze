@@ -9,7 +9,9 @@ Wire layout (big-endian)::
     counter  8 B   monotonic counter
     expiry   4 B   unix timestamp (seconds) after which the frame is invalid
     command  cmd_len B   opcode (1 B) + arguments
-    signature 666 B  Falcon-512 *padded* signature
+    signature        666 B for Falcon-padded-512 (default); the length is set by
+                     the signing key's suite (see suites.py): 2420 B ML-DSA-44,
+                     730 B hybrid Ed25519 + Falcon-512
 
 The signature covers DOMAIN_TAG || header || command || pass_nonce. The pass
 nonce is held onboard and is never transmitted inside command frames.
@@ -29,7 +31,9 @@ from dataclasses import dataclass
 FRAME_VERSION = 1
 HEADER_FMT = ">BBBBQI"
 HEADER_LEN = struct.calcsize(HEADER_FMT)  # 16
-SIG_LEN = 666  # Falcon-padded-512 fixed signature length (verified at import in crypto.py)
+SIG_LEN = 666  # Falcon-padded-512 fixed signature length (the default suite; verified at import in crypto.py)
+SIG_LENGTHS = (666, 730, 2420)  # Falcon-512, hybrid Ed25519 + Falcon-512, ML-DSA-44 (checked in suites.py)
+MIN_SIG_LEN, MAX_SIG_LEN = min(SIG_LENGTHS), max(SIG_LENGTHS)
 MAX_BODY_LEN = 32
 PASS_OPEN_BODY_LEN = 33
 NONCE_LEN = 32
@@ -94,16 +98,17 @@ def max_body_for(opcode: int | None) -> int:
 
 def parse_frame(data: bytes) -> Frame:
     """Parse wire bytes. Cheap and constant-time-ish; never touches crypto."""
-    if len(data) < HEADER_LEN + 1 + SIG_LEN:
+    if len(data) < HEADER_LEN + 1 + MIN_SIG_LEN:
         raise MalformedFrame(f"frame too short ({len(data)} B)")
     version, sat_id, key_id, cmd_len, counter, expiry = struct.unpack(HEADER_FMT, data[:HEADER_LEN])
     if version != FRAME_VERSION:
         raise MalformedFrame(f"unsupported frame version {version}")
     if cmd_len < 1:
         raise MalformedFrame("empty command body")
-    expected = HEADER_LEN + cmd_len + SIG_LEN
-    if len(data) != expected:
-        raise MalformedFrame(f"length mismatch: got {len(data)} B, header implies {expected} B")
+    sig_len = len(data) - HEADER_LEN - cmd_len
+    if sig_len not in SIG_LENGTHS:
+        raise MalformedFrame(f"length mismatch: {len(data)} B leaves a {sig_len} B signature "
+                             f"(supported suites use {', '.join(map(str, SIG_LENGTHS))} B)")
     command = data[HEADER_LEN : HEADER_LEN + cmd_len]
     if cmd_len > max_body_for(command[0]):
         raise MalformedFrame(f"command body {cmd_len} B exceeds limit for opcode 0x{command[0]:02x}")
@@ -111,5 +116,5 @@ def parse_frame(data: bytes) -> Frame:
     return Frame(version, sat_id, key_id, counter, expiry, command, signature)
 
 
-def frame_size(body_len: int) -> int:
-    return HEADER_LEN + body_len + SIG_LEN
+def frame_size(body_len: int, sig_len: int = SIG_LEN) -> int:
+    return HEADER_LEN + body_len + sig_len

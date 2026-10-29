@@ -46,7 +46,7 @@ export function LiveProvider({ children }: { children: ReactNode }) {
         setEvents((prev) => [...prev.slice(-299), e]);
         subs.current.forEach((fn) => fn(e));
         if (e.type === "frame" && e.phase === "verdict") refreshState();
-        if (["pass_done", "reset", "attack", "qrng", "plan", "alert", "nasa"].includes(e.type)) refreshState();
+        if (["pass_done", "reset", "attack", "qrng", "plan", "alert", "nasa", "keys"].includes(e.type)) refreshState();
       };
     };
     connect();

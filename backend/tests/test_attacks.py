@@ -42,7 +42,7 @@ def test_01_valid_command_accepted(rig):
     assert r["verdict"] == "ACCEPT" and r["reason"] == "OK"
     assert rig.state.last_counter == f.counter > c0
     assert rig.state.nv_writes == w0 + 1  # NFR-04: exactly one NV write
-    assert [s["status"] for s in r["steps"]] == ["pass"] * 7
+    assert [s["status"] for s in r["steps"]] == ["pass"] * 9
     on_disk = json.loads(rig.state.path.read_text())
     assert on_disk["last_counter"] == f.counter
     assert r["log"]["verdict"] == "ACCEPT" and r["log"]["opcode_name"] == "CAPTURE_IMAGE"
@@ -273,7 +273,8 @@ def test_malformed_frames_rejected(rig):
 
 def test_check_order_matches_prd(rig):
     r = rig.send(rig.frame().to_bytes())
-    assert [s["name"] for s in r["steps"]] == ["flood_guard", "parse", "sat_id", "expiry", "counter", "signature", "role"]
+    assert [s["name"] for s in r["steps"]] == ["flood_guard", "parse", "sat_id", "expiry", "counter", "key_state",
+                                               "signature", "role", "policy"]
 
 
 def test_frame_sizes_match_nfr01(rig):

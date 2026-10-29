@@ -4,75 +4,138 @@
     "brute_force": {
       "completed": true,
       "method": "brute_force",
-      "nodes_explored": 14,
+      "nodes_explored": 2392193,
       "note": null,
-      "objective": 6.0,
+      "objective": 66.8,
       "plan": {
-        "C09": 1,
-        "C10": null,
-        "C14": 1
+        "C01": 1,
+        "C02": 1,
+        "C03": 2,
+        "C04": 2,
+        "C05": 1,
+        "C06": 2,
+        "C07": 3,
+        "C08": 3,
+        "C09": 3,
+        "C10": 4,
+        "C11": 1,
+        "C12": 3,
+        "C13": 2,
+        "C14": 4
       },
-      "runtime_s": 0.000161,
-      "search_space": 8,
+      "runtime_s": 5.761471,
+      "search_space": 6103515625,
       "validation": {
         "budgets": [
           {
-            "budget_bytes": 2621,
+            "budget_bytes": 3982,
             "ok": true,
             "pass": 1,
+            "remaining_bytes": 504,
+            "used_bytes": 3478
+          },
+          {
+            "budget_bytes": 3700,
+            "ok": true,
+            "pass": 2,
+            "remaining_bytes": 219,
+            "used_bytes": 3481
+          },
+          {
+            "budget_bytes": 3798,
+            "ok": true,
+            "pass": 3,
+            "remaining_bytes": 282,
+            "used_bytes": 3516
+          },
+          {
+            "budget_bytes": 2620,
+            "ok": true,
+            "pass": 4,
             "remaining_bytes": 537,
-            "used_bytes": 2084
+            "used_bytes": 2083
           }
         ],
-        "deadline_misses": 1,
-        "deferred": 1,
+        "deadline_misses": 0,
+        "deferred": 0,
         "feasible": true,
-        "objective": 6.0,
-        "scheduled": 2,
+        "objective": 66.8,
+        "scheduled": 14,
         "violations": []
       }
     },
     "greedy": {
       "method": "greedy",
-      "objective": 6.0,
+      "objective": 55.4,
       "plan": {
-        "C09": 1,
-        "C10": null,
-        "C14": 1
+        "C01": 1,
+        "C02": 1,
+        "C03": null,
+        "C04": null,
+        "C05": 1,
+        "C06": 2,
+        "C07": 2,
+        "C08": 2,
+        "C09": 3,
+        "C10": 3,
+        "C11": 1,
+        "C12": 3,
+        "C13": 2,
+        "C14": 3
       },
-      "runtime_s": 9.2e-05,
+      "runtime_s": 8.3e-05,
       "validation": {
         "budgets": [
           {
-            "budget_bytes": 2621,
+            "budget_bytes": 3982,
             "ok": true,
             "pass": 1,
-            "remaining_bytes": 537,
-            "used_bytes": 2084
+            "remaining_bytes": 504,
+            "used_bytes": 3478
+          },
+          {
+            "budget_bytes": 3700,
+            "ok": true,
+            "pass": 2,
+            "remaining_bytes": 177,
+            "used_bytes": 3523
+          },
+          {
+            "budget_bytes": 3798,
+            "ok": true,
+            "pass": 3,
+            "remaining_bytes": 342,
+            "used_bytes": 3456
+          },
+          {
+            "budget_bytes": 2620,
+            "ok": true,
+            "pass": 4,
+            "remaining_bytes": 1905,
+            "used_bytes": 715
           }
         ],
-        "deadline_misses": 1,
-        "deferred": 1,
+        "deadline_misses": 2,
+        "deferred": 2,
         "feasible": true,
-        "objective": 6.0,
-        "scheduled": 2,
+        "objective": 55.4,
+        "scheduled": 12,
         "violations": []
       }
     }
   },
   "comparison": {
-    "brute_force_objective": 6.0,
-    "brute_force_scheduled": 2,
-    "greedy_objective": 6.0,
-    "greedy_scheduled": 2,
+    "brute_force_objective": 66.8,
+    "brute_force_scheduled": 14,
+    "greedy_objective": 55.4,
+    "greedy_scheduled": 12,
     "opt_matches_brute_force": true,
-    "opt_objective": 6.0,
-    "opt_scheduled": 2,
-    "opt_vs_greedy": 0.0,
-    "scope": "re-plan: passes 4..4, 3 unacknowledged command(s)"
+    "opt_objective": 66.8,
+    "opt_scheduled": 14,
+    "opt_vs_greedy": 11.4
   },
-  "created_utc": "2026-10-29T10:40:58.364089+00:00",
-  "evidence_file": "opt_jobs/opt_20261029T104058Z_replan_p4_local-nojobid.json",
+  "created_utc": "2026-10-29T13:00:17.706254+00:00",
+  "evidence_file": "opt_jobs/opt_20261029T130017Z_local-nojobid.json",
   "explanations": [
     {
       "id": "C01",
@@ -124,15 +187,15 @@
     },
     {
       "id": "C09",
-      "pass": 4,
-      "reason": "Sent in pass 4 (weight 0.7), deadline pass 4. After C08 (pass 3).",
+      "pass": 3,
+      "reason": "Sent in pass 3 (weight 0.8), deadline pass 4. After C08 (pass 3). Ordered after its dependency within the pass.",
       "status": "SENT"
     },
     {
       "id": "C10",
-      "pass": null,
-      "reason": "Would fit in pass 3, but adding it is not optimal or would break a dependency ordering; kept for a later horizon.",
-      "status": "DEFERRED_TRADEOFF"
+      "pass": 4,
+      "reason": "Sent in pass 4 (weight 0.7), deadline pass 4.",
+      "status": "SENT"
     },
     {
       "id": "C11",
@@ -405,8 +468,8 @@
         "pass_open_bytes": 715
       },
       {
-        "budget_bytes": 2621,
-        "command_budget": 1906,
+        "budget_bytes": 2620,
+        "command_budget": 1905,
         "index": 4,
         "label": "AOS 2026-10-31 01:46 UTC \u00b7 4.4 min \u00b7 max 16\u00b0",
         "pass_open_bytes": 715
@@ -428,14 +491,14 @@
     },
     "job_id": null,
     "model": {
-      "binary_variables": 3,
+      "binary_variables": 56,
       "constraint_families": [
         "once_<cmd>: sum_t x[i,t] <= 1",
         "budget_p<t>: sum_i frame_bytes_i x[i,t] <= budget_t - 715 (PASS_OPEN)",
         "deadline_<cmd>_p<t>: x[i,t] <= 0 for t > deadline_i",
         "dep_<A>_before_<B>_p<t>: x[B,t] - sum_{t'<=t} x[A,t'] <= 0"
       ],
-      "constraints": 4,
+      "constraints": 53,
       "name": "q_uplink_multipass_schedule",
       "objective": "maximize sum_i sum_t priority_i * w_t * x[i,t], w_t = 1 - 0.1 (t-1)",
       "problem_class": "MILP",
@@ -453,8 +516,8 @@
       "C06": 2,
       "C07": 3,
       "C08": 3,
-      "C09": 4,
-      "C10": null,
+      "C09": 3,
+      "C10": 4,
       "C11": 1,
       "C12": 3,
       "C13": 2,
@@ -464,8 +527,8 @@
     "problem_id": null,
     "raw_result": {
       "basis": null,
-      "best_bound": 6.0,
-      "compute_time_s": 0.2735903,
+      "best_bound": 66.8,
+      "compute_time_s": 0.2420826,
       "dual_values": null,
       "error_message": null,
       "execution_mode": "local",
@@ -473,8 +536,8 @@
       "iteration_count": 0,
       "job_id": null,
       "model_status": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
-      "num_nodes": 0,
-      "objective": 6.0,
+      "num_nodes": 1,
+      "objective": 66.8,
       "optimality_gap": 0.0,
       "problem_class": "MILP",
       "problem_id": null,
@@ -482,9 +545,62 @@
       "reduced_costs": null,
       "sense": "MAX",
       "solution": {
-        "x_C09_p1": 1.0,
+        "x_C01_p1": 1.0,
+        "x_C01_p2": 0.0,
+        "x_C01_p3": 0.0,
+        "x_C01_p4": 0.0,
+        "x_C02_p1": 1.0,
+        "x_C02_p2": 0.0,
+        "x_C02_p3": 0.0,
+        "x_C02_p4": 0.0,
+        "x_C03_p1": 0.0,
+        "x_C03_p2": 1.0,
+        "x_C03_p3": 0.0,
+        "x_C03_p4": 0.0,
+        "x_C04_p1": 0.0,
+        "x_C04_p2": 1.0,
+        "x_C04_p3": 0.0,
+        "x_C04_p4": 0.0,
+        "x_C05_p1": 1.0,
+        "x_C05_p2": 0.0,
+        "x_C05_p3": 0.0,
+        "x_C05_p4": 0.0,
+        "x_C06_p1": 0.0,
+        "x_C06_p2": 1.0,
+        "x_C06_p3": 0.0,
+        "x_C06_p4": 0.0,
+        "x_C07_p1": 0.0,
+        "x_C07_p2": 0.0,
+        "x_C07_p3": 1.0,
+        "x_C07_p4": 0.0,
+        "x_C08_p1": 0.0,
+        "x_C08_p2": 0.0,
+        "x_C08_p3": 1.0,
+        "x_C08_p4": 0.0,
+        "x_C09_p1": 0.0,
+        "x_C09_p2": 0.0,
+        "x_C09_p3": 1.0,
+        "x_C09_p4": 0.0,
         "x_C10_p1": 0.0,
-        "x_C14_p1": 1.0
+        "x_C10_p2": 0.0,
+        "x_C10_p3": 0.0,
+        "x_C10_p4": 1.0,
+        "x_C11_p1": 1.0,
+        "x_C11_p2": 0.0,
+        "x_C11_p3": 0.0,
+        "x_C11_p4": 0.0,
+        "x_C12_p1": 0.0,
+        "x_C12_p2": 0.0,
+        "x_C12_p3": 1.0,
+        "x_C12_p4": 0.0,
+        "x_C13_p1": 0.0,
+        "x_C13_p2": 1.0,
+        "x_C13_p3": 0.0,
+        "x_C13_p4": 0.0,
+        "x_C14_p1": 0.0,
+        "x_C14_p2": 0.0,
+        "x_C14_p3": 0.0,
+        "x_C14_p4": 1.0
       },
       "solution_pool": null,
       "solve_info": {
@@ -498,148 +614,20 @@
         "settings": {},
         "solution_feasible": true,
         "solver": "HiGHS",
-        "source_objective": 6.0,
+        "source_objective": 66.8,
         "termination": "optimal",
         "transformed": true
       },
-      "solver_time_s": 0.09586610000000001,
+      "solver_time_s": 0.0229882,
       "status": "optimal"
     },
-    "reported_objective": 6.0,
+    "reported_objective": 66.8,
     "requested_mode": "local",
     "solver": "QpiAI Opt",
-    "started_utc": "2026-10-29T10:40:58.088972+00:00",
+    "started_utc": "2026-10-29T13:00:11.702106+00:00",
     "status": "optimal",
-    "wall_time_s": 0.274
+    "wall_time_s": 0.242
   },
-  "replan": {
-    "blocked_by_missed_dependency": [],
-    "delivered": {
-      "C01": 1,
-      "C02": 1,
-      "C03": 2,
-      "C04": 2,
-      "C05": 1,
-      "C06": 2,
-      "C07": 3,
-      "C08": 3,
-      "C11": 1,
-      "C12": 3,
-      "C13": 2
-    },
-    "from_pass": 4,
-    "history": [],
-    "missed_deadline": [],
-    "previous_plan": {
-      "C01": 1,
-      "C02": 1,
-      "C03": 2,
-      "C04": 2,
-      "C05": 1,
-      "C06": 2,
-      "C07": 3,
-      "C08": 3,
-      "C09": 3,
-      "C10": 4,
-      "C11": 1,
-      "C12": 3,
-      "C13": 2,
-      "C14": 4
-    },
-    "requeued": [
-      "C09",
-      "C10",
-      "C14"
-    ],
-    "sub_instance": {
-      "commands": [
-        {
-          "args_hex": "03",
-          "body_len": 2,
-          "deadline_pass": 1,
-          "depends_on": [],
-          "frame_bytes": 684,
-          "id": "C09",
-          "name": "Reboot ADCS after patch",
-          "note": "",
-          "opcode": 34,
-          "opcode_name": "REBOOT_SUBSYSTEM",
-          "priority": 3,
-          "required_role": "ADMIN",
-          "role": "ADMIN"
-        },
-        {
-          "args_hex": "",
-          "body_len": 1,
-          "deadline_pass": 1,
-          "depends_on": [],
-          "frame_bytes": 683,
-          "id": "C10",
-          "name": "Health ping",
-          "note": "",
-          "opcode": 16,
-          "opcode_name": "NOOP_PING",
-          "priority": 1,
-          "required_role": "OPERATOR",
-          "role": "OPERATOR"
-        },
-        {
-          "args_hex": "0300",
-          "body_len": 3,
-          "deadline_pass": 1,
-          "depends_on": [],
-          "frame_bytes": 685,
-          "id": "C14",
-          "name": "Sun-pointing for charge",
-          "note": "",
-          "opcode": 17,
-          "opcode_name": "SET_ATTITUDE_MODE",
-          "priority": 3,
-          "required_role": "OPERATOR",
-          "role": "OPERATOR"
-        }
-      ],
-      "passes": [
-        {
-          "budget_bytes": 2621,
-          "command_budget": 1906,
-          "index": 1,
-          "label": "AOS 2026-10-31 01:46 UTC \u00b7 4.4 min \u00b7 max 16\u00b0",
-          "pass_open_bytes": 715
-        }
-      ],
-      "weights": {
-        "1": 1.0
-      }
-    },
-    "sub_plan": {
-      "C09": 1,
-      "C10": null,
-      "C14": 1
-    }
-  },
-  "replan_history": [
-    {
-      "from_pass": 4,
-      "previous_plan": {
-        "C01": 1,
-        "C02": 1,
-        "C03": 2,
-        "C04": 2,
-        "C05": 1,
-        "C06": 2,
-        "C07": 3,
-        "C08": 3,
-        "C09": 3,
-        "C10": 4,
-        "C11": 1,
-        "C12": 3,
-        "C13": 2,
-        "C14": 4
-      },
-      "time_utc": "2026-10-29T10:40:58.364089+00:00"
-    }
-  ],
   "validation": {
     "budgets": [
       {
@@ -660,22 +648,22 @@
         "budget_bytes": 3798,
         "ok": true,
         "pass": 3,
-        "remaining_bytes": 966,
-        "used_bytes": 2832
+        "remaining_bytes": 282,
+        "used_bytes": 3516
       },
       {
-        "budget_bytes": 2621,
+        "budget_bytes": 2620,
         "ok": true,
         "pass": 4,
         "remaining_bytes": 537,
-        "used_bytes": 2084
+        "used_bytes": 2083
       }
     ],
-    "deadline_misses": 1,
-    "deferred": 1,
+    "deadline_misses": 0,
+    "deferred": 0,
     "feasible": true,
-    "objective": 65.8,
-    "scheduled": 13,
+    "objective": 66.8,
+    "scheduled": 14,
     "violations": []
   }
 }

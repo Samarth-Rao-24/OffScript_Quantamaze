@@ -4,10 +4,28 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 
-from ..common.frame import MAX_BODY_LEN, PASS_OPEN_BODY_LEN, frame_size
+from ..common.frame import MAX_BODY_LEN, PASS_OPEN_BODY_LEN, SIG_LEN, frame_size
 from ..common.roles import OPCODE_INFO, Opcode, Role, required_role
 
-PASS_OPEN_FRAME_BYTES = frame_size(PASS_OPEN_BODY_LEN)  # 715 B, sent at the start of every pass
+PASS_OPEN_FRAME_BYTES = frame_size(PASS_OPEN_BODY_LEN)  # 715 B with the default Falcon-512 ADMIN key
+
+# Signature size of each role's current signing key. Planning uses these, so after a
+# migration (say OPERATOR -> ML-DSA-44, 2420 B) every plan is sized for the new frames;
+# a plan made before the migration then fails its pre-signing feasibility check.
+_SIG_BYTES: dict[str, int] = {Role.OPERATOR: SIG_LEN, Role.ADMIN: SIG_LEN}
+
+
+def set_signature_sizes(sizes: dict[str, int]) -> None:
+    _SIG_BYTES.update({k: int(v) for k, v in sizes.items()})
+
+
+def signature_sizes() -> dict[str, int]:
+    return dict(_SIG_BYTES)
+
+
+def pass_open_bytes() -> int:
+    """PASS_OPEN frame size with the current ADMIN signing key."""
+    return frame_size(PASS_OPEN_BODY_LEN, _SIG_BYTES[Role.ADMIN])
 
 
 @dataclass
@@ -28,7 +46,7 @@ class Command:
 
     @property
     def frame_bytes(self) -> int:
-        return frame_size(len(self.body))
+        return frame_size(len(self.body), _SIG_BYTES.get(self.role, SIG_LEN))
 
     def validate(self) -> None:
         if self.opcode not in OPCODE_INFO or self.opcode == Opcode.PASS_OPEN:
@@ -70,14 +88,14 @@ class PassWindow:
     @property
     def command_budget(self) -> int:
         """Bytes left for commands after the mandatory PASS_OPEN frame."""
-        return self.budget_bytes - PASS_OPEN_FRAME_BYTES
+        return self.budget_bytes - pass_open_bytes()
 
     def to_dict(self) -> dict:
         return {
             "index": self.index,
             "budget_bytes": self.budget_bytes,
             "command_budget": self.command_budget,
-            "pass_open_bytes": PASS_OPEN_FRAME_BYTES,
+            "pass_open_bytes": pass_open_bytes(),
             "label": self.label,
         }
 
@@ -133,7 +151,7 @@ class Instance:
             if p.index != i:
                 raise ValueError("passes must be numbered 1..T")
             if p.command_budget < 0:
-                raise ValueError(f"pass {p.index} budget smaller than the PASS_OPEN frame ({PASS_OPEN_FRAME_BYTES} B)")
+                raise ValueError(f"pass {p.index} budget smaller than the PASS_OPEN frame ({pass_open_bytes()} B)")
 
     def to_dict(self) -> dict:
         return {

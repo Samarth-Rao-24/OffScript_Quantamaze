@@ -72,6 +72,9 @@ export const REASON_TEXT: Record<string, string> = {
   E_REPLAY: "Counter not above the last accepted",
   E_BAD_SIG: "Signature invalid for this key and pass nonce",
   E_UNAUTHORIZED: "Key's role may not issue this command",
+  E_KEY_REVOKED: "Signing key has been revoked",
+  E_KEY_INACTIVE: "Signing key is pre-loaded but not activated",
+  E_KEY_POLICY: "Key-management command breaks the key policy",
   LINK_REFUSED: "Ground link refused: pass byte budget reached",
 };
 

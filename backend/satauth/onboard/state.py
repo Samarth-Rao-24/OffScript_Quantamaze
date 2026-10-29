@@ -26,12 +26,24 @@ class StateStore:
     def provisioned(self) -> bool:
         return bool(self._state.get("public_keys"))
 
-    def provision(self, *, sat_id: int, public_keys: dict[int, bytes], role_table: dict, genesis_nonce: bytes) -> None:
-        """Ground-side pre-launch provisioning (FR-02). Not a flight operation."""
+    def provision(self, *, sat_id: int, public_keys: dict[int, bytes], role_table: dict, genesis_nonce: bytes,
+                  key_meta: dict[int, dict] | None = None) -> None:
+        """Ground-side pre-launch provisioning (FR-02). Not a flight operation.
+
+        ``key_meta`` = key_id -> {role, suite, state}; keys not listed default to the
+        role in KEY_IDS, Falcon-512, active (the original two-key layout)."""
+        from ..common.roles import KEY_IDS, KEY_RING_SPEC
+
+        spec = {kid: {"role": r, "suite": su, "state": st} for kid, r, su, st in KEY_RING_SPEC}
+        meta = {}
+        for k in public_keys:
+            m = (key_meta or {}).get(k) or spec.get(k) or {"role": KEY_IDS.get(k), "suite": "falcon512", "state": "active"}
+            meta[str(k)] = {"role": m["role"], "suite": m["suite"], "state": m["state"]}
         with self._lock:
             self._state = {
                 "sat_id": sat_id,
                 "public_keys": {str(k): v.hex() for k, v in public_keys.items()},
+                "key_meta": meta,
                 "role_table": role_table,
                 "last_counter": 0,
                 "pass_nonce": genesis_nonce.hex(),
@@ -68,10 +80,31 @@ class StateStore:
         hx = self._state["public_keys"].get(str(key_id))
         return bytes.fromhex(hx) if hx else None
 
-    def role_for_key(self, key_id: int) -> str | None:
+    def _key_meta(self, key_id: int) -> dict | None:
+        if str(key_id) not in self._state["public_keys"]:
+            return None
         from ..common.roles import KEY_IDS
 
-        return KEY_IDS.get(key_id) if str(key_id) in self._state["public_keys"] else None
+        return (self._state.get("key_meta") or {}).get(str(key_id)) or {
+            "role": KEY_IDS.get(key_id), "suite": "falcon512", "state": "active"}  # pre-ring state files
+
+    def role_for_key(self, key_id: int) -> str | None:
+        m = self._key_meta(key_id)
+        return m["role"] if m else None
+
+    def key_state(self, key_id: int) -> str | None:
+        m = self._key_meta(key_id)
+        return m["state"] if m else None
+
+    def key_suite(self, key_id: int) -> str | None:
+        m = self._key_meta(key_id)
+        return m["suite"] if m else None
+
+    def key_ring(self) -> dict[str, dict]:
+        import hashlib
+
+        return {k: {**(self._key_meta(int(k)) or {}), "public_key_sha256": hashlib.sha256(bytes.fromhex(v)).hexdigest()}
+                for k, v in self._state.get("public_keys", {}).items()}
 
     def allowed(self, role: str, opcode: int) -> bool:
         return opcode in set(self._state["role_table"].get(role, []))
@@ -88,10 +121,17 @@ class StateStore:
 
     # ---- the single NV write on acceptance (NFR-04) ----
     def commit_accept(self, *, counter: int, new_nonce: bytes | None = None, new_pass_index: int | None = None,
-                      gap: dict | None = None) -> None:
+                      gap: dict | None = None, key_change: tuple[int, str] | None = None) -> None:
         with self._lock:
             new_state = dict(self._state)
             new_state["last_counter"] = counter
+            if key_change is not None:  # KEY_ACTIVATE / KEY_REVOKE take effect in the same single write
+                kid, new = key_change
+                km = {k: dict(v) for k, v in (new_state.get("key_meta") or {}).items()}
+                if str(kid) not in km:
+                    km[str(kid)] = dict(self._key_meta(kid) or {})
+                km[str(kid)]["state"] = new
+                new_state["key_meta"] = km
             if gap:  # same single write: no extra NV cost for gap reporting
                 new_state["gaps_reported_total"] = int(new_state.get("gaps_reported_total", 0)) + 1
                 new_state["missing_counters_total"] = int(new_state.get("missing_counters_total", 0)) + int(gap["count"])

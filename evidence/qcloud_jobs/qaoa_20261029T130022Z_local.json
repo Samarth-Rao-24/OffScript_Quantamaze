@@ -20,9 +20,9 @@
     "qaoa_objective": 30.3,
     "qaoa_reached_optimum": true
   },
-  "created_utc": "2026-10-29T10:39:47.901489+00:00",
+  "created_utc": "2026-10-29T13:00:17.956147+00:00",
   "device_name": "QpiAI-QSV-Local (in-process, not a cloud run)",
-  "evidence_file": "qcloud_jobs/qaoa_20261029T103954Z_local.json",
+  "evidence_file": "qcloud_jobs/qaoa_20261029T130022Z_local.json",
   "kind": "qaoa",
   "mode": "local",
   "opt_classical": {
@@ -60,7 +60,7 @@
       "C11": 1
     },
     "raw_result": {
-      "compute_time_s": 0.253063,
+      "compute_time_s": 0.1714894,
       "execution_mode": "local",
       "job_id": null,
       "num_nodes": 12,
@@ -96,7 +96,7 @@
         "termination": "optimal",
         "transformed": true
       },
-      "solver_time_s": 0.1903851,
+      "solver_time_s": 0.11208,
       "variable_assignment": {
         "x_C01_p1": 1,
         "x_C02_p1": 0,
@@ -108,7 +108,7 @@
         "x_C11_p1": 1
       }
     },
-    "wall_time_s": 0.254
+    "wall_time_s": 0.172
   },
   "parameters": {
     "max_iterations": 30,
@@ -154,7 +154,7 @@
       "C11": 1
     },
     "raw_result": {
-      "compute_time_s": 5.5426838,
+      "compute_time_s": 3.4213313,
       "eigenvalue": null,
       "execution_mode": "local",
       "job_id": null,
@@ -30657,7 +30657,7 @@
         "termination": "completed",
         "transformed": true
       },
-      "solver_time_s": 3.742233099997975,
+      "solver_time_s": 2.236701100002392,
       "variable_assignment": {
         "x_C01_p1": 1,
         "x_C02_p1": 0,
@@ -30679,7 +30679,7 @@
       "x_C06_p2": 0,
       "x_C11_p1": 1
     },
-    "wall_time_s": 5.543
+    "wall_time_s": 3.421
   },
   "qubits": 12,
   "qubo": {

@@ -79,6 +79,7 @@ SCHEMES = [
     ("Falcon-padded-512", "pqcrypto 0.4.0 / PQClean", True, "falcon_padded_512", True),
     ("Falcon-512 (compressed)", "pqcrypto 0.4.0 / PQClean", True, "falcon_512", False),
     ("ML-DSA-44 (FIPS 204)", "pqcrypto 0.4.0 / PQClean", True, "ml_dsa_44", False),
+    ("Hybrid Ed25519 + Falcon-512", "cryptography (OpenSSL) + pqcrypto 0.4.0", True, "hybrid", False),
     ("ECDSA P-256", "cryptography (OpenSSL)", False, "ecdsa", False),
     ("Ed25519", "cryptography (OpenSSL)", False, "ed25519", False),
 ]
@@ -89,6 +90,12 @@ def bench_scheme(name, lib, pq, key, selected, n_sign=200, n_verify=1000) -> dic
         kg, sign, verify, _ = _ecdsa()
     elif key == "ed25519":
         kg, sign, verify = _ed25519()
+    elif key == "hybrid":  # the migration suite the app uses (satauth.common.suites): both signatures must verify
+        from ..common import suites
+
+        kg = lambda: suites.generate_keypair("hybrid")  # noqa: E731
+        sign = lambda sk, m: suites.sign("hybrid", sk, m)  # noqa: E731
+        verify = lambda pk, m, s: suites.verify("hybrid", pk, m, s)  # noqa: E731
     else:
         kg, sign, verify = _pqc(key)
     kg_ns = []

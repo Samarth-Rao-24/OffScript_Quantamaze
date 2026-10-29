@@ -121,7 +121,7 @@ Or from the command line: `.\scripts\run_all.ps1 -WithQpiAI`.
 cd F:\OffScript\backend
 F:\OffScript\.venv\Scripts\python.exe scripts\final_run.py --fresh
 ```
-It runs: key check (both keys authenticate with QpiAI), 4 QRNG circuits on the QpiAI Quantum SDK simulator, the NASA pull (real ISS passes over Bengaluru + DONKI space weather, applied as the pass budgets; skipped with a note if NASA is unreachable, or with `--no-nasa`), the QpiAI Opt local solver plan (validated, compared with greedy and brute force), QAOA on the QpiAI simulator, benchmarks, then passes with a **missing-packet drill** in pass 3 (one frame lost on the link, detected, reconciled, recovered or re-planned with QpiAI Opt; `--no-drill` to skip), nonce verification, judge sample cases and all attacks on the real satellite process. `--fresh` archives the previous evidence to `evidence\_previous_runs\`. Options: `--quantum cloud` and `--opt-mode platform-qubo` for cloud jobs (need platform access and credits), `--qrng-jobs`, `--skip-qaoa`.
+It runs: key check (both keys authenticate with QpiAI), 6 QRNG circuits on the QpiAI Quantum SDK simulator (4 passes + 2 contact windows), the NASA pull (real ISS passes over Bengaluru + DONKI space weather, applied as the pass budgets; skipped with a note if NASA is unreachable, or with `--no-nasa`), the QpiAI Opt local solver plan (validated, compared with greedy and brute force), QAOA on the QpiAI simulator, benchmarks, then passes with a **missing-packet drill** in pass 3 (one frame lost on the link, detected, reconciled, recovered or re-planned with QpiAI Opt; `--no-drill` to skip), nonce verification, judge sample cases, all attacks, and a **key-management drill** (rotate OPERATOR to its spare, prove the old key is refused, migrate to hybrid Ed25519 + Falcon) on the real satellite process. `--fresh` archives the previous evidence to `evidence\_previous_runs\`. Options: `--quantum cloud` and `--opt-mode platform-qubo` for cloud jobs (need platform access and credits), `--qrng-jobs`, `--skip-qaoa`.
 
 ### 4a. Real pass windows from NASA data (Pass planner, top)
 
@@ -143,6 +143,21 @@ Choose a drill next to the pass buttons: lose the first transmission of a chosen
 5. Anything left is **carried over**. **Re-plan passes N–4 with QpiAI Opt** re-runs the optimiser on every unacknowledged command over the remaining passes, with deadlines kept: past-deadline commands are reported *missed*, and their dependents *blocked*. The merged plan is re-validated before anything is signed. Re-running a pass never resends a command that was already acknowledged.
 
 Alerts are logged to `evidence/logs/alerts.jsonl`, and the acknowledgement ledger to `evidence/logs/ack_log.jsonl`. Both appear on the Evidence screen.
+
+### 4c. Key management and algorithm migration (Attack lab, "Key management" panel)
+
+Eight public keys are pre-loaded onboard before launch:
+- a primary and a spare Falcon-512 key per role;
+- an ML-DSA-44 key per role (FIPS 204, the final standard);
+- a hybrid Ed25519 + Falcon-512 key per role.
+
+Only the primaries start active. **Rotate key** sends two ADMIN-signed frames: `KEY_ACTIVATE` for the new key, then `KEY_REVOKE` for the old one. After that, the **Revoked key** attack card shows a validly signed frame from the old key refused as `E_KEY_REVOKED` before any signature work.
+
+The algorithm is bound to the key, not chosen by the frame, so migration (Falcon → hybrid → ML-DSA fallback) is just a rotation. Plans are re-sized for the new frame lengths.
+
+Set `QUPLINK_KEY_PASSPHRASE` in `.env` to keep every private key encrypted at rest (scrypt + AES-256-GCM).
+
+Full design, migration phases, CCSDS mapping and deployment notes: `docs/MIGRATION_AND_DEPLOYMENT.md`.
 
 ### Checking cost before a paid QCloud run
 
@@ -178,7 +193,7 @@ Judges can also **add or remove commands** in the Pass planner (then **Save queu
 
 ```powershell
 cd backend
-..\.venv\Scripts\python.exe -m pytest -q                         # 78 tests without keys (80 with Opt + QCloud integration enabled)
+..\.venv\Scripts\python.exe -m pytest -q                         # 90 tests without keys (92 with Opt + QCloud integration enabled)
 ..\.venv\Scripts\python.exe -m satauth.bench.measure             # latency, RAM, NV writes, flood
 ..\.venv\Scripts\python.exe -m satauth.bench.scheme_compare      # Falcon / ML-DSA / ECDSA / Ed25519
 .\scripts\run_all.ps1                                            # all of the above + UI build (from repo root)

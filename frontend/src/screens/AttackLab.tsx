@@ -4,8 +4,9 @@ import { api, REASON_TEXT, type Json } from "../api";
 import { useLive } from "../live";
 import { Button, ErrorNote, Fact, Mono, Panel, StepLadder, VerdictTag } from "../components/ui";
 import JudgeConsole from "../components/JudgeConsole";
+import KeyPanel from "../components/KeyPanel";
 
-const ORDER = ["valid", "tamper", "replay", "expired", "unauthorized", "forged", "crosspass", "wrongsat", "flood", "overbudget"];
+const ORDER = ["valid", "tamper", "replay", "expired", "unauthorized", "forged", "crosspass", "wrongsat", "flood", "overbudget", "revoked"];
 
 export default function AttackLab() {
   const { state, refreshState } = useLive();
@@ -85,7 +86,7 @@ export default function AttackLab() {
       )}
       {!windowOpen && <p className="rounded bg-caution/10 px-3 py-2 text-sm text-caution">Open a contact window first: PASS_OPEN installs the QRNG pass nonce that every frame is bound to.</p>}
 
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
         {ORDER.filter((k) => attacks[k]).map((k) => {
           const res = results[k];
           return (
@@ -116,6 +117,8 @@ export default function AttackLab() {
       </div>
 
       {r && <Result r={r} />}
+
+      <KeyPanel windowOpen={windowOpen} />
 
       <JudgeConsole windowOpen={windowOpen} />
     </div>

@@ -18,7 +18,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 11.4
+              "us": 3.5
             },
             {
               "detail": "699 B, body 17 B",
@@ -26,7 +26,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 52.5
+              "us": 26.9
             },
             {
               "detail": "sat_id=42",
@@ -34,7 +34,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 4.7
+              "us": 3.4
             },
             {
               "detail": "600 s remaining",
@@ -42,7 +42,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 3.9
+              "us": 2.3
             },
             {
               "detail": "2 > 1",
@@ -50,23 +50,39 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 4.3
+              "us": 2.5
             },
             {
-              "detail": "valid (Falcon-padded-512, 216 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 2: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 243.5
+              "us": 16.4
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 88 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 95.6
             },
             {
               "detail": "ADMIN -> ORBIT_BURN",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
-              "us": 16.4
+              "step": 6,
+              "us": 6.2
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 2.0
             }
           ],
           "verdict": "ACCEPT"
@@ -86,7 +102,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 9.7
+              "us": 10.3
             },
             {
               "detail": "684 B, body 2 B",
@@ -94,7 +110,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 57.5
+              "us": 57.0
             },
             {
               "detail": "sat_id=42",
@@ -102,7 +118,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 5.4
+              "us": 6.8
             },
             {
               "detail": "600 s remaining",
@@ -110,7 +126,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 4.4
+              "us": 4.6
             },
             {
               "detail": "3 > 2",
@@ -118,23 +134,39 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 4.8
+              "us": 4.7
             },
             {
-              "detail": "valid (Falcon-padded-512, 232 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 2: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 262.1
+              "us": 40.2
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 256 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 279.5
             },
             {
               "detail": "ADMIN -> SET_SAFE_MODE",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
+              "step": 6,
               "us": 18.3
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 6.2
             }
           ],
           "verdict": "ACCEPT"
@@ -154,7 +186,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 10.9
+              "us": 4.2
             },
             {
               "detail": "685 B, body 3 B",
@@ -162,7 +194,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 78.1
+              "us": 26.0
             },
             {
               "detail": "sat_id=42",
@@ -170,7 +202,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 12.2
+              "us": 2.6
             },
             {
               "detail": "600 s remaining",
@@ -178,7 +210,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 7.5
+              "us": 1.7
             },
             {
               "detail": "4 > 3",
@@ -186,23 +218,39 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 8.3
+              "us": 2.1
             },
             {
-              "detail": "valid (Falcon-padded-512, 283 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 1: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 332.8
+              "us": 13.3
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 79 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 86.7
             },
             {
               "detail": "OPERATOR -> SET_ATTITUDE_MODE",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
-              "us": 17.8
+              "step": 6,
+              "us": 6.6
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 1.6
             }
           ],
           "verdict": "ACCEPT"
@@ -222,7 +270,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 7.8
+              "us": 5.8
             },
             {
               "detail": "695 B, body 13 B",
@@ -230,7 +278,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 57.4
+              "us": 41.7
             },
             {
               "detail": "sat_id=42",
@@ -238,7 +286,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 5.0
+              "us": 4.3
             },
             {
               "detail": "600 s remaining",
@@ -246,7 +294,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 4.8
+              "us": 3.6
             },
             {
               "detail": "5 > 4",
@@ -254,23 +302,39 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 4.7
+              "us": 3.3
             },
             {
-              "detail": "valid (Falcon-padded-512, 234 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 1: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 264.8
+              "us": 22.2
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 161 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 177.4
             },
             {
               "detail": "OPERATOR -> CAPTURE_IMAGE",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
-              "us": 14.8
+              "step": 6,
+              "us": 13.4
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 3.5
             }
           ],
           "verdict": "ACCEPT"
@@ -294,21 +358,21 @@
       },
       "loss_model": null,
       "nonce": {
-        "counts_sha256": "47b2f908fc797deca53d83fa31998bc645eaf6b43825e223b6c865a83bdc6eca",
+        "counts_sha256": "d188c4a8b5e7ef082b9c50e5aaff8693d02927f49d06fa41080564234c8dec0d",
         "device": "QpiAI-QSV-Local",
         "job_id": null,
-        "nonce": "1fcbdaf9fc3899117ef3b7e6355cb193e410ad35d01980b40b92d99b6576cd2a",
-        "os_entropy_hex": "d010482fc78a6887be581e299170308e3171fae9426f23568c36b3d0fc8793d8",
+        "nonce": "24273931a7b1509564e9f61af6826f4c23f3b341b6b616a448d1f6aeba6a984d",
+        "os_entropy_hex": "a63aeba813e007c073ac31864e37fdd9221522bb735991ad51e958b00d7ea3d7",
         "pass": 1,
-        "qrng_file": "qrng_20261029T103728Z_local_b70240.json",
+        "qrng_file": "qrng_20261029T125819Z_local_1b6922.json",
         "randomness_class": "qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
         "source": "SHA-256(OS 32 B || QCloud counts digest || job_id || pass)",
-        "time_utc": "2026-10-29T10:40:55.682113+00:00"
+        "time_utc": "2026-10-29T13:01:09.857701+00:00"
       },
       "pass": 1,
       "plan_execution_mode": "local",
       "plan_job_id": null,
-      "time_utc": "2026-10-29T10:40:56.419662+00:00",
+      "time_utc": "2026-10-29T13:01:10.655692+00:00",
       "window": 1
     },
     {
@@ -329,7 +393,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 11.8
+              "us": 6.2
             },
             {
               "detail": "695 B, body 13 B",
@@ -337,7 +401,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 80.7
+              "us": 43.3
             },
             {
               "detail": "sat_id=42",
@@ -345,7 +409,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 6.3
+              "us": 2.8
             },
             {
               "detail": "600 s remaining",
@@ -353,7 +417,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 5.7
+              "us": 3.2
             },
             {
               "detail": "7 > 6",
@@ -361,23 +425,39 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 4.7
+              "us": 2.7
             },
             {
-              "detail": "valid (Falcon-padded-512, 242 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 1: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 275.2
+              "us": 20.4
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 128 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 138.8
             },
             {
               "detail": "OPERATOR -> CAPTURE_IMAGE",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
-              "us": 16.4
+              "step": 6,
+              "us": 8.2
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 2.6
             }
           ],
           "verdict": "ACCEPT"
@@ -397,7 +477,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 12.2
+              "us": 3.2
             },
             {
               "detail": "691 B, body 9 B",
@@ -405,7 +485,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 87.9
+              "us": 26.8
             },
             {
               "detail": "sat_id=42",
@@ -413,7 +493,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 5.3
+              "us": 1.9
             },
             {
               "detail": "600 s remaining",
@@ -421,7 +501,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 5.7
+              "us": 1.8
             },
             {
               "detail": "8 > 7",
@@ -429,23 +509,39 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 4.6
+              "us": 1.4
             },
             {
-              "detail": "valid (Falcon-padded-512, 239 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 1: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 271.9
+              "us": 11.9
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 76 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 82.5
             },
             {
               "detail": "OPERATOR -> DOWNLINK_DATA",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
-              "us": 15.8
+              "step": 6,
+              "us": 5.1
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 1.6
             }
           ],
           "verdict": "ACCEPT"
@@ -465,7 +561,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 10.7
+              "us": 3.8
             },
             {
               "detail": "685 B, body 3 B",
@@ -473,7 +569,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 74.7
+              "us": 31.4
             },
             {
               "detail": "sat_id=42",
@@ -481,15 +577,15 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 6.2
+              "us": 2.2
             },
             {
-              "detail": "599 s remaining",
+              "detail": "600 s remaining",
               "label": "Not expired",
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 5.9
+              "us": 1.9
             },
             {
               "detail": "9 > 8",
@@ -497,23 +593,39 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 5.4
+              "us": 2.1
             },
             {
-              "detail": "valid (Falcon-padded-512, 322 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 1: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 366.4
+              "us": 15.3
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 108 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 116.0
             },
             {
               "detail": "OPERATOR -> SET_HEATER",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
-              "us": 18.7
+              "step": 6,
+              "us": 6.5
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 2.6
             }
           ],
           "verdict": "ACCEPT"
@@ -533,7 +645,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 10.0
+              "us": 5.6
             },
             {
               "detail": "695 B, body 13 B",
@@ -541,7 +653,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 71.5
+              "us": 42.3
             },
             {
               "detail": "sat_id=42",
@@ -549,7 +661,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 6.0
+              "us": 3.4
             },
             {
               "detail": "600 s remaining",
@@ -557,7 +669,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 3.9
+              "us": 3.0
             },
             {
               "detail": "10 > 9",
@@ -565,23 +677,39 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 4.5
+              "us": 3.3
             },
             {
-              "detail": "valid (Falcon-padded-512, 209 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 1: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 233.8
+              "us": 22.7
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 170 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 180.4
             },
             {
               "detail": "OPERATOR -> CAPTURE_IMAGE",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
-              "us": 12.9
+              "step": 6,
+              "us": 9.0
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 3.5
             }
           ],
           "verdict": "ACCEPT"
@@ -605,21 +733,21 @@
       },
       "loss_model": null,
       "nonce": {
-        "counts_sha256": "9f0b3cd87692d6e5a47dce2a0d1d451244907acc9dfca4907b78d20f095d3dd3",
+        "counts_sha256": "ea446968b07c6acdbc746d8ed63f49e4540a484d7ae4c49561caf8fae1102988",
         "device": "QpiAI-QSV-Local",
         "job_id": null,
-        "nonce": "225ac5059ee4a6255097bc52977c1f19b0ed2a3b0cfb50b887d76abce6e40e03",
-        "os_entropy_hex": "3ceece98127ea26096a94f2e6fc1c99628f21ec486432d441b238182da2417f9",
+        "nonce": "2346b4afb6b937e4d08d7d9fe6253239bf0d1603db88804f881f37ab366acc99",
+        "os_entropy_hex": "0dfa92cb3cd1e6669a536d34a864899331632af9fe25dc78f237a265abdc319a",
         "pass": 2,
-        "qrng_file": "qrng_20261029T103731Z_local_87e982.json",
+        "qrng_file": "qrng_20261029T125820Z_local_e5bf18.json",
         "randomness_class": "qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
         "source": "SHA-256(OS 32 B || QCloud counts digest || job_id || pass)",
-        "time_utc": "2026-10-29T10:40:56.551841+00:00"
+        "time_utc": "2026-10-29T13:01:10.784349+00:00"
       },
       "pass": 2,
       "plan_execution_mode": "local",
       "plan_job_id": null,
-      "time_utc": "2026-10-29T10:40:57.203427+00:00",
+      "time_utc": "2026-10-29T13:01:11.301684+00:00",
       "window": 2
     },
     {
@@ -678,7 +806,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 7.1
+              "us": 4.1
             },
             {
               "detail": "689 B, body 7 B",
@@ -686,7 +814,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 51.9
+              "us": 34.2
             },
             {
               "detail": "sat_id=42",
@@ -694,7 +822,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 3.9
+              "us": 2.9
             },
             {
               "detail": "600 s remaining",
@@ -702,7 +830,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 4.1
+              "us": 2.5
             },
             {
               "detail": "13 > 11",
@@ -710,23 +838,39 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 4.5
+              "us": 2.5
             },
             {
-              "detail": "valid (Falcon-padded-512, 215 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 1: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 238.7
+              "us": 17.4
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 130 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 138.5
             },
             {
               "detail": "OPERATOR -> DOWNLINK_DATA",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
-              "us": 12.4
+              "step": 6,
+              "us": 7.6
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 2.8
             }
           ],
           "verdict": "ACCEPT"
@@ -746,7 +890,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 7.1
+              "us": 5.4
             },
             {
               "detail": "714 B, body 32 B",
@@ -754,7 +898,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 49.2
+              "us": 44.0
             },
             {
               "detail": "sat_id=42",
@@ -762,7 +906,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 4.4
+              "us": 4.2
             },
             {
               "detail": "600 s remaining",
@@ -770,7 +914,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 3.6
+              "us": 3.1
             },
             {
               "detail": "14 > 13",
@@ -778,23 +922,39 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 4.1
+              "us": 3.3
             },
             {
-              "detail": "valid (Falcon-padded-512, 209 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 2: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 234.6
+              "us": 22.9
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 173 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 184.5
             },
             {
               "detail": "ADMIN -> PATCH_FIRMWARE",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
-              "us": 16.8
+              "step": 6,
+              "us": 24.8
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 2.4
             }
           ],
           "verdict": "ACCEPT"
@@ -814,7 +974,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 7.0
+              "us": 2.6
             },
             {
               "detail": "714 B, body 32 B",
@@ -822,7 +982,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 49.4
+              "us": 23.2
             },
             {
               "detail": "sat_id=42",
@@ -830,7 +990,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 3.8
+              "us": 1.7
             },
             {
               "detail": "600 s remaining",
@@ -838,7 +998,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 3.4
+              "us": 1.4
             },
             {
               "detail": "15 > 14",
@@ -846,23 +1006,39 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 3.8
+              "us": 1.5
             },
             {
-              "detail": "valid (Falcon-padded-512, 208 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 2: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 230.5
+              "us": 10.6
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 74 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 78.5
             },
             {
               "detail": "ADMIN -> PATCH_FIRMWARE",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
-              "us": 11.6
+              "step": 6,
+              "us": 5.0
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 1.6
             }
           ],
           "verdict": "ACCEPT"
@@ -891,21 +1067,21 @@
         "random_rate": 0.0
       },
       "nonce": {
-        "counts_sha256": "678bbc5b1e8479d530699a9c8e5c89b45eecf5496a52be1f4d04df3a5f7ee1c5",
+        "counts_sha256": "861204479e952b7853c7f0273d45184739d83bddf627314f1c443598eb4076b5",
         "device": "QpiAI-QSV-Local",
         "job_id": null,
-        "nonce": "10eb51c4aa24cea5aa321c86646629012683ec408a64c88ce4ba525b81e17a08",
-        "os_entropy_hex": "f16dbfaadc881a75088afd19dd7d48084dc57e636164df693d794f1b48561f90",
+        "nonce": "069a88451d1af13f5a8359bbcd71401cf65d76728092b21b8e2d551553d48d32",
+        "os_entropy_hex": "4a39765034385eea86407675aecb021cd4ae683453663517b27d28d0086b6704",
         "pass": 3,
-        "qrng_file": "qrng_20261029T103731Z_local_2678c6.json",
+        "qrng_file": "qrng_20261029T125821Z_local_f02061.json",
         "randomness_class": "qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
         "source": "SHA-256(OS 32 B || QCloud counts digest || job_id || pass)",
-        "time_utc": "2026-10-29T10:40:57.342221+00:00"
+        "time_utc": "2026-10-29T13:01:11.429294+00:00"
       },
       "pass": 3,
       "plan_execution_mode": "local",
       "plan_job_id": null,
-      "time_utc": "2026-10-29T10:40:57.980778+00:00",
+      "time_utc": "2026-10-29T13:01:11.943671+00:00",
       "window": 3
     },
     {
@@ -926,7 +1102,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 7.9
+              "us": 5.2
             },
             {
               "detail": "684 B, body 2 B",
@@ -934,7 +1110,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 53.3
+              "us": 39.6
             },
             {
               "detail": "sat_id=42",
@@ -942,7 +1118,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 4.3
+              "us": 3.1
             },
             {
               "detail": "600 s remaining",
@@ -950,7 +1126,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 3.8
+              "us": 3.0
             },
             {
               "detail": "17 > 16",
@@ -958,23 +1134,39 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 4.1
+              "us": 3.7
             },
             {
-              "detail": "valid (Falcon-padded-512, 248 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 2: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 273.5
+              "us": 21.7
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 160 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 170.4
             },
             {
               "detail": "ADMIN -> REBOOT_SUBSYSTEM",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
-              "us": 13.0
+              "step": 6,
+              "us": 9.4
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 3.0
             }
           ],
           "verdict": "ACCEPT"
@@ -994,7 +1186,7 @@
               "name": "flood_guard",
               "status": "pass",
               "step": 0,
-              "us": 9.8
+              "us": 6.0
             },
             {
               "detail": "685 B, body 3 B",
@@ -1002,7 +1194,7 @@
               "name": "parse",
               "status": "pass",
               "step": null,
-              "us": 74.1
+              "us": 38.5
             },
             {
               "detail": "sat_id=42",
@@ -1010,7 +1202,7 @@
               "name": "sat_id",
               "status": "pass",
               "step": 1,
-              "us": 7.0
+              "us": 2.8
             },
             {
               "detail": "600 s remaining",
@@ -1018,7 +1210,7 @@
               "name": "expiry",
               "status": "pass",
               "step": 2,
-              "us": 6.2
+              "us": 2.5
             },
             {
               "detail": "18 > 17",
@@ -1026,30 +1218,46 @@
               "name": "counter",
               "status": "pass",
               "step": 3,
-              "us": 6.9
+              "us": 3.2
             },
             {
-              "detail": "valid (Falcon-padded-512, 349 us)",
-              "label": "Falcon signature over frame + pass nonce",
-              "name": "signature",
+              "detail": "key_id 1: falcon512, active",
+              "label": "Signing key active",
+              "name": "key_state",
               "status": "pass",
               "step": 4,
-              "us": 394.9
+              "us": 38.7
+            },
+            {
+              "detail": "valid (Falcon-padded-512, 130 us)",
+              "label": "Signature over frame + pass nonce",
+              "name": "signature",
+              "status": "pass",
+              "step": 5,
+              "us": 139.1
             },
             {
               "detail": "OPERATOR -> SET_ATTITUDE_MODE",
               "label": "Opcode allowed for key role",
               "name": "role",
               "status": "pass",
-              "step": 5,
-              "us": 19.1
+              "step": 6,
+              "us": 7.3
+            },
+            {
+              "detail": "not a key-management command",
+              "label": "Key-management policy",
+              "name": "policy",
+              "status": "pass",
+              "step": 7,
+              "us": 2.8
             }
           ],
           "verdict": "ACCEPT"
         }
       ],
       "link": {
-        "budget_bytes": 2621,
+        "budget_bytes": 2620,
         "frames_sent": 3,
         "hostile_bytes": 0,
         "hostile_frames": 0,
@@ -1060,27 +1268,27 @@
         "lost": 0,
         "pass": 4,
         "refused": 0,
-        "remaining_bytes": 537,
+        "remaining_bytes": 536,
         "used_bytes": 2084,
         "window_id": 4
       },
       "loss_model": null,
       "nonce": {
-        "counts_sha256": "66bda37fb8b6ea8e4d6cde7be8af87d1e220ec89945e93de4b49641fd9ce181e",
+        "counts_sha256": "e65e2f1c00a7143d8d17725fd73de6e5a45cefa8be5ef001b3ade2a6e46da0a1",
         "device": "QpiAI-QSV-Local",
         "job_id": null,
-        "nonce": "d5efc0f974db297fda39587cd7e5e2f80e551fcec72c29db04b45d40af5f7b6d",
-        "os_entropy_hex": "37eb6f1ec839dfb9e7c863d9481a84cfb814295d2932b5c10f96a8ad78cdc975",
+        "nonce": "c5f58764ecd209070a16bbfcfc95e34e6d2a822f00369b8cfc70c19a1f7a5e7d",
+        "os_entropy_hex": "5538247f24e420f10090dff22367e6b5826db2e71b9d82b83fb16962c4fdbc3e",
         "pass": 4,
-        "qrng_file": "qrng_20261029T103731Z_local_a6328a.json",
+        "qrng_file": "qrng_20261029T125821Z_local_f16e8a.json",
         "randomness_class": "qpiai-local-simulator (classical PRNG sampling, not a cloud run)",
         "source": "SHA-256(OS 32 B || QCloud counts digest || job_id || pass)",
-        "time_utc": "2026-10-29T10:40:58.523515+00:00"
+        "time_utc": "2026-10-29T13:01:12.187539+00:00"
       },
       "pass": 4,
       "plan_execution_mode": "local",
       "plan_job_id": null,
-      "time_utc": "2026-10-29T10:40:58.927615+00:00",
+      "time_utc": "2026-10-29T13:01:12.523435+00:00",
       "window": 4
     }
   ]

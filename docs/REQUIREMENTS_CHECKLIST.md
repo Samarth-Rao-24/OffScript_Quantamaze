@@ -70,3 +70,13 @@ Status key: **Done** = implemented and tested in the build workspace. **Needs yo
 |---|---|---|
 | Missing-packet detection | No-ACK detection, onboard counter-gap report (same single NV write), ground ledger reconciliation, dependency hold, re-sign (never resend), in-pass retransmission, carry-over, QpiAI Opt re-plan of the remaining passes with deadlines and dependencies kept | Done; `tests/test_packet_loss.py` (6 tests), drill in `final_run.py` |
 | NASA data | Real ISS TLE (TLE API in the api.nasa.gov catalogue) -> SGP4 passes over Bengaluru -> per-pass byte budgets; NASA DONKI storms/flares -> space-weather margin; raw responses recorded with SHA-256 | Done; `tests/test_nasa.py` (6 offline tests on a synthetic TLE), live fetch in `final_run.py` |
+
+**Key management and migration (2026-10-29, after the rubric review).**
+
+| Item | What | Status |
+|---|---|---|
+| Key ring | 8 pre-loaded keys: primary + spare Falcon-512, ML-DSA-44, hybrid Ed25519 + Falcon-512 per role | Done |
+| Rotation / revocation | ADMIN-only `KEY_ACTIVATE` / `KEY_REVOKE`, onboard policy (`E_KEY_POLICY`), revoked or standby keys refused before signature work (`E_KEY_REVOKED`, `E_KEY_INACTIVE`) | Done; `tests/test_keys.py`, attack card "Revoked key", final-run drill |
+| Crypto agility | Algorithm bound to `key_id` (no downgrade); plans re-sized for the active suites | Done; downgrade test |
+| Keys at rest | scrypt + AES-256-GCM with `QUPLINK_KEY_PASSPHRASE` | Done; test |
+| Migration and deployment | Phased path, CCSDS SDLS mapping, onboard footprint, ground HSM model | `docs/MIGRATION_AND_DEPLOYMENT.md` |

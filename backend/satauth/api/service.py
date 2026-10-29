@@ -21,7 +21,8 @@ from ..common.frame import NONCE_LEN
 from ..common.roles import OPCODE_INFO, default_role_table, opcode_name
 from ..config import Settings
 from ..ground.feasibility import order_within_pass, validate_plan
-from ..ground.keygen import ensure_role_keys, load_public_keys
+from ..ground.keygen import ensure_role_keys, load_public_keys, ring_spec
+from ..ground.queue import set_signature_sizes, signature_sizes
 from ..ground.qrng import QRNGPool
 from ..ground.queue import Command, Instance, PassWindow, default_passes, default_queue
 from ..ground.replan import build_subinstance, delivered_from_runs, merge_plan
@@ -81,6 +82,7 @@ class MissionControl:
         if not store.provisioned:
             self._provision(store)
         self.signer = Signer(self.data, self.s.sat_id, self.s.default_expiry_s)
+        self._sync_sig_sizes()
         self.sat = SatelliteProcess(self.state_path, self.onboard_log, self.s.flood_limit)
         chain = read_json(self.chain_path, default=None)
         self.window_counter = int((chain or {}).get("window_counter", 0))
@@ -95,7 +97,7 @@ class MissionControl:
     def _provision(self, store: StateStore) -> None:
         genesis = os.urandom(NONCE_LEN)
         store.provision(sat_id=self.s.sat_id, public_keys=load_public_keys(self.data),
-                        role_table=default_role_table(), genesis_nonce=genesis)
+                        role_table=default_role_table(), genesis_nonce=genesis, key_meta=ring_spec())
         atomic_write_json(self.chain_path, {"current": genesis.hex(), "history": [
             {"nonce": genesis.hex(), "pass": 0, "source": "provisioning (OS CSPRNG, pre-launch)", "time_utc": _utc()}],
             "window_counter": 0})
@@ -112,6 +114,8 @@ class MissionControl:
             self._provision(store)
             assert self.signer is not None
             self.signer.counter.reset()
+            self.signer.ring.reset()
+            self._sync_sig_sizes()
             self.sat = SatelliteProcess(self.state_path, self.onboard_log, self.s.flood_limit)
             self.link = LinkSimulator(self.ev / "logs" / "link_log.jsonl")
             self.window_counter = 0
@@ -444,6 +448,107 @@ class MissionControl:
             return {"window": wid, "pass": pass_no, "nonce": n, "pass_open": res, "tx": tx,
                     "link": self.link.snapshot(), "state": self.state()}
 
+    # ------------------------------------------------------------------ key management
+    def _sync_sig_sizes(self) -> None:
+        assert self.signer is not None
+        set_signature_sizes({r: self.signer.sig_len_for_role(r) for r in ("OPERATOR", "ADMIN")})
+
+    def key_status(self) -> dict:
+        from ..common import suites
+        from ..common.frame import HEADER_LEN, MAX_BODY_LEN, PASS_OPEN_BODY_LEN
+
+        assert self.signer is not None and self.sat is not None
+        onboard = self.sat.state().get("key_ring", {})
+        ground = self.signer.ring.snapshot()
+        meta = (getattr(self, "keys_meta", {}) or {})
+        rows = []
+        for kid, spec in sorted(ring_spec().items()):
+            su = suites.info(spec["suite"])
+            rows.append({"key_id": kid, "role": spec["role"], "suite": spec["suite"], "algorithm": su["name"],
+                         "standard": su["standard"], "signature_bytes": su["sig_len"], "public_key_bytes": su["pk_len"],
+                         "onboard_state": (onboard.get(str(kid)) or {}).get("state", "not provisioned"),
+                         "ground_state": ground["states"].get(str(kid), "standby"),
+                         "signing": ground["signing"].get(spec["role"]) == kid,
+                         "public_key_sha256": ((meta.get("keys") or {}).get(str(kid)) or {}).get("public_key_sha256")})
+        sizes = signature_sizes()
+        typical = HEADER_LEN + 12  # header + a 12-byte command body
+        return {"keys": rows, "signing": ground["signing"], "signature_bytes": sizes,
+                "frame_bytes_typical": {r: typical + n for r, n in sizes.items()},
+                "pass_open_bytes": HEADER_LEN + PASS_OPEN_BODY_LEN + sizes["ADMIN"],
+                "operator_commands_per_3600B_pass": (3600 - (HEADER_LEN + PASS_OPEN_BODY_LEN + sizes["ADMIN"]))
+                // (HEADER_LEN + MAX_BODY_LEN // 2 + sizes["OPERATOR"]),
+                "encrypted_at_rest": bool(meta.get("encrypted_at_rest")), "at_rest": meta.get("at_rest"),
+                "needs_reset": any(r["onboard_state"] == "not provisioned" for r in rows)}
+
+    def _send_admin(self, opcode: int, kid: int, label: str, pace_ms: int, sign_kid: int | None = None) -> dict:
+        assert self.signer is not None
+        frame = self.signer.build(role="ADMIN", command=bytes([opcode, kid]), pass_nonce=self.current_nonce(),
+                                  key_id=sign_kid)
+        data = frame.to_bytes()
+        ev = {"window": self.link.window_id, "pass": self.link.pass_no, "label": label, "counter": frame.counter,
+              "bytes": len(data), "opcode_name": opcode_name(opcode), "role": "ADMIN"}
+        self._frame_event("signed", **ev)
+        try:
+            self.link.transmit(data, label=label)
+        except LinkBudgetExceeded as exc:
+            self._frame_event("refused", **ev, error=str(exc), link=self.link.snapshot())
+            raise ServiceError(f"{label}: {exc}. Start a new contact window and try again.", 409) from exc
+        self._frame_event("tx", **ev, link=self.link.snapshot())
+        self._pace(pace_ms)
+        res = self._deliver(data, context={"key_management": label})
+        self._frame_event("verdict", **ev, result=res, link=self.link.snapshot())
+        return {"label": label, "counter": frame.counter, "bytes": len(data), "verdict": res["verdict"],
+                "reason": res["reason"], "steps": res["steps"]}
+
+    def rotate_key(self, role: str, to_kid: int, pace_ms: int = 0) -> dict:
+        """Rotate (or migrate) a role to a pre-loaded standby key: ADMIN-signed
+        KEY_ACTIVATE(new), then KEY_REVOKE(old). The ground switches keys only after
+        the spacecraft acknowledges each step."""
+        from ..common.roles import Opcode
+
+        with self._lock:
+            assert self.signer is not None
+            if not self.link.window_id:
+                raise ServiceError("Open a contact window first: key commands travel over the link like any other.", 409)
+            spec = ring_spec().get(int(to_kid))
+            if not spec or spec["role"] != role:
+                raise ServiceError(f"key_id {to_kid} is not a {role} key", 400)
+            if self.signer.ring.state(to_kid) != "standby":
+                raise ServiceError(f"key_id {to_kid} is {self.signer.ring.state(to_kid)}; choose a standby key", 409)
+            if self.key_status()["needs_reset"]:
+                raise ServiceError("This satellite was provisioned before the key ring existed. Use Reset demo state "
+                                   "once to pre-load the full key ring.", 409)
+            old = self.signer.ring.signing_kid(role)
+            before = self.key_status()
+            steps = [self._send_admin(Opcode.KEY_ACTIVATE, to_kid, f"KEY_ACTIVATE {to_kid}", pace_ms)]
+            if steps[0]["verdict"] != "ACCEPT":
+                raise ServiceError(f"KEY_ACTIVATE rejected: {steps[0]['reason']}", 409)
+            self.signer.ring.set(to_kid, "active", signing_role=role)
+            self._sync_sig_sizes()
+            # an ADMIN key signs its own revocation (the new ADMIN key is already active,
+            # so the spacecraft is never left without one, and the frame stays small)
+            steps.append(self._send_admin(Opcode.KEY_REVOKE, old, f"KEY_REVOKE {old}", pace_ms,
+                                          sign_kid=old if role == "ADMIN" else None))
+            if steps[1]["verdict"] != "ACCEPT":
+                raise ServiceError(f"KEY_REVOKE rejected: {steps[1]['reason']} (key {to_kid} is active, {old} still valid)", 409)
+            self.signer.ring.set(old, "retired")
+            self.signer._sk_cache.pop(old, None)
+            after = self.key_status()
+            self._alert("KEY_ROTATED", "info",
+                        f"{role} rotated from key_id {old} ({self.signer.suite_for(old)}) to key_id {to_kid} "
+                        f"({spec['suite']}). Key {old} is revoked onboard; frames signed with it are now refused. "
+                        f"{role} frames are now {after['frame_bytes_typical'][role]} B (were "
+                        f"{before['frame_bytes_typical'][role]} B): re-optimise the plan.",
+                        role=role, from_kid=old, to_kid=to_kid, suite=spec["suite"])
+            from ..common.atomic import append_jsonl
+
+            append_jsonl(self.ev / "logs" / "key_events.jsonl",
+                         {"time_utc": _utc(), "event": "rotate", "role": role, "from_kid": old, "to_kid": to_kid,
+                          "suite": spec["suite"], "frames": steps, "sizes_before": before["frame_bytes_typical"],
+                          "sizes_after": after["frame_bytes_typical"]})
+            self.emit({"type": "keys", "phase": "rotated", "role": role, "to_kid": to_kid})
+            return {"role": role, "from_kid": old, "to_kid": to_kid, "frames": steps, "before": before, "after": after}
+
     MAX_ATTEMPTS = 3
 
     def _uplink_command(self, c: Command, *, t: int, window: int, plan: dict, nonce: bytes, pace_ms: int,
@@ -631,7 +736,8 @@ class MissionControl:
                 "link": self.link.snapshot(), "qrng": self.qrng.status(), "config": self.s.public_status(),
                 "alerts": {"total": len(self.alerts), "warnings": sum(1 for a in self.alerts if a["severity"] != "info"),
                            "latest": self.alerts[-1] if self.alerts else None},
-                "keys": getattr(self, "keys_meta", {})}
+                "keys": {"encrypted_at_rest": bool((getattr(self, "keys_meta", {}) or {}).get("encrypted_at_rest")),
+                         "signing": self.signer.ring.snapshot()["signing"] if self.signer else None}}
 
     def log_tail(self, limit: int = 500) -> list[dict]:
         return read_jsonl(self.onboard_log, limit=limit)

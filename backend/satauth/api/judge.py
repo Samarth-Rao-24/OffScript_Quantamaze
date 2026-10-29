@@ -20,7 +20,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from ..common import crypto
+from ..common import crypto, suites
 from ..common.atomic import atomic_write_bytes, atomic_write_json
 from ..common.frame import FRAME_VERSION, HEADER_FMT, HEADER_LEN, NONCE_LEN, SIG_LEN, pack_header, signed_message
 from ..common.roles import OPCODE_INFO, ROLE_KEY_ID, Opcode, Role, opcode_name
@@ -82,7 +82,7 @@ def decode(data: bytes) -> dict:
             out.update(opcode=body[0], opcode_name=opcode_name(body[0]), args_hex=body[1:].hex())
         sig = data[HEADER_LEN + clen:]
         out.update(signature_len=len(sig), signature_prefix=sig[:8].hex(),
-                   length_consistent=len(data) == HEADER_LEN + clen + SIG_LEN)
+                   length_consistent=666 <= len(data) - HEADER_LEN - clen <= 2420)
     return out
 
 
@@ -164,16 +164,18 @@ def build_frame(mc: MissionControl, spec: dict) -> tuple[bytes, dict]:
     nonce, nonce_note = _resolve_nonce(mc, spec.get("nonce"))
     if key == "ATTACKER":
         _, sk = attacker_keypair(mc.data)
-        key_id = int(spec["key_id"]) if spec.get("key_id") not in (None, "") else ROLE_KEY_ID[Role.OPERATOR]
+        key_id = int(spec["key_id"]) if spec.get("key_id") not in (None, "") else mc.signer.ring.signing_kid(Role.OPERATOR)
         key_note = "attacker's own Falcon key (unknown to the satellite)"
+        suite = "falcon512"
     else:
-        sk = mc.signer._sk(key)
-        key_id = int(spec["key_id"]) if spec.get("key_id") not in (None, "") else ROLE_KEY_ID[key]
-        key_note = f"ground {key} key"
+        own = mc.signer.ring.signing_kid(key)
+        sk, suite = mc.signer._sk(own), mc.signer.suite_for(own)
+        key_id = int(spec["key_id"]) if spec.get("key_id") not in (None, "") else own
+        key_note = f"ground {key} key (key_id {own}, {suite})"
     if not 0 <= key_id <= 255:
         raise ValueError("key_id must be 0-255")
     header = pack_header(FRAME_VERSION, sat_id, key_id, len(body), counter, expiry)
-    sig = crypto.sign(sk, signed_message(header, body, nonce))
+    sig = suites.sign(suite, sk, signed_message(header, body, nonce))
     data = header + body + sig
     data, mut = _mutate(data, spec.get("mutate"))
     return data, {"key": key_note, "key_id": key_id, "opcode_name": opcode_name(opcode), "counter": counter,

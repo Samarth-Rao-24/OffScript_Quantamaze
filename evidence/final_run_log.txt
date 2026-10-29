@@ -1,30 +1,36 @@
 
 
-######## final_run started 2026-10-29T10:37:18.655597+00:00 ########
+######## final_run started 2026-10-29T12:58:10.477456+00:00 ########
 settings: {"opt_key_configured": true, "qcloud_key_configured": true, "opt_mode": "local", "qrng_device": "QpiAI-QSV-Local", "qrng_qubits": 8, "qrng_shots": 1024, "qaoa_device": "QpiAI-QSV-Simulator", "qaoa_mode": "local", "qaoa_max_iterations": 30, "allow_dev_nonce": false, "allow_local_qrng": true, "sat_id": 42, "flood_limit": 8, "pass_budgets": [3600, 3600, 2900, 2200], "nasa_key_configured": true, "norad_id": 25544, "ground_station": {"name": "Bengaluru", "lat": 12.9716, "lon": 77.5946, "alt_m": 920.0}, "uplink_bps": 80.0, "min_elevation_deg": 10.0}
 
 QUANTUM MODE: LOCAL (organiser-recommended). QRNG and QAOA run in the QpiAI Quantum SDK simulator, authenticated with the QCloud key; no credits, no cloud job IDs. Records are labelled as 'QpiAI local simulator (not a cloud run)'.
 
-This run submits: 4 QRNG job(s) on QpiAI-QSV-Local (no credits), one QpiAI Opt local solve, QAOA on the local QpiAI simulator (no credits).
+This run submits: 6 QRNG job(s) on QpiAI-QSV-Local (no credits), one QpiAI Opt local solve, QAOA on the local QpiAI simulator (no credits).
 Nothing in this run uses credits, so it starts without a confirmation.
 
 === 1. Key check ===
 [OK] 1. Key check: both keys present; QCloud login accepted; experiment 'Default Experiment' found (id 52e4fc50-cd7b-41af-a247-1ca79051d95d)
 
 === 2.1 QRNG job on QpiAI-QSV-Local ===
-[OK] 2.1 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=251/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+[OK] 2.1 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=253/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
 
 === 2.2 QRNG job on QpiAI-QSV-Local ===
-[OK] 2.2 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=252/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+[OK] 2.2 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=253/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
 
 === 2.3 QRNG job on QpiAI-QSV-Local ===
-[OK] 2.3 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=251/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+[OK] 2.3 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=254/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
 
 === 2.4 QRNG job on QpiAI-QSV-Local ===
-[OK] 2.4 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=254/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+[OK] 2.4 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=252/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+
+=== 2.5 QRNG job on QpiAI-QSV-Local ===
+[OK] 2.5 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=253/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
+
+=== 2.6 QRNG job on QpiAI-QSV-Local ===
+[OK] 2.6 QRNG job on QpiAI-QSV-Local: job_id=None status=completed credits_used=0 outcomes=251/256 (qpiai-local-simulator (classical PRNG sampling, not a cloud run))
 
 === 2b. NASA orbit + space weather -> pass budgets ===
-[OK] 2b. NASA orbit + space weather -> pass budgets: ISS (ZARYA) TLE from NASA TLE API (api.nasa.gov catalogue) (epoch 2026-10-28T11:12, 0.98 d old); 8 passes over Bengaluru in 72 h; space weather x1.0 (max Kp None); budgets [3982, 3700, 3798, 2621]; note: {'donki': 'could not reach https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/GST?startDate=2026-10-22&endDate=2026-10-29: <urlopen error timed out>'} -> applied to the queue
+[OK] 2b. NASA orbit + space weather -> pass budgets: ISS (ZARYA) TLE from NASA TLE API (api.nasa.gov catalogue) (epoch 2026-10-28T14:18, 0.94 d old); 8 passes over Bengaluru in 72 h; space weather x1.0 (max Kp None); budgets [3982, 3700, 3798, 2620]; note: {'donki': 'could not reach https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/GST?startDate=2026-10-22&endDate=2026-10-29: <urlopen error timed out>'} -> applied to the queue
 
 === 3a. QpiAI Opt schedule (local solver, drives the uplink) ===
 [OK] 3a. QpiAI Opt schedule (local solver, drives the uplink): job_id=None mode=local objective=66.8 optimum=66.8 greedy=55.4 sent=14/14
@@ -33,7 +39,7 @@ Nothing in this run uses credits, so it starts without a confirmation.
 [OK] 4. QAOA (local QpiAI simulator): 12 qubits, QpiAI local simulator (QpiAI-QSV-Local, no cloud job IDs), QAOA=30.3 classical Opt=30.3 exact=30.3
 
 === 5. Resource benchmarks ===
-[OK] 5. Resource benchmarks: verify p50 76.1 us, peak RAM 22109 B, flood checks 8/500
+[OK] 5. Resource benchmarks: verify p50 54.7 us, peak RAM 52581 B, flood checks 8/500
 
 === 6. Mission run on the satellite process ===
   pass 1: 4 accepted (ACCEPT 4), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)
@@ -60,22 +66,30 @@ Nothing in this run uses credits, so it starts without a confirmation.
   attack wrongsat     passed=True observed=['E_WRONG_SAT']
   attack overbudget   passed=True observed=['LINK_REFUSED']
   attack flood        passed=True observed=['E_BAD_SIG', 'E_FLOOD_LOCKOUT']
-[OK] 6. Mission run on the satellite process: {'pass 1': '4 accepted (ACCEPT 4), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)', 'pass 2': '4 accepted (ACCEPT 4), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)', 'pass 3': '3 accepted (ACCEPT 3, HELD 2, NO_ACK 1), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)', 'missing-packet drill': {'dropped': 'C07', 'pass': 3, 'detected_no_ack': True, 'satellite_gap_report_confirms': True, 'recovered_in_pass': True, 'held': ['C08', 'C09'], 'carried_over': ['C09'], 'replanned_with_qpiai_opt': {'mode': 'local', 'moved': {'C09': 4, 'C10': None, 'C14': 4}, 'missed': [], 'blocked': []}}, 'pass 4': '2 accepted (ACCEPT 2), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)', 'nonce verified': True, 'judge sample': {'cases': 10, 'passed': 10, 'failed': 0, 'errors': 0, 'false_accepts': 0, 'false_rejects': 0, 'wrong_reason': 0, 'pass_rate': 1.0}, 'attacks passed': 10}
+  key ring: 8 keys; private keys encrypted at rest: True
+  rotate OPERATOR 1 -> 3: ['ACCEPT', 'ACCEPT']
+  after rotation, attack revoked  passed=True observed=['E_KEY_REVOKED']
+  after rotation, attack valid    passed=True observed=['OK']
+  migrate OPERATOR 3 -> 7 (hybrid): {'frames': ['ACCEPT', 'ACCEPT'], 'operator_frame_bytes_12B_body': 758}; hybrid command passed=True
+  demo state reset after the drill: OPERATOR key 1 and ADMIN key 2 active again; the rotation is recorded in evidence/logs/key_events.jsonl and the archived onboard log
+[OK] 6. Mission run on the satellite process: {'pass 1': '4 accepted (ACCEPT 4), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)', 'pass 2': '4 accepted (ACCEPT 4), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)', 'pass 3': '3 accepted (ACCEPT 3, HELD 2, NO_ACK 1), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)', 'missing-packet drill': {'dropped': 'C07', 'pass': 3, 'detected_no_ack': True, 'satellite_gap_report_confirms': True, 'recovered_in_pass': True, 'held': ['C08', 'C09'], 'carried_over': ['C09'], 'replanned_with_qpiai_opt': {'mode': 'local', 'moved': {'C09': 4, 'C10': None, 'C14': 4}, 'missed': [], 'blocked': []}}, 'pass 4': '2 accepted (ACCEPT 2), nonce source: qpiai-local-simulator (classical PRNG sampling, not a cloud run)', 'nonce verified': True, 'judge sample': {'cases': 10, 'passed': 10, 'failed': 0, 'errors': 0, 'false_accepts': 0, 'false_rejects': 0, 'wrong_reason': 0, 'pass_rate': 1.0}, 'attacks passed': 10, 'key management drill': {'private keys encrypted at rest': True, 'rotation 1 -> 3 (Falcon spare)': ['ACCEPT', 'ACCEPT'], 'after rotation: revoked': {'passed': True, 'observed': ['E_KEY_REVOKED']}, 'after rotation: valid': {'passed': True, 'observed': ['OK']}, 'migration 3 -> 7 (hybrid Ed25519 + Falcon-512)': {'frames': ['ACCEPT', 'ACCEPT'], 'operator_frame_bytes_12B_body': 758}, 'hybrid-signed command': {'passed': True, 'observed': ['OK']}}}
 
 === 7. Evidence bundle ===
-[OK] 7. Evidence bundle: F:\OffScript\q-uplink-evidence.zip (494 KB)
+[OK] 7. Evidence bundle: F:\OffScript\q-uplink-evidence.zip (619 KB)
 
 ######## SUMMARY ########
-OK      1. Key check  (10.3 s)
-OK      2.1 QRNG job on QpiAI-QSV-Local  (2.6 s)
+OK      1. Key check  (9.2 s)
+OK      2.1 QRNG job on QpiAI-QSV-Local  (1.3 s)
 OK      2.2 QRNG job on QpiAI-QSV-Local  (0.2 s)
 OK      2.3 QRNG job on QpiAI-QSV-Local  (0.1 s)
 OK      2.4 QRNG job on QpiAI-QSV-Local  (0.1 s)
-OK      2b. NASA orbit + space weather -> pass budgets  (125.5 s)
-OK      3a. QpiAI Opt schedule (local solver, drives the uplink)  (10.2 s)
-OK      4. QAOA (local QpiAI simulator)  (6.6 s)
-OK      5. Resource benchmarks  (59.5 s)
-OK      6. Mission run on the satellite process  (8.3 s)
-OK      7. Evidence bundle  (3.6 s)
+OK      2.5 QRNG job on QpiAI-QSV-Local  (0.1 s)
+OK      2.6 QRNG job on QpiAI-QSV-Local  (0.1 s)
+OK      2b. NASA orbit + space weather -> pass budgets  (109.5 s)
+OK      3a. QpiAI Opt schedule (local solver, drives the uplink)  (6.8 s)
+OK      4. QAOA (local QpiAI simulator)  (5.2 s)
+OK      5. Resource benchmarks  (43.9 s)
+OK      6. Mission run on the satellite process  (9.4 s)
+OK      7. Evidence bundle  (2.9 s)
 
-11 OK, 0 failed, 0 unavailable on this QpiAI account. Full log: evidence/final_run_log.txt
+13 OK, 0 failed, 0 unavailable on this QpiAI account. Full log: evidence/final_run_log.txt

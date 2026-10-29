@@ -21,7 +21,7 @@ from collections import deque
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ..common import crypto
+from ..common import crypto, suites
 from ..common.frame import NONCE_LEN, MalformedFrame, parse_frame
 from ..common.roles import Opcode, opcode_name
 from .flood_guard import FloodGuard
@@ -36,6 +36,9 @@ E_EXPIRED = "E_EXPIRED"
 E_REPLAY = "E_REPLAY"
 E_BAD_SIG = "E_BAD_SIG"
 E_UNAUTHORIZED = "E_UNAUTHORIZED"
+E_KEY_REVOKED = "E_KEY_REVOKED"
+E_KEY_INACTIVE = "E_KEY_INACTIVE"
+E_KEY_POLICY = "E_KEY_POLICY"
 
 STEP_NAMES = [
     (0, "flood_guard", "Flood guard below limit"),
@@ -43,8 +46,10 @@ STEP_NAMES = [
     (1, "sat_id", "Satellite ID matches"),
     (2, "expiry", "Not expired"),
     (3, "counter", "Counter > last accepted"),
-    (4, "signature", "Falcon signature over frame + pass nonce"),
-    (5, "role", "Opcode allowed for key role"),
+    (4, "key_state", "Signing key active"),
+    (5, "signature", "Signature over frame + pass nonce"),
+    (6, "role", "Opcode allowed for key role"),
+    (7, "policy", "Key-management policy"),
 ]
 
 
@@ -209,37 +214,64 @@ class OnboardVerifier:
             return finish(E_REPLAY)
         step(3, "counter", "Counter > last accepted", True, f"{frame.counter} > {last}", t0)
 
-        # Step 4: signature over frame + current pass nonce
+        # Step 4: the signing key must be provisioned and active (cheap: no crypto).
+        # Revoked or standby keys are refused before any signature work.
         t0 = time.perf_counter_ns()
         pk = self.state.public_key(frame.key_id)
+        kstate = self.state.key_state(frame.key_id)
+        suite = self.state.key_suite(frame.key_id)
+        if pk is not None and kstate == "revoked":
+            step(4, "key_state", "Signing key active", False, f"key_id {frame.key_id} was revoked", t0)
+            return finish(E_KEY_REVOKED)
+        if pk is not None and kstate != "active":
+            step(4, "key_state", "Signing key active", False, f"key_id {frame.key_id} is {kstate} (not yet activated)", t0)
+            return finish(E_KEY_INACTIVE)
+        step(4, "key_state", "Signing key active", True,
+             f"key_id {frame.key_id}: {suite}, active" if pk is not None else f"key_id {frame.key_id} unknown", t0)
+
+        # Step 5: signature over frame + current pass nonce, with the key's own suite
+        # (the algorithm comes from the key, never from the frame: no downgrade)
+        t0 = time.perf_counter_ns()
         nonce = self.state.pass_nonce
         if pk is None:
             self.guard.record_sig_failure()
-            step(4, "signature", "Falcon signature over frame + pass nonce", False, f"unknown key_id {frame.key_id}", t0)
+            step(5, "signature", "Signature over frame + pass nonce", False, f"unknown key_id {frame.key_id}", t0)
             return finish(E_BAD_SIG)
         result["sig_checked"] = True
+        result["suite"] = suite
         v0 = time.perf_counter_ns()
-        valid = crypto.verify(pk, frame.signed_message(nonce), frame.signature)
+        valid = suites.verify(suite, pk, frame.signed_message(nonce), frame.signature)
         dv = time.perf_counter_ns() - v0
         self.stats.sig_verifications += 1
         self.stats.sig_verify_ns_total += dv
         result["verify_us"] = round(dv / 1000, 2)
         if not valid:
             self.guard.record_sig_failure()
-            step(4, "signature", "Falcon signature over frame + pass nonce", False,
-                 f"invalid for key_id {frame.key_id} under pass nonce {nonce.hex()[:12]}... "
-                 f"(failures {self.guard.failures}/{self.guard.limit})", t0)
+            step(5, "signature", "Signature over frame + pass nonce", False,
+                 f"invalid {suite} signature ({len(frame.signature)} B) for key_id {frame.key_id} under pass nonce "
+                 f"{nonce.hex()[:12]}... (failures {self.guard.failures}/{self.guard.limit})", t0)
             return finish(E_BAD_SIG)
-        step(4, "signature", "Falcon signature over frame + pass nonce", True,
-             f"valid ({crypto.ALGORITHM}, {round(dv / 1000)} us)", t0)
+        step(5, "signature", "Signature over frame + pass nonce", True,
+             f"valid ({suites.SUITES[suite]['name']}, {round(dv / 1000)} us)", t0)
 
-        # Step 5: role authorisation
+        # Step 6: role authorisation
         t0 = time.perf_counter_ns()
         role = result["role"]
         if role is None or not self.state.allowed(role, frame.opcode):
-            step(5, "role", "Opcode allowed for key role", False, f"{role} may not issue {opcode_name(frame.opcode)}", t0)
+            step(6, "role", "Opcode allowed for key role", False, f"{role} may not issue {opcode_name(frame.opcode)}", t0)
             return finish(E_UNAUTHORIZED)
-        step(5, "role", "Opcode allowed for key role", True, f"{role} -> {opcode_name(frame.opcode)}", t0)
+        step(6, "role", "Opcode allowed for key role", True, f"{role} -> {opcode_name(frame.opcode)}", t0)
+
+        # Step 7: key-management policy (KEY_ACTIVATE / KEY_REVOKE only)
+        t0 = time.perf_counter_ns()
+        key_change = None
+        if frame.opcode in (Opcode.KEY_ACTIVATE, Opcode.KEY_REVOKE):
+            ok, why, key_change = self._key_policy(frame)
+            step(7, "policy", "Key-management policy", ok, why, t0)
+            if not ok:
+                return finish(E_KEY_POLICY)
+        else:
+            step(7, "policy", "Key-management policy", True, "not a key-management command", t0)
 
         # Counter-gap report (missing-packet detection): counters skipped between the
         # last accepted frame and this one were never accepted onboard. Reported in the
@@ -258,10 +290,32 @@ class OnboardVerifier:
             result["executed"] = f"pass nonce installed ({new_nonce.hex()[:16]}...), pass #{self.state.pass_index}"
             result["pass_index"] = self.state.pass_index
         else:
-            self.state.commit_accept(counter=frame.counter, gap=gap)
+            self.state.commit_accept(counter=frame.counter, gap=gap, key_change=key_change)
             result["executed"] = f"{opcode_name(frame.opcode)} args={frame.command[1:].hex() or '-'}"
             self.executed.append({"counter": frame.counter, "opcode": opcode_name(frame.opcode), "args": frame.command[1:].hex()})
         return finish(OK)
+
+    def _key_policy(self, frame) -> tuple[bool, str, tuple[int, str] | None]:
+        args = frame.command[1:]
+        if len(args) != 1:
+            return False, "expects exactly one argument byte: the key_id", None
+        kid = args[0]
+        st = self.state.key_state(kid)
+        if st is None:
+            return False, f"key_id {kid} is not provisioned onboard", None
+        if frame.opcode == Opcode.KEY_ACTIVATE:
+            if st != "standby":
+                return False, f"key_id {kid} is {st}; only a standby key can be activated", None
+            return True, f"activate key_id {kid} ({self.state.key_suite(kid)}, {self.state.role_for_key(kid)})", (kid, "active")
+        if st == "revoked":
+            return False, f"key_id {kid} is already revoked", None
+        role = self.state.role_for_key(kid)
+        if role == "ADMIN":
+            others = [k for k, m in self.state.key_ring().items()
+                      if int(k) != kid and m.get("role") == "ADMIN" and m.get("state") == "active"]
+            if not others:
+                return False, f"refused: key_id {kid} is the last active ADMIN key (the spacecraft would be locked out)", None
+        return True, f"revoke key_id {kid} ({role}); frames signed with it will be refused", (kid, "revoked")
 
     def snapshot(self) -> dict:
         return {
@@ -272,6 +326,7 @@ class OnboardVerifier:
             "flood": self.guard.snapshot(),
             "nv_writes": self.state.nv_writes,
             "gaps": self.state.gap_summary(),
+            "key_ring": self.state.key_ring(),
             "stats": self.stats.as_dict(),
             "executed_recent": list(self.executed),
             "state_file": str(self.state.path),

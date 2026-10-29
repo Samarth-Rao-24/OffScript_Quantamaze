@@ -9,7 +9,7 @@ from __future__ import annotations
 import time
 
 from .feasibility import Plan, objective
-from .queue import Instance, PASS_OPEN_FRAME_BYTES
+from .queue import Instance, pass_open_bytes
 
 BRUTE_FORCE_NODE_CAP = 5_000_000
 
@@ -18,7 +18,7 @@ def greedy(inst: Instance) -> dict:
     """Highest priority first; earliest pass that fits budget, deadline and dependencies."""
     t0 = time.perf_counter()
     by = inst.by_id()
-    used = {p.index: PASS_OPEN_FRAME_BYTES for p in inst.passes}
+    used = {p.index: pass_open_bytes() for p in inst.passes}
     budget = {p.index: p.budget_bytes for p in inst.passes}
     plan: Plan = {c.id: None for c in inst.commands}
     # topological-aware: repeat until no change so dependants can follow their prerequisites
@@ -49,7 +49,7 @@ def brute_force(inst: Instance, node_cap: int = BRUTE_FORCE_NODE_CAP) -> dict:
     t0 = time.perf_counter()
     cmds = sorted(inst.commands, key=lambda c: c.id)
     budget = {p.index: p.budget_bytes for p in inst.passes}
-    used = {p.index: PASS_OPEN_FRAME_BYTES for p in inst.passes}
+    used = {p.index: pass_open_bytes() for p in inst.passes}
     plan: Plan = {}
     best = {"obj": -1.0, "plan": None}
     nodes = 0

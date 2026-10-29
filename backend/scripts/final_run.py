@@ -16,6 +16,8 @@ Defaults follow the organisers' guidance: QpiAI local solver and simulator, no c
      missing-packet drill in pass N-1 (lost frame -> hold -> gap report -> re-sign ->
      QpiAI Opt re-plan of the remaining passes), nonce verification, QCloud re-fetch of
      each cloud QRNG job (if any), judge sample cases, all attacks
+  6b. key-management drill: rotate OPERATOR to its spare key (old key refused as
+      E_KEY_REVOKED), then migrate OPERATOR to hybrid Ed25519 + Falcon-512
   7. evidence zip at F:\\OffScript\\q-uplink-evidence.zip and a summary
 
 Every step's output and any error traceback go to evidence/final_run_log.txt.
@@ -85,7 +87,8 @@ def main() -> int:
 
     ap = argparse.ArgumentParser()
     ap.add_argument("--qrng-device", default="QpiAI-QSV-Simulator")
-    ap.add_argument("--qrng-jobs", type=int, default=4)
+    ap.add_argument("--qrng-jobs", type=int, default=6,
+                    help="QRNG runs: one per pass (4) plus contact windows for the key-management drill")
     ap.add_argument("--qrng-shots", type=int, default=1024)
     ap.add_argument("--qaoa-device", default="QpiAI-QSV-Simulator")
     ap.add_argument("--qaoa-iterations", type=int, default=30)
@@ -345,6 +348,7 @@ def main() -> int:
                         attacks[k] = f"error: {exc}"
                         print(f"  attack {k:<12} error: {exc}")
                 out["attacks passed"] = sum(1 for v in attacks.values() if v is True)
+                out["key management drill"] = _key_drill(mc)
             else:
                 out["attacks"] = "skipped: no contact window could be opened (no QRNG nonce available)"
             return out
@@ -364,6 +368,45 @@ def main() -> int:
 
     step("7. Evidence bundle", bundle)
     return finish(s, started)
+
+
+def _key_drill(mc) -> dict:
+    """Rotate OPERATOR to its Falcon spare (routine rotation / compromise response),
+    prove the old key is refused, then migrate OPERATOR to the hybrid Ed25519 +
+    Falcon-512 suite and send a command with it."""
+    from satauth.api.attacks import run_attack
+
+    out: dict = {}
+    try:
+        status = mc.key_status()
+        out["private keys encrypted at rest"] = status["encrypted_at_rest"]
+        print(f"  key ring: {len(status['keys'])} keys; private keys encrypted at rest: {status['encrypted_at_rest']}")
+        mc.open_window()
+        r = mc.rotate_key("OPERATOR", 3)
+        out["rotation 1 -> 3 (Falcon spare)"] = [f["verdict"] for f in r["frames"]]
+        print(f"  rotate OPERATOR 1 -> 3: {out['rotation 1 -> 3 (Falcon spare)']}")
+        for kind in ("revoked", "valid"):
+            a = run_attack(mc, kind)
+            out[f"after rotation: {kind}"] = {"passed": a["passed"], "observed": a["observed"]}
+            print(f"  after rotation, attack {kind:<8} passed={a['passed']} observed={a['observed']}")
+        r = mc.rotate_key("OPERATOR", 7)
+        sizes = r["after"]["frame_bytes_typical"]["OPERATOR"]
+        out["migration 3 -> 7 (hybrid Ed25519 + Falcon-512)"] = {"frames": [f["verdict"] for f in r["frames"]],
+                                                                 "operator_frame_bytes_12B_body": sizes}
+        a = run_attack(mc, "valid")
+        out["hybrid-signed command"] = {"passed": a["passed"], "observed": a["observed"]}
+        print(f"  migrate OPERATOR 3 -> 7 (hybrid): {out['migration 3 -> 7 (hybrid Ed25519 + Falcon-512)']}; "
+              f"hybrid command passed={a['passed']}")
+    except Exception as exc:
+        out["error"] = f"{type(exc).__name__}: {exc}"
+        print(f"  key management drill error: {exc}")
+    try:  # leave the app ready for a demo: primaries active again (the drill stays in evidence/logs/)
+        mc.reset()
+        print("  demo state reset after the drill: OPERATOR key 1 and ADMIN key 2 active again; the rotation is "
+              "recorded in evidence/logs/key_events.jsonl and the archived onboard log")
+    except Exception as exc:
+        print(f"  reset after the drill failed: {exc}")
+    return out
 
 
 def _drill_target(plan: dict, t: int) -> str | None:
@@ -389,7 +432,7 @@ def _archive_previous(s) -> None:
     moves = [*(ev / "qcloud_jobs").glob("qrng_*.json"), *(ev / "qcloud_jobs").glob("qaoa_*.json"),
              *(ev / "qcloud_jobs").glob("refetch_*.json"), ev / "qcloud_jobs" / "nonce_derivations.jsonl",
              ev / "opt_jobs", ev / "judge_runs", ev / "bench", ev / "pass_runs.json", ev / "final_run_log.txt",
-             ev / "final_run_summary.json", ev / "logs" / "alerts.jsonl", ev / "logs" / "ack_log.jsonl", gd / "qrng_pool.json", gd / "current_plan.json", gd / "pass_runs.json"]
+             ev / "final_run_summary.json", ev / "logs" / "alerts.jsonl", ev / "logs" / "ack_log.jsonl", ev / "logs" / "key_events.jsonl", gd / "qrng_pool.json", gd / "current_plan.json", gd / "pass_runs.json"]
     moved = 0
     for p in moves:
         if p.exists():

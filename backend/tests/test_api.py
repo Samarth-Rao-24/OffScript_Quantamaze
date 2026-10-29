@@ -93,8 +93,9 @@ def test_evidence_zip_has_no_private_keys(client):
     assert r.status_code == 200
     z = zipfile.ZipFile(io.BytesIO(r.content))
     names = z.namelist()
-    assert "manifest.json" in names and any(n.endswith("operator.pk") for n in names)
-    assert not any(n.endswith(".sk") for n in names)
+    assert "manifest.json" in names and any(n.endswith("/k1.pk") for n in names)
+    assert sum(n.endswith(".pk") for n in names) == 8  # the whole public key ring
+    assert not any(n.endswith((".sk", ".sk.enc")) for n in names)
     for n in names:
         assert b"QPIAI" not in z.read(n) or n.endswith(".json")  # env var *names* only appear in docs/json
 

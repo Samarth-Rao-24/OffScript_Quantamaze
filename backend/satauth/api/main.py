@@ -325,6 +325,24 @@ async def nasa_apply(payload: dict = Body(default={})):
     return await asyncio.to_thread(mc.nasa_apply, payload.get("evidence_file"))
 
 
+@app.get("/api/keys")
+async def keys():
+    """Key ring: onboard and ground state per key, suites, sizes (public data only)."""
+    return await asyncio.to_thread(mc.key_status)
+
+
+@app.post("/api/keys/rotate")
+async def keys_rotate(payload: dict = Body(...)):
+    role = payload.get("role")
+    if role not in ("OPERATOR", "ADMIN"):
+        raise HTTPException(400, "role must be OPERATOR or ADMIN")
+    try:
+        kid = int(payload.get("to_kid"))
+    except (TypeError, ValueError):
+        raise HTTPException(400, "to_kid must be a key id")
+    return await _exclusive("keys", mc.rotate_key, role, kid, int(payload.get("pace_ms", 0)))
+
+
 @app.get("/api/delivery")
 async def delivery():
     """Missing-packet view: acknowledged commands, carried-over commands, alerts, ACK ledger."""

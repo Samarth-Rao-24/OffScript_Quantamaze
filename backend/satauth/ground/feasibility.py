@@ -7,7 +7,7 @@ solver's own feasibility flag.
 
 from __future__ import annotations
 
-from .queue import Instance, PASS_OPEN_FRAME_BYTES
+from .queue import Instance, pass_open_bytes
 
 Plan = dict[str, int | None]  # command id -> pass index (1..T) or None (deferred)
 
@@ -29,7 +29,7 @@ def validate_plan(inst: Instance, plan: Plan) -> dict:
     if missing:
         violations.append(f"plan omits commands {sorted(missing)} (each must be assigned or explicitly deferred)")
 
-    used = {p.index: PASS_OPEN_FRAME_BYTES for p in inst.passes}
+    used = {p.index: pass_open_bytes() for p in inst.passes}
     for cid, t in plan.items():
         if cid not in by:
             continue
@@ -93,7 +93,7 @@ def order_within_pass(inst: Instance, plan: Plan, t: int) -> list[str]:
 def explain(inst: Instance, plan: Plan) -> list[dict]:
     """The "Why?" panel: one human-readable reason per command."""
     by = inst.by_id()
-    used = {p.index: PASS_OPEN_FRAME_BYTES for p in inst.passes}
+    used = {p.index: pass_open_bytes() for p in inst.passes}
     for cid, t in plan.items():
         if t is not None:
             used[t] += by[cid].frame_bytes

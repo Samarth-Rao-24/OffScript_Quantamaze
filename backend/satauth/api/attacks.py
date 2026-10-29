@@ -26,6 +26,7 @@ ATTACKS = {
     "wrongsat": ("Wrong satellite", "Valid frame addressed to another spacecraft", "E_WRONG_SAT"),
     "flood": ("Flood", "500 junk frames with high counters and random signatures", "E_BAD_SIG then E_FLOOD_LOCKOUT"),
     "overbudget": ("Over budget", "Ground tries to transmit more bytes than the pass allows", "LINK_REFUSED"),
+    "revoked": ("Revoked key", "Validly signed with a key the ground retired after a rotation (stolen-key case)", "E_KEY_REVOKED"),
 }
 
 FLOOD_FRAMES = 500
@@ -161,14 +162,28 @@ def _atk_forged(mc, fuzz: FuzzStream):
     # (a) attacker's own Falcon key, claiming to be the OPERATOR key
     pk, sk = crypto.generate_keypair()
     f = mc.signer.build(role=Role.OPERATOR, command=bytes([Opcode.SET_SAFE_MODE, 1]), pass_nonce=mc.current_nonce(),
-                        secret_key=sk, key_id=ROLE_KEY_ID[Role.OPERATOR])
+                        secret_key=sk, key_id=mc.signer.ring.signing_kid(Role.OPERATOR))
     out.append(_send(mc, f.to_bytes(), "forged (unknown key)"))
     # (b) QRNG-seeded random signature bytes on a plausible header
     body = bytes([Opcode.NOOP_PING])
-    header = pack_header(FRAME_VERSION, mc.s.sat_id, ROLE_KEY_ID[Role.ADMIN], len(body),
+    header = pack_header(FRAME_VERSION, mc.s.sat_id, mc.signer.ring.signing_kid(Role.ADMIN), len(body),
                          mc.signer.counter.next(), int(time.time()) + 300)
     out.append(_send(mc, header + body + fuzz.bytes(SIG_LEN), "forged (random signature)"))
     return out
+
+
+def _atk_revoked(mc, fuzz):
+    retired = [int(k) for k, st in mc.signer.ring.snapshot()["states"].items() if st == "retired"]
+    if not retired:
+        raise ServiceError("No retired key yet. Rotate a key in Key management first, then try the revoked key.", 409)
+    kid = retired[0]
+    from ..common.roles import KEY_IDS
+
+    f = mc.signer.build(role=KEY_IDS[kid], command=bytes([Opcode.NOOP_PING]), pass_nonce=mc.current_nonce(),
+                        key_id=kid, allow_retired=True)
+    r = _send(mc, f.to_bytes(), f"revoked key_id {kid}")
+    r["key_id_used"] = kid
+    return [r]
 
 
 def _atk_crosspass(mc, fuzz):
@@ -194,7 +209,7 @@ def _atk_flood(mc, fuzz: FuzzStream):
     exp = int(time.time()) + 300
     show = mc.s.flood_limit + 3
     for i in range(FLOOD_FRAMES):
-        header = pack_header(FRAME_VERSION, mc.s.sat_id, ROLE_KEY_ID[Role.OPERATOR], len(body), base + i, exp)
+        header = pack_header(FRAME_VERSION, mc.s.sat_id, mc.signer.ring.signing_kid(Role.OPERATOR), len(body), base + i, exp)
         data = header + body + fuzz.bytes(SIG_LEN)
         out.append(_send(mc, data, f"flood#{i + 1}", emit=i < show))
     mc._frame_event("flood_summary", window=mc.link.window_id, summary=_flood_summary(out, mc.s.flood_limit))
